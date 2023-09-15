@@ -1,0 +1,4 @@
+--patch-module
+calc.ui=_
+--add-reads
+calc.ui=ALL-UNNAMED
