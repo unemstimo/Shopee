@@ -1,5 +1,5 @@
 module GR2334.ui {
-    requires calc.core;
+    requires core;
     requires javafx.controls;
     requires javafx.fxml;
 
