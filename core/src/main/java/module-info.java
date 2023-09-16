@@ -1,3 +1,3 @@
-module GR2334.core {
+module core {
     exports core;
 }
