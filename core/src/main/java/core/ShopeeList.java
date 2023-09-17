@@ -8,6 +8,10 @@ public class ShopeeList {
     private String ListName ="";
     private HashMap<String,Integer> Shop_list;
 
+    public ShopeeList(){
+        
+    }
+
     /**
      * Constructor a shoppinglist with a name and a hashmap containing the different foods
      * 
@@ -18,6 +22,7 @@ public class ShopeeList {
         SetListName(name);
         this.Shop_list = new HashMap<>();
     }
+
 
     /** 
       * Sets the name of the Shopee List
