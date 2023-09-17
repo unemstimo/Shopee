@@ -20,18 +20,18 @@
       <Text layoutX="231.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VELKOMMEN TIL SHOPEE!" />
       <Label id="shoppinglist_label" layoutX="265.0" layoutY="40.0" text="Din handleliste" />
       <Label layoutX="24.0" layoutY="93.0" text="Legg til matvare:" />
-      <TextField id="add_new_food" layoutX="122.0" layoutY="87.0" prefHeight="26.0" prefWidth="118.0" />
+      <TextField id="newFood" layoutX="122.0" layoutY="87.0" prefHeight="26.0" prefWidth="118.0" />
       <Label layoutX="261.0" layoutY="91.0" text="Antall:" />
-      <TextField id="amount_new_food" layoutX="300.0" layoutY="87.0" prefHeight="26.0" prefWidth="126.0" />
-      <Button id="add_food_button" layoutX="447.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleAddFoodButtonClick" text="LEGG TIL" />
+      <TextField id="amountNewFood" layoutX="300.0" layoutY="87.0" prefHeight="26.0" prefWidth="126.0" />
+      <Button id="addFood" layoutX="447.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleAddFoodButtonClick" text="LEGG TIL" />
       <Label layoutX="28.0" layoutY="161.0" text="Din handleliste:" />
-      <TextArea id="display_shopping_list" layoutX="121.0" layoutY="151.0" prefHeight="149.0" prefWidth="249.0" />
-      <Button id="food_bought_button" layoutX="181.0" layoutY="308.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="71.0" text="Marker som &#10;kjøpt" textAlignment="CENTER">
+      <TextArea id="displayShoppingList" layoutX="121.0" layoutY="151.0" prefHeight="149.0" prefWidth="249.0" />
+      <Button id="foodBought" layoutX="181.0" layoutY="308.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="71.0" text="Marker som &#10;kjøpt" textAlignment="CENTER">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button id="remove_food_button" layoutX="256.0" layoutY="308.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="62.0" text="Fjern fra &#10;handleliste" textAlignment="CENTER">
+      <Button id="removeFood" layoutX="256.0" layoutY="308.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="62.0" text="Fjern fra &#10;handleliste" textAlignment="CENTER">
          <font>
             <Font size="10.0" />
          </font>
