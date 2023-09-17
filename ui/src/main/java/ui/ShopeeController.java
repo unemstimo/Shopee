@@ -13,7 +13,7 @@ import javafx.scene.control.ListView;
 
 public class ShopeeController {
 
-    private ShopeeList List;
+    private ShopeeList shopeeList = new ShopeeList(); 
 
     
 }
