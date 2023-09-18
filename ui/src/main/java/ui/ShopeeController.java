@@ -1,10 +1,12 @@
 package ui;
+import core.ShopeeList;
+import core.FoodItem;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
-import core.ShopeeList;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.collections.FXCollections;
 
 public class ShopeeController {
     
@@ -26,15 +29,17 @@ public class ShopeeController {
     private ShopeeList shopeeList = new ShopeeList(); 
     
     // Created an instance of the class HandleTxtFile to be able to read and write to file
-    private HandleTxtFile myTxtFileHandeler = new HandleTxtFile();
+    private HandleTxtfile myTxtFileHandeler = new HandleTxtfile();
 
     @FXML private TextField newFood, amountNewFood; 
     @FXML private Button addFood, foodBought, removeFood;
     @FXML private TextArea displayShoppingList;
     @FXML private VBox shoppingListContainer;
+    @FXML private ListView<FoodItem> shoppingListView;
+
 
     /**
-     * Collect the user input from food- and amount-textfield, and adds the food item to the shopping list.
+     * Collect the user input from food- and amount-textfield, and adds the food object to the shopping list.
      * 
      * @param event
      */
@@ -47,46 +52,34 @@ public class ShopeeController {
 
         shopeeList.AddFood(food, amount);
 
-        showShoppingList(shopeeList.getFoods());
+        showShoppingList(shopeeList.getShoppingList());
+        newFood.clear();
+        amountNewFood.clear();
     }
 
     @FXML
-    public void showShoppingList(List<String> listOfFoods) {
-        
+    public void showShoppingList(List<FoodItem> listOfFoods) {
         // All shopping list items will be displayed in this vertical box
-        shoppingListContainer = new VBox(); 
-
-        for(int i = 0; i < listOfFoods.size(); i++) {
-            List<Room> rooms = availableRooms.get(i);
-
-            // lager en ny tekstboks for hvert bookingforslag
-            TextField roomTextField = new TextField();
-            roomTextField.setId("roomTextField" + i);
-            String string = "";
-            int price = 0;
-            for(Room room : rooms) {
-                string += room.toString() + "\n";
-                bookingSearch.calculatePrice(room);
-                price += bookingSearch.getPrice();
-            }
-        
-            final String printString = string + "Totalpris: " + Integer.toString(price);
-            roomTextField.setText(printString);
-
-            // lager en ny tilhørende knapp til hvert bookingforslag
-            Button roomButton = new Button("Select");
-            roomButton.setId("roomButton" + i);
-            roomButton.setOnAction(event -> handleRoomSelection(printString)); //gå videre til neste side i JavaFX - se under:
-
-            // legger til tekstboks og knapp for det enkelte forslaget til i vertikalboksen
-            roomContainer.getChildren().addAll(roomTextField, roomButton);
-        }  
+        List<FoodItem> foodsNotBought = listOfFoods.stream().filter(l -> !l.getBought()).toList();
+        shoppingListView.setItems(foodsNotBought);
     }
 
     @FXML 
-    public void handleFoodBoughtButtonClick(ActionEvent event) {
+    public void markAsBought(ActionEvent event) {
+        int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
+        if(selectedIndex >= 0) {
+            shopeeList.get(selectedIndex).setBought();
+        }
+        showShoppingList(shopeeList.getShoppingList());
+    }
 
-        
+    @FXML
+    public void removeItem(ActionEvent event) {
+         int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
+        if(selectedIndex >= 0) {
+            shopeeList.RemoveFood(shopeeList.get(selectedIndex).getFoodName());
+        }
+        showShoppingList(shopeeList.getShoppingList());
     }
     
 }
