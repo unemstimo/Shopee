@@ -2,14 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ShopeeController">
    <children>
@@ -26,19 +26,18 @@
       <TextField id="amountNewFood" layoutX="300.0" layoutY="87.0" prefHeight="26.0" prefWidth="126.0" />
       <Button id="addFood" layoutX="447.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleAddFoodButtonClick" text="LEGG TIL" />
       <Label layoutX="28.0" layoutY="161.0" text="Din handleliste:" />
-      <VBox id="shoppingListContainer">
-         <ListView fx:id="shoppingListView"/>
-         <!-- Buttons for actions -->
-         <Button id="foodBought" layoutX="181.0" layoutY="308.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="71.0" textAlignment="CENTER" text="Marker som kjøpt" onAction="#markAsBought">
-            <font>
-               <Font size="10.0" />
-            </font>
-         </Button>
-         <Button id="removeFood" layoutX="256.0" layoutY="308.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="62.0" textAlignment="CENTER" text="Fjern fra handleliste" onAction="#removeItem">
-            <font>
-               <Font size="10.0" />
-            </font>
-         </Button>
-      </VBox>     
+      <VBox id="shoppingListContainer" layoutX="186.0" layoutY="19.0" />
+      <ListView fx:id="shoppingListView" layoutX="122.0" layoutY="147.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="203.0" prefWidth="248.0" />
+      <!-- Buttons for actions -->
+      <Button id="foodBought" layoutX="196.0" layoutY="357.0" mnemonicParsing="false" onAction="#markAsBought" prefHeight="32.0" prefWidth="71.0" text="Marker som kjøpt" textAlignment="CENTER">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button id="removeFood" layoutX="122.0" layoutY="356.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="33.0" prefWidth="62.0" text="Fjern fra handleliste" textAlignment="CENTER">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>     
    </children>
 </AnchorPane>
