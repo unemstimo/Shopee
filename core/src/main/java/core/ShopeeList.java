@@ -8,8 +8,11 @@ public class ShopeeList {
     private String ListName ="";
     private HashMap<String,Integer> Shop_list;
 
+    /**
+     * Empty construtor for use in controller. 
+     */
     public ShopeeList(){
-        
+
     }
 
     /**
@@ -22,7 +25,6 @@ public class ShopeeList {
         SetListName(name);
         this.Shop_list = new HashMap<>();
     }
-
 
     /** 
       * Sets the name of the Shopee List
