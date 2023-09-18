@@ -1,31 +1,22 @@
 package core;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShopeeList {
     
     private String ListName ="";
-    private HashMap<String,Integer> Shop_list;
+    private List<FoodItem> Shop_list;
 
     /**
      * Empty construtor for use in controller. 
      */
     public ShopeeList(){
-
+        this.Shop_list = new ArrayList<>();
     }
 
-    /**
-     * Constructor a shoppinglist with a name and a hashmap containing the different foods
-     * 
-     * @param name
-     */
     
-    public ShopeeList(String name) {
-        SetListName(name);
-        this.Shop_list = new HashMap<>();
-    }
-
     /** 
       * Sets the name of the Shopee List
       *
@@ -52,7 +43,6 @@ public class ShopeeList {
      * 
      * @param Listname
      */
-
     public void ValidName(String listName) {
         if (!listName.matches("[A-Za-z0-9]+")) {
             throw new IllegalArgumentException("Shoplist name is not valid"); // usikker på om dette er nødvendig??
@@ -62,71 +52,101 @@ public class ShopeeList {
     /**
      * Adds a food that the user wants in the List
      * 
-     * @param food
+     * @param foodname
      * @param amount
      */
 
-    public void AddFood(String food, int amount) {
-        if(Shop_list.keySet().contains(food)) {
-            int current_amount = Shop_list.get(food);
-            int newAmount = current_amount + amount;
-
-            this.Shop_list.put(food, newAmount);
+    public void AddFood(String foodname, int amount) { 
+        if(hasFood(foodname)) {
+            FoodItem food = Shop_list.stream().filter(a -> a.getFoodName().equals(foodname)).findFirst().orElse(null);
+            food.setAmount(amount);
         }
         else {
-            this.Shop_list.put(food, amount);
+            FoodItem foodItem = new FoodItem(foodname, amount);
+            this.Shop_list.add(foodItem);
         }
     }
 
      /**
      * Removes a food that the user wants from the List
      * 
-     * @param food
+     * @param foodname
+     * @throws IllegalArgumentException if the food is not in the list
      */
 
     public void RemoveFood(String food) {
-        if(!Shop_list.keySet().contains(food)) {
+        if(!hasFood(food)) {
             throw new IllegalArgumentException("This food is not in the food list!");
         }
-        this.Shop_list.remove(food);
+        this.Shop_list.remove(this.getFood(food));
     }
 
-
     /**
-     * Gets the amount of a certain food
+     * Gets a food from the list, null if the food is not in the list
      * 
-     * @param food
+     * @param foodname
+     * @return Fooditem object or null
      */
+
+    public FoodItem getFood(String foodname) {
+        if(!hasFood(foodname)) {
+            throw new IllegalArgumentException("This food is not in the shopee list!");
+        }
+       return Shop_list.stream().filter(a -> a.getFoodName().equals(foodname)).findFirst().orElse(null);
+    }
+
+      /**
+       * Gets the amount of a given food
+       * 
+       * @param food
+       * @return the amount of the food
+       */
 
     public int getFoodAmount(String food) {
-        if(!Shop_list.keySet().contains(food)) {
-            throw new IllegalArgumentException("This food is not in the food list!");
+        if(!hasFood(food)) {
+            throw new IllegalArgumentException("Cannot remove this food because the list does not contain it!");
         }
-        return Shop_list.get(food);
+        return Shop_list.stream().filter(a -> a.getFoodName().equals(food)).findFirst().orElse(null).getFoodAmount();
     }
+
 
     /**
-     * Gets a list containing all the foodnames in the list
+     * Checks if the food is in the shopee list
      * 
-     * @return the names of all the foods in the list
+     * @param foodname
+     * @return
      */
+    public boolean hasFood(String foodname) {
+        List<String> foodnames = this.Shop_list.stream().map(a -> a.getFoodName()).collect(Collectors.toList());
 
-    public List<String> getFoods() {
-        return Shop_list.keySet().stream().toList();
+        if(!foodnames.contains(foodname)) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
+
+  
+
+    
 
     
 
     public static void main(String[] args) {
-        ShopeeList hall = new ShopeeList("Oskar");
+        ShopeeList hall = new ShopeeList();
         hall.AddFood("kiwi", 5);
         hall.AddFood("kiwi", 5);
         hall.AddFood("tomat", 3);
         System.out.println(hall);
-        System.out.println(hall.getFoods());
+        System.out.println(hall.getFood("kiwi"));
+        System.out.println(hall.getFoodAmount("kiwi"));
         hall.RemoveFood("kiwi");
-        System.out.println(hall);
-        System.out.println(hall.getFoods());
+        System.out.println("halla");
+        System.out.println(hall.getFood("kiwi"));
+        System.out.println(hall.getFoodAmount("kiwi"));
+
+        
     }
    
 }
