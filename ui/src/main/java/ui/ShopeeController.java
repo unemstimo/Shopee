@@ -28,7 +28,6 @@ public class ShopeeController {
 
     @FXML private TextField newFood, amountNewFood; 
     @FXML private Button addFood, foodBought, removeFood;
-    @FXML private TextArea displayShoppingList;
     @FXML private VBox shoppingListContainer;
     @FXML private ListView<FoodItem> shoppingListView;
 
