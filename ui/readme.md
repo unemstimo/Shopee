@@ -7,7 +7,9 @@ The shopee app is an application that works as a shopping list. The app allows a
 ## User story
 
 ### important to be able to see
-1. -**Shopping List** : The user should be able to see the food items added to the shopping list along with the amount of food items 
+1. **Shopping List** : The user should be able to see the food items added to the shopping list along with the amount of food items 
 ### important to be able to do
-1. -**Add food** 
-2. -**
+1. **Add food** 
+2. **Buy food** : 
+3. **Remove food**
+
