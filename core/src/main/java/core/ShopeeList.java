@@ -95,6 +95,10 @@ public class ShopeeList {
        return Shop_list.stream().filter(a -> a.getFoodName().equals(foodname)).findFirst().orElse(null);
     }
 
+    public FoodItem getFood(int index) {
+        return Shop_list.get(index);
+    }
+
       /**
        * Gets the amount of a given food
        * 

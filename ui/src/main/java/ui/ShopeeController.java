@@ -3,15 +3,10 @@ import core.ShopeeList;
 import core.FoodItem;
 
 import java.util.List;
-import java.util.function.BinaryOperator;
-import java.util.function.UnaryOperator;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -29,7 +24,7 @@ public class ShopeeController {
     private ShopeeList shopeeList = new ShopeeList(); 
     
     // Created an instance of the class HandleTxtFile to be able to read and write to file
-    private HandleTxtfile myTxtFileHandeler = new HandleTxtfile();
+    //private HandleTxtfile myTxtFileHandeler = new HandleTxtfile();
 
     @FXML private TextField newFood, amountNewFood; 
     @FXML private Button addFood, foodBought, removeFood;
@@ -59,8 +54,7 @@ public class ShopeeController {
 
     @FXML
     public void showShoppingList(List<FoodItem> listOfFoods) {
-        // All shopping list items will be displayed in this vertical box
-        List<FoodItem> foodsNotBought = listOfFoods.stream().filter(l -> !l.getBought()).toList();
+        ObservableList<FoodItem> foodsNotBought = FXCollections.observableArrayList(listOfFoods.stream().filter(l -> !l.isBought()).toList());
         shoppingListView.setItems(foodsNotBought);
     }
 
@@ -68,7 +62,7 @@ public class ShopeeController {
     public void markAsBought(ActionEvent event) {
         int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
         if(selectedIndex >= 0) {
-            shopeeList.get(selectedIndex).setBought();
+            shopeeList.getFood(selectedIndex).setBought();
         }
         showShoppingList(shopeeList.getShoppingList());
     }
@@ -77,7 +71,7 @@ public class ShopeeController {
     public void removeItem(ActionEvent event) {
          int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
         if(selectedIndex >= 0) {
-            shopeeList.RemoveFood(shopeeList.get(selectedIndex).getFoodName());
+            shopeeList.RemoveFood(shopeeList.getFood(selectedIndex).getFoodName());
         }
         showShoppingList(shopeeList.getShoppingList());
     }
