@@ -127,8 +127,13 @@ public class ShopeeList {
         }
     }
 
-  
-
+    /**
+     * Method to get all elements in the shopping list
+     * @return all objects in the shopping list
+     */
+    public List<FoodItem> getShoppingList(){
+        return shop_list;
+    }
     
 
     
