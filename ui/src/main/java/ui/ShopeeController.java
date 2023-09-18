@@ -31,7 +31,7 @@ public class ShopeeController {
     @FXML private TextField newFood, amountNewFood; 
     @FXML private Button addFood, foodBought, removeFood;
     @FXML private TextArea displayShoppingList;
-    @FXML private VBox roomContainer;
+    @FXML private VBox shoppingListContainer;
 
     /**
      * Collect the user input from food- and amount-textfield, and adds the food item to the shopping list.
@@ -47,12 +47,40 @@ public class ShopeeController {
 
         shopeeList.AddFood(food, amount);
 
-        showShoppingList();
+        showShoppingList(shopeeList.getFoods());
     }
 
     @FXML
-    public void showShoppingList() {
+    public void showShoppingList(List<String> listOfFoods) {
+        
+        // All shopping list items will be displayed in this vertical box
+        shoppingListContainer = new VBox(); 
 
+        for(int i = 0; i < listOfFoods.size(); i++) {
+            List<Room> rooms = availableRooms.get(i);
+
+            // lager en ny tekstboks for hvert bookingforslag
+            TextField roomTextField = new TextField();
+            roomTextField.setId("roomTextField" + i);
+            String string = "";
+            int price = 0;
+            for(Room room : rooms) {
+                string += room.toString() + "\n";
+                bookingSearch.calculatePrice(room);
+                price += bookingSearch.getPrice();
+            }
+        
+            final String printString = string + "Totalpris: " + Integer.toString(price);
+            roomTextField.setText(printString);
+
+            // lager en ny tilhørende knapp til hvert bookingforslag
+            Button roomButton = new Button("Select");
+            roomButton.setId("roomButton" + i);
+            roomButton.setOnAction(event -> handleRoomSelection(printString)); //gå videre til neste side i JavaFX - se under:
+
+            // legger til tekstboks og knapp for det enkelte forslaget til i vertikalboksen
+            roomContainer.getChildren().addAll(roomTextField, roomButton);
+        }  
     }
 
     @FXML 
