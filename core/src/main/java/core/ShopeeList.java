@@ -132,7 +132,7 @@ public class ShopeeList {
      * @return all objects in the shopping list
      */
     public List<FoodItem> getShoppingList(){
-        return shop_list;
+        return Shop_list;
     }
     
 
