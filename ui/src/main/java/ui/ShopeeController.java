@@ -1,34 +1,40 @@
 package ui;
 import core.ShopeeList;
+import core.Storage.ReadFromFile;
 import core.FoodItem;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
 
-public class ShopeeController {
+public class ShopeeController implements Initializable {
     
     /**
     * Using the empty constructor in the ShopeeList class to create a new shopping list. 
     * In this sprint, we dont name our shoppinglists, but instead we create one single shoppinglist to moderate. 
     * Now we can set and validate the input from the user.
     */
-
-    private ShopeeList shopeeList = new ShopeeList(); 
     
-    // Created an instance of the class HandleTxtFile to be able to read and write to file
-    //private HandleTxtfile myTxtFileHandeler = new HandleTxtfile();
+    private ReadFromFile fileReader = new ReadFromFile();
+    private ShopeeList shopeeList = fileReader.filereader();
+
 
     @FXML private TextField newFood, amountNewFood; 
     @FXML private Button addFood, foodBought, removeFood;
     @FXML private VBox shoppingListContainer;
     @FXML private ListView<FoodItem> shoppingListView;
+    @FXML private ListView<FoodItem> boughtListView;
+
 
 
     /**
@@ -36,42 +42,77 @@ public class ShopeeController {
      * 
      * @param event
      */
-    
     @FXML
     public void handleAddFoodButtonClick(ActionEvent event) {
 
         String food = newFood.getText();
         int amount = Integer.parseInt(amountNewFood.getText());
 
-        shopeeList.AddFood(food, amount);
+        shopeeList.addFoodShopList(food, amount);
 
-        showShoppingList(shopeeList.getShoppingList());
+        showShoppingList(shopeeList.getShopList());
         newFood.clear();
         amountNewFood.clear();
     }
 
+
+    /**
+     * Updates the shopping list- ListView with the list-parameter in the UI
+     * 
+     * @param listOfFoods
+     */
     @FXML
     public void showShoppingList(List<FoodItem> listOfFoods) {
-        ObservableList<FoodItem> foodsNotBought = FXCollections.observableArrayList(listOfFoods.stream().filter(l -> !l.isBought()).toList());
-        shoppingListView.setItems(foodsNotBought);
+        ObservableList<FoodItem> foodList = FXCollections.observableArrayList(listOfFoods);
+        shoppingListView.setItems(foodList);
     }
 
+    /**
+     * Updates the bought list- ListView with the list-parameter in the UI
+     * 
+     * @param listOfBoughtFoods
+     */
+    @FXML
+    public void showBoughtList(List<FoodItem> listOfBoughtFoods) {
+        ObservableList<FoodItem> foodList = FXCollections.observableArrayList(listOfBoughtFoods);
+        boughtListView.setItems(foodList);
+    }
+
+    /**
+     * Sets the selected food object from the shopping list as bought and moves it to the bought list
+     * 
+     * @param event
+     */
     @FXML 
     public void markAsBought(ActionEvent event) {
         int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
         if(selectedIndex >= 0) {
-            shopeeList.getFood(selectedIndex).setBought();
+            FoodItem foodItem = shopeeList.getFood(selectedIndex);
+            shopeeList.addFoodBoughtList(foodItem);
         }
-        showShoppingList(shopeeList.getShoppingList());
+        showShoppingList(shopeeList.getShopList());
+        showBoughtList(shopeeList.getBoughtList());
     }
 
+    /**
+     * Removes selected food item from the shopping list
+     * 
+     * @param event
+     */
     @FXML
     public void removeItem(ActionEvent event) {
          int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
         if(selectedIndex >= 0) {
-            shopeeList.RemoveFood(shopeeList.getFood(selectedIndex).getFoodName());
+            shopeeList.removeFood(shopeeList.getFood(selectedIndex).getFoodName());
         }
-        showShoppingList(shopeeList.getShoppingList());
+        showShoppingList(shopeeList.getShopList());
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        showShoppingList(shopeeList.getShopList());
+        showBoughtList(shopeeList.getBoughtList());
     }
     
 }
