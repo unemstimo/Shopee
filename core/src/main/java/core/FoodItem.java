@@ -2,23 +2,20 @@ package core;
 
 public class FoodItem {
     
-private final String Food;
+private final String food;
 private int amount;
-
-private boolean bought;
 
 
 /**
  *Constructor for a food item that sets the name, 
  *the amount and initialize the boolean bought value 
  * 
- * @param Food
+ * @param food
  * @param amount
  */
-public FoodItem(String Food, int amount) {
-    this.Food = Food;
+public FoodItem(String food, int amount) {
+    this.food = food;
     this.amount = amount;
-    this.bought = false;
 }
 
 /**
@@ -37,7 +34,7 @@ public void setAmount(int amount) {
  * @return the foodname
  */
 public String getFoodName() {
-    return this.Food;
+    return this.food;
 }
 
 
@@ -51,28 +48,9 @@ public int getFoodAmount() {
 }
 
 
-/**
- * Gets the boolean if the food is bought
- * 
- * @return
- */
-public boolean isBought() {
-    return bought;
-}
-
-
-/**
- * Sets the bought variable true
- * 
- */
-public void setBought() {
-    this.bought = true;
-}
-
-
 @Override
 public String toString() {
-    return Food + "," + amount;
+    return food + "," + amount;
 }
 
 }

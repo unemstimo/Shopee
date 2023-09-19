@@ -18,7 +18,7 @@ public class ShopeeListTest {
     @Test
     public void testAddFood(){
         ShopeeList list1 = new ShopeeList();
-        list1.AddFood("apple", 4);
+        list1.addFoodShopList("apple", 4);
         Assertions.assertEquals("apple", list1.getFood(0));
     }
 }

@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -18,19 +20,32 @@
       <Label layoutX="261.0" layoutY="91.0" text="Antall:" />
       <TextField fx:id="amountNewFood" layoutX="300.0" layoutY="87.0" prefHeight="26.0" prefWidth="126.0" />
       <Button fx:id="addFood" layoutX="447.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleAddFoodButtonClick" text="LEGG TIL" />
-      <Label layoutX="28.0" layoutY="161.0" text="Din handleliste:" />
-      <VBox id="shoppingListContainer" layoutX="186.0" layoutY="19.0" />
-      <ListView fx:id="shoppingListView" layoutX="122.0" layoutY="147.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="203.0" prefWidth="248.0" />
+      <Label layoutX="121.0" layoutY="133.0" text="Din handleliste:" />
+      <VBox layoutX="120.0" layoutY="150.0">
+         <children>
+            <ListView fx:id="shoppingListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="203.0" prefWidth="180.0" />
+         </children></VBox>
       <!-- Buttons for actions -->
-      <Button fx:id="foodBought" layoutX="196.0" layoutY="357.0" mnemonicParsing="false" onAction="#markAsBought" prefHeight="32.0" prefWidth="71.0" text="Marker som kjøpt" textAlignment="CENTER">
+      <Button fx:id="foodBought" layoutX="219.0" layoutY="358.0" mnemonicParsing="false" onAction="#markAsBought" prefHeight="32.0" prefWidth="88.0" text="Marker som kjøpt" textAlignment="CENTER">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="removeFood" layoutX="122.0" layoutY="356.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="33.0" prefWidth="62.0" text="Fjern fra handleliste" textAlignment="CENTER">
+      <Button fx:id="removeFood" layoutX="112.0" layoutY="358.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="32.0" prefWidth="102.0" text="Fjern fra handleliste" textAlignment="CENTER">
          <font>
             <Font size="10.0" />
          </font>
-      </Button>     
+      </Button>
+      <VBox layoutX="380.0" layoutY="150.0">
+         <children>
+            <ListView fx:id="boughtListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="203.0" prefWidth="180.0" />
+         </children>
+      </VBox>
+      <Label layoutX="380.0" layoutY="133.0" text="Kjøpte varer:" />
+      <ImageView fitHeight="72.0" fitWidth="152.0" layoutX="12.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../images.png" />
+         </image>
+      </ImageView>     
    </children>
 </AnchorPane>
