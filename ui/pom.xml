@@ -69,6 +69,26 @@
     <build>
         <plugins>
                 <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipUiTests}</skipTests>
+                    <systemPropertyVariables>
+                        <headless>${headlessTests}</headless>
+                    </systemPropertyVariables>
+                    <argLine>
+                    @{jaCoCoArgLine} -Dtestfx.robot=awt
+                    --add-opens GR2334.ui/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+                    --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
+                    </argLine>
+                </configuration>
+            </plugin>
+
+                <plugin>
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-maven-plugin</artifactId>
                     <version>0.0.8</version>
@@ -92,6 +112,15 @@
                     </argLine>
                 </configuration>
 	        </plugin>
+            <!-- Configure jacoco code coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <propertyName>jaCoCoArgLine</propertyName>
+                </configuration>
+            </plugin>
+
 
 
         </plugins>
