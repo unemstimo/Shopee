@@ -26,6 +26,33 @@ public class ShopeeTest extends ApplicationTest {
 
     private ShopeeController controller;
     private Parent root;
-    
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Shopee.fxml"));
+        root = fxmlLoader.load();
+        controller = fxmlLoader.getController();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public Parent getRootNode() {
+        return root;
+    }
+
+    /**
+     * Test for the behavior and simulate the user interactions
+     */
+
+    @Test
+    public void testAddFoodButtonClick(){
+        clickOn("#newFood").write("Apple");
+        clickOn("#amountNewFood").write("4");
+        clickOn("#addFood");
+        Assertions.assertEquals(" ", lookup("#newFood").queryTextInputControl().getText());
+        Assertions.assertEquals(" ", lookup("#amountNewFood").queryTextInputControl().getText());
+
+    }
+
     
 }
