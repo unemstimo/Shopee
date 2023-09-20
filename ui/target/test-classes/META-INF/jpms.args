@@ -1,4 +1,0 @@
---patch-module
-GR2334.ui=_
---add-reads
-GR2334.ui=ALL-UNNAMED
