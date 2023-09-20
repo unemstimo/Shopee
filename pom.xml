@@ -80,7 +80,6 @@
             </plugins>
         </pluginManagement>
     </build>
-    
 
     <modules>
         <module>core</module>
