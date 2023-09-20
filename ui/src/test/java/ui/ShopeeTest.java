@@ -49,8 +49,8 @@ public class ShopeeTest extends ApplicationTest {
         clickOn("#newFood").write("Apple");
         clickOn("#amountNewFood").write("4");
         clickOn("#addFood");
-        Assertions.assertEquals(" ", lookup("#newFood").queryTextInputControl().getText());
-        Assertions.assertEquals(" ", lookup("#amountNewFood").queryTextInputControl().getText());
+        Assertions.assertEquals("", lookup("#newFood").queryTextInputControl().getText());
+        Assertions.assertEquals("", lookup("#amountNewFood").queryTextInputControl().getText());
 
     }
 
