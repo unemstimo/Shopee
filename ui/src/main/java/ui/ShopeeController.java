@@ -37,6 +37,13 @@ public class ShopeeController implements Initializable {
 
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        showShoppingList(shopeeList.getShopList());
+        showBoughtList(shopeeList.getBoughtList());
+    }
+
+
     /**
      * Collect the user input from food- and amount-textfield, and adds the food object to the shopping list.
      * 
@@ -108,11 +115,5 @@ public class ShopeeController implements Initializable {
         showShoppingList(shopeeList.getShopList());
     }
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        showShoppingList(shopeeList.getShopList());
-        showBoughtList(shopeeList.getBoughtList());
-    }
     
 }

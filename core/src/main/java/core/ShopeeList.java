@@ -8,13 +8,13 @@ import core.Storage.WriteToFile;
 
 public class ShopeeList {
     
-    private String listName ="";
+    private String listName =""; // will be used later in the project!
     private List<FoodItem> shop_list;
     private List<FoodItem> bought_list;
     private WriteToFile fileWriter = new WriteToFile();
 
     /**
-     * Empty construtor for use in controller. 
+     * Construtor inizializing the two lists of the ShopeeList object
      */
     public ShopeeList(){
         this.shop_list = new ArrayList<>();
@@ -67,6 +67,8 @@ public class ShopeeList {
             FoodItem foodItem = new FoodItem(foodname, amount);
             this.shop_list.add(foodItem);
         }
+        
+        //Updates the file
         this.fileWriter.textWriter(this);
     }
 
@@ -81,7 +83,41 @@ public class ShopeeList {
         this.bought_list.add(foodItem);
         removeFood(foodItem.getFoodName());
         
+        //Updates the file
         this.fileWriter.textWriter(this);
+    }
+
+
+    /**
+     * Only used to load a food object in the read from file file. 
+     * Is not necessarry later in the project
+     * 
+     * @param foodname
+     * @param amount
+     */
+    public void loadBoughtListFile(String foodname, int amount) {
+        this.bought_list.add(new FoodItem(foodname, amount));
+    }
+
+    /**
+     * Only used to load a food object in the read from file file. 
+     * Is not necessarry later in the project
+     * 
+     * @param foodname
+     * @param amount
+     */
+    public void loadShopListFile(String foodname, int amount) {
+        this.shop_list.add(new FoodItem(foodname, amount));
+    }
+
+    /**
+     * Gets the filewriter to the filereader
+     * Is not necessarry later in the project
+     * 
+     * @return fileWriter
+     */
+    public WriteToFile getFileWriter() {
+        return fileWriter;
     }
 
      /**
@@ -93,7 +129,7 @@ public class ShopeeList {
         hasFood(foodname);
         this.shop_list.remove(this.getFood(foodname));
         
-        //Oppdaterer filen
+        //Updates the file
         this.fileWriter.textWriter(this);
     }
 

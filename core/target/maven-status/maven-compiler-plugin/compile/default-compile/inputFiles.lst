@@ -1,2 +1,5 @@
-/Users/unemariestimo/Library/Mobile Documents/com~apple~CloudDocs/Documents/ITP/javafx-template-1/modules-template/core/src/main/java/module-info.java
-/Users/unemariestimo/Library/Mobile Documents/com~apple~CloudDocs/Documents/ITP/javafx-template-1/modules-template/core/src/main/java/core/Calc.java
+/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/core/Storage/ReadFromFile.java
+/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/core/Storage/WriteToFile.java
+/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/core/FoodItem.java
+/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/module-info.java
+/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/core/ShopeeList.java

@@ -48,6 +48,10 @@ public int getFoodAmount() {
 }
 
 
+/**
+ * Proper to-wtring to represent the object
+ * 
+ */
 @Override
 public String toString() {
     return food + "," + amount;

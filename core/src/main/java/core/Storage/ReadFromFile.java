@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import core.ShopeeList;
-import core.FoodItem;
 
 public class ReadFromFile {
       
@@ -14,45 +13,48 @@ public class ReadFromFile {
 
         ShopeeList shopeeList = new ShopeeList();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath1))) {
+        //Reads from the shoplist text file
+
+        try (BufferedReader reader1 = new BufferedReader(new FileReader(filePath1))) {
             String line;
             
 
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader1.readLine()) != null) {
                 // Process each line from the file
-                System.out.println(line);
                 String[] fields = line.split(",");
-                shopeeList.addFoodShopList(fields[0],Integer.parseInt(fields[1].strip()));
-                //food.isStatus(fields[2]);
-               
-                System.out.println(fields[0].strip() + " jaaa " + fields[1].strip());
+                shopeeList.loadShopListFile(fields[0],Integer.parseInt(fields[1].strip()));
             }
+
+            reader1.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("An error occurred while reading from the file.");
+        } 
+        
+        //Reads from the bough item text file
+
+         try (BufferedReader reader2 = new BufferedReader(new FileReader(filePath2))) {
+            String line;
+
+            while ((line = reader2.readLine()) != null) {
+                // Process each line from the file
+                String[] fields = line.split(",");
+                shopeeList.loadBoughtListFile(fields[0],Integer.parseInt(fields[1].strip()));
+            }
+
+            reader2.close();
+
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("An error occurred while reading from the file.");
         }
+        
+       
 
+        System.out.println(shopeeList.getBoughtList());
+        System.out.println(shopeeList.getShopList());
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath2))) {
-            String line;
-            
-
-            while ((line = reader.readLine()) != null) {
-                // Process each line from the file
-                System.out.println(line);
-                String[] fields = line.split(",");
-                FoodItem item = new FoodItem(fields[0],Integer.parseInt(fields[1].strip()));
-                shopeeList.addFoodBoughtList(item);
-                //food.isStatus(fields[2]);
-               
-                System.out.println(fields[0].strip() + "" + fields[1].strip());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("An error occurred while reading from the file.");
-        }
-
-        System.out.println(shopeeList);
         return shopeeList;
     }
 }
