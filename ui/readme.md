@@ -5,6 +5,17 @@ The shopee app is an application that works as a shopping list. The app allows a
 ___
 ## Illustrative screenshot of the application
 
+The pictures illustrate how the group thinks the final product of the app will look like. 
+
+### FrontPage:
+![FrontPage](frame1.png)
+
+### New Shopee List:
+![New Shopee List](frame2.png)
+
+### Edit Shopee List:
+![Edit Shopee List](frame3.png)
+
 ## User story
 As a user I want to be able to add food items to my shopping list, and also mark item as bought or remove items, for an efficient and simple shopping.
 _____
