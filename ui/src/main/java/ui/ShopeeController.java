@@ -1,5 +1,6 @@
 package ui;
 import core.ShopeeList;
+import core.User;
 import core.Storage.ReadFromFile;
 import core.FoodItem;
 
@@ -27,7 +28,7 @@ public class ShopeeController implements Initializable {
     
     private ReadFromFile fileReader = new ReadFromFile();
     private ShopeeList shopeeList = fileReader.filereader();
-
+    private User user;
 
     @FXML private TextField newFood, amountNewFood; 
     @FXML private Button addFood, foodBought, removeFood;
@@ -35,7 +36,9 @@ public class ShopeeController implements Initializable {
     @FXML private ListView<FoodItem> shoppingListView;
     @FXML private ListView<FoodItem> boughtListView;
 
-
+    public void setUser(User user){
+        this.user = user;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
