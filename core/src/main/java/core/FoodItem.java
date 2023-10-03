@@ -1,5 +1,6 @@
 package core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FoodItem {
@@ -15,6 +16,7 @@ private int foodAmount;
  * @param food
  * @param amount
  */
+
 public FoodItem(@JsonProperty("foodName") String foodName, @JsonProperty("foodAmount") int foodAmount) {
     this.foodName = foodName;
     this.foodAmount = foodAmount;

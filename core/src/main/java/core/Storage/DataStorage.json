@@ -1,36 +1,123 @@
 [ {
-  "listName" : "Oskar",
-  "shopList" : [ {
-    "foodName" : "hest",
-    "foodAmount" : 19
+  "username" : "Osk.voldsund@gmail.no",
+  "password" : "Oskar123@",
+  "shopeeList" : [ {
+    "listName" : "Oskar",
+    "shopList" : [ {
+      "foodName" : "hest",
+      "foodAmount" : 19
+    }, {
+      "foodName" : "pølse",
+      "foodAmount" : 1
+    } ],
+    "boughtList" : [ {
+      "foodName" : "mais",
+      "foodAmount" : 100
+    }, {
+      "foodName" : "kjott",
+      "foodAmount" : 7
+    } ]
   }, {
-    "foodName" : "pikk",
-    "foodAmount" : 1
-  }, {
-    "foodName" : "fitte",
-    "foodAmount" : 7
-  } ],
-  "boughtList" : [ {
-    "foodName" : "mais",
-    "foodAmount" : 100
-  }, {
-    "foodName" : "kjott",
-    "foodAmount" : 7
+    "listName" : "Pelle",
+    "shopList" : [ ],
+    "boughtList" : [ {
+      "foodName" : "pølse",
+      "foodAmount" : 1
+    }, {
+      "foodName" : "kjott",
+      "foodAmount" : 7
+    }, {
+      "foodName" : "mais",
+      "foodAmount" : 100
+    }, {
+      "foodName" : "hest",
+      "foodAmount" : 19
+    }, {
+      "foodName" : "mandler",
+      "foodAmount" : 7
+    } ]
   } ]
 }, {
-  "listName" : "Peder",
-  "shopList" : [ ],
-  "boughtList" : [ {
-    "foodName" : "tomat",
-    "foodAmount" : 100
-  }, {
-    "foodName" : "fisk",
-    "foodAmount" : 1
-  }, {
-    "foodName" : "kjott",
-    "foodAmount" : 7
-  }, {
-    "foodName" : "ost",
-    "foodAmount" : 19
+  "username" : "Une.marie@gmail.no",
+  "password" : "9Gt21312312!",
+  "shopeeList" : [ {
+    "listName" : "Oskar",
+    "shopList" : [ {
+      "foodName" : "hest",
+      "foodAmount" : 19
+    }, {
+      "foodName" : "pølse",
+      "foodAmount" : 1
+    } ],
+    "boughtList" : [ {
+      "foodName" : "mais",
+      "foodAmount" : 100
+    }, {
+      "foodName" : "kjott",
+      "foodAmount" : 7
+    } ]
+  } ]
+}, {
+  "username" : "Johan.legreid@gmail.no",
+  "password" : "turbkka!r5Hs",
+  "shopeeList" : [ {
+    "listName" : "Pelle",
+    "shopList" : [ ],
+    "boughtList" : [ {
+      "foodName" : "pølse",
+      "foodAmount" : 1
+    }, {
+      "foodName" : "kjott",
+      "foodAmount" : 7
+    }, {
+      "foodName" : "mais",
+      "foodAmount" : 100
+    }, {
+      "foodName" : "hest",
+      "foodAmount" : 19
+    }, {
+      "foodName" : "mandler",
+      "foodAmount" : 7
+    } ]
+  } ]
+}, {
+  "username" : "Hanna.kongleif@gmail.no",
+  "password" : "Oskar123@",
+  "shopeeList" : [ {
+    "listName" : "Oskar",
+    "shopList" : [ {
+      "foodName" : "hest",
+      "foodAmount" : 19
+    }, {
+      "foodName" : "pølse",
+      "foodAmount" : 1
+    } ],
+    "boughtList" : [ {
+      "foodName" : "mais",
+      "foodAmount" : 100
+    }, {
+      "foodName" : "kjott",
+      "foodAmount" : 7
+    } ]
+  } ]
+}, {
+  "username" : "filip.johnsen@gmail.no",
+  "password" : "Oskar123@",
+  "shopeeList" : [ {
+    "listName" : "Oskar",
+    "shopList" : [ {
+      "foodName" : "hest",
+      "foodAmount" : 19
+    }, {
+      "foodName" : "pølse",
+      "foodAmount" : 1
+    } ],
+    "boughtList" : [ {
+      "foodName" : "mais",
+      "foodAmount" : 100
+    }, {
+      "foodName" : "kjott",
+      "foodAmount" : 7
+    } ]
   } ]
 } ]
