@@ -61,7 +61,7 @@ private boolean validateArguments(String username, String password){
         throw new IllegalArgumentException("The domain needs to be two letters long or 'com'");
     }
     if (!newList.contains(domeneSplit[1])) {
-        throw new IllegalArgumentException("Dette domenet eksisterer ikke");
+        throw new IllegalArgumentException("This domain doesnt exist.");
     }
     usernameValid = true;
     
@@ -97,8 +97,6 @@ public void setUsername(String username){
 public void setPassword(String password){
     this.password = password;
 }
-
-
 
 }
 

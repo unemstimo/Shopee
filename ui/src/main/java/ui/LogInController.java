@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import core.User;
 import core.Storage.ReadFromFile;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LogInController implements Initializable {
+public class LogInController {
 
 @FXML private TextField usernameInput, passwordInput;
 @FXML private Button signIn, signUp;
@@ -26,7 +27,7 @@ public class LogInController implements Initializable {
 
 private String username;
 private String password;
-private User user = new User();
+private User user;
 
 private void readTextFields(){
     username = usernameInput.getText();
@@ -44,8 +45,7 @@ private void readTextFields(){
 public void handleSignUpButtonClick (ActionEvent event){
     readTextFields();
     try {
-        //"readFromJson()" need to be replaced with method from Json class
-        List<User> users = readFromJson();
+        List<User> users = JsonToObj();
         boolean usernameTaken = false;
         for (User userInFile : users) {
             if(userInFile.getUsername().equals(username)){
@@ -56,11 +56,16 @@ public void handleSignUpButtonClick (ActionEvent event){
         if(usernameTaken){
             output.setText("Brukernavnet finnes allerede.");
         } else{
-            User newUser = new User(username, password);
-            users.add(newUser);
-            //need to save the updated user list to JSon datastorage, "writeToJdon()" need to be replaced with method from Json class
-            writeToJson(users);
+            try{
+                User newUser = new User(username, password);
+                users.add(newUser);
+            } catch(Exception e) {
+                output.setText("Brukernavnet eller passordet oppfyller ikke gitte krav. Brukernavn må være på formatet navn@epost.domene , passordet må være minst 8 tegn langt, og innholde både bokstaver, tall og spesialtegn.");
+            }
+            writeToFile(users);
             output.setText("Brukeren er blitt opprettet. Du kan nå logge inn");
+            usernameInput.clear();
+            passwordInput.clear();
         }
     } catch (IOException e) {
         e.printStackTrace(); 
@@ -69,16 +74,6 @@ public void handleSignUpButtonClick (ActionEvent event){
         e.printStackTrace();
         output.setText("En feil har oppstått. Prøv igjen senere.");
     }
-    //go through file to check if the user already exist
-    //if user exist:
-    //output.setText("Brukeren finnes allerede i systemet vårt. Prøv å logg inn i stedet.");
-    
-    //if user doesnt exist:
-    // ny bruker burde hete newUseri hvor i er lengden på listen av eksitserende brukere slik at vi kan skille de fra hverandre. 
-    // eller trenger kanskje ikke dette hvis vi hver gang vi skal frem til en spesifikk bruker, bruker en stream som filtrerer på user.getUsername
-    //this.user = new User(username, password);
-    //add new user to file
-    //loadNewPage(new ActionEvent());
 }
 
 /**
@@ -89,17 +84,12 @@ public void handleSignUpButtonClick (ActionEvent event){
  * @throws IOException 
  * catches file reading error and other exceptions 
  */
-//!!!HEr trenger vi kanskje å hente opp handlelisten? Eller vent siden user blir med videre til shopeecontrolleren så tar vi opp handlelisten i kontrolleren i stedet
-// okei, sidn vi bruker i shopeecontroller at vi viser shopeeList som listen med food items, må vi enten endre dette eller koble user opp mot shopeelist i enten shopeelist eller shopeeApp
-
 @FXML 
 public void handleSignInButtonClick(ActionEvent event)throws IOException{
     readTextFields();
 
     try {
-        //Read from Json, "readFromJson()" need to be replaced with method from Json, need to be made by Johan and Oskar 
-        //and should return list of users.
-        List<User> users = readFromJson();
+        List<User> users = JsonToObj();
 
         boolean userExist = false;
         for (User userInFile : users) {
@@ -109,7 +99,8 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
             }
         }
         if(userExist){
-            this.user = new User(username, password);
+            this.user.setUsername(username);
+            this.user.setPassword(password);
             loadNewPage(new ActionEvent());
             usernameInput.clear();
             passwordInput.clear();
@@ -126,14 +117,6 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
     }
 
 }
-
-
-@Override
-public void initialize(URL location, ResourceBundle resources) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'initialize'");
-}
-
 
 private void loadNewPage(ActionEvent actionEvent) {
     try{  
