@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ShopeeList {
+    
     
     private String listName =""; // will be used later in the project!
     private List<FoodItem> shopList;
@@ -13,7 +16,8 @@ public class ShopeeList {
     /**
      * Construtor inizializing the two lists of the ShopeeList object
      */
-    public ShopeeList(){ //Må endre denne til å måtte ha et navn, Kan ikke lage en handleliste uten navn
+    public ShopeeList(@JsonProperty("listName") String listName){ //Må endre denne til å måtte ha et navn, Kan ikke lage en handleliste uten navn
+        this.listName = listName;
         this.shopList = new ArrayList<>();
         this.boughtList = new ArrayList<>();
     }
@@ -187,7 +191,7 @@ public class ShopeeList {
 
 
     public static void main(String[] args) {
-        ShopeeList hall = new ShopeeList();
+        ShopeeList hall = new ShopeeList("uke4");
         hall.setListName("jajajajjjjaaj");
         System.out.println(hall.getListName());
         hall.addFoodShopList("kiwi", 5);
