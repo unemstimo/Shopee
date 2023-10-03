@@ -4,21 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import core.Storage.WriteToFile;
-
 public class ShopeeList {
     
     private String listName =""; // will be used later in the project!
-    private List<FoodItem> shop_list;
-    private List<FoodItem> bought_list;
-    private WriteToFile fileWriter = new WriteToFile();
+    private List<FoodItem> shopList;
+    private List<FoodItem> boughtList;
 
     /**
      * Construtor inizializing the two lists of the ShopeeList object
      */
-    public ShopeeList(){
-        this.shop_list = new ArrayList<>();
-        this.bought_list = new ArrayList<>();
+    public ShopeeList(){ //Må endre denne til å måtte ha et navn, Kan ikke lage en handleliste uten navn
+        this.shopList = new ArrayList<>();
+        this.boughtList = new ArrayList<>();
     }
 
     
@@ -59,18 +56,25 @@ public class ShopeeList {
      * @param amount
      */
     public void addFoodShopList(String foodname, int amount) { 
-        if(shop_list.stream().map(a -> a.getFoodName()).collect(Collectors.toList()).contains(foodname)) {
-            FoodItem food = shop_list.stream().filter(a -> a.getFoodName().equals(foodname)).findFirst().orElse(null);
-            food.setAmount(amount);
+        if(shopList.stream().map(a -> a.getFoodName()).collect(Collectors.toList()).contains(foodname)) {
+            FoodItem food = shopList.stream().filter(a -> a.getFoodName().equals(foodname)).findFirst().orElse(null);
+            food.setFoodAmount(amount);
         }
         else {
             FoodItem foodItem = new FoodItem(foodname, amount);
-            this.shop_list.add(foodItem);
+            this.shopList.add(foodItem);
         }
         
-        //Updates the file
-        this.fileWriter.textWriter(this);
     }
+
+    public void setShopList(List<FoodItem> list) {
+        this.shopList = list;
+    }
+
+    public void setBoughtList(List<FoodItem> list) {
+        this.boughtList = list;
+    }
+
 
     /**
      * Adds a food that the user wants to mark as bought in the bought list,
@@ -80,45 +84,13 @@ public class ShopeeList {
      */
     public void addFoodBoughtList(FoodItem foodItem) { 
         hasFood(foodItem.getFoodName());
-        this.bought_list.add(foodItem);
+        this.boughtList.add(foodItem);
         removeFood(foodItem.getFoodName());
         
-        //Updates the file
-        this.fileWriter.textWriter(this);
     }
 
 
-    /**
-     * Only used to load a food object in the read from file file. 
-     * Is not necessarry later in the project
-     * 
-     * @param foodname
-     * @param amount
-     */
-    public void loadBoughtListFile(String foodname, int amount) {
-        this.bought_list.add(new FoodItem(foodname, amount));
-    }
 
-    /**
-     * Only used to load a food object in the read from file file. 
-     * Is not necessarry later in the project
-     * 
-     * @param foodname
-     * @param amount
-     */
-    public void loadShopListFile(String foodname, int amount) {
-        this.shop_list.add(new FoodItem(foodname, amount));
-    }
-
-    /**
-     * Gets the filewriter to the filereader
-     * Is not necessarry later in the project
-     * 
-     * @return fileWriter
-     */
-    public WriteToFile getFileWriter() {
-        return fileWriter;
-    }
 
      /**
      * Removes a food that the user wants from the List
@@ -127,10 +99,9 @@ public class ShopeeList {
      */
     public void removeFood(String foodname) {
         hasFood(foodname);
-        this.shop_list.remove(this.getFood(foodname));
+        this.shopList.remove(this.getFood(foodname));
         
-        //Updates the file
-        this.fileWriter.textWriter(this);
+        
     }
 
     /**
@@ -141,7 +112,7 @@ public class ShopeeList {
      */
     public FoodItem getFood(String foodname) {
         hasFood(foodname);
-        return shop_list.stream().filter(a -> a.getFoodName().equals(foodname)).findFirst().orElse(null);
+        return shopList.stream().filter(a -> a.getFoodName().equals(foodname)).findFirst().orElse(null);
     }
 
     /**
@@ -151,7 +122,7 @@ public class ShopeeList {
      * @return Fooditem object or null
      */
     public FoodItem getFood(int index) {
-        return shop_list.get(index);
+        return shopList.get(index);
     }
 
     /**
@@ -162,7 +133,7 @@ public class ShopeeList {
      */
     public int getFoodAmount(String food) {
         hasFood(food);
-        return shop_list.stream().filter(a -> a.getFoodName().equals(food)).findFirst().orElse(null).getFoodAmount();
+        return shopList.stream().filter(a -> a.getFoodName().equals(food)).findFirst().orElse(null).getFoodAmount();
     }
 
 
@@ -173,7 +144,7 @@ public class ShopeeList {
      * @throws IllegalArgumentException if the food is not in the list
      */
     public void hasFood(String foodname) {
-        List<String> foodnames = this.shop_list.stream().map(a -> a.getFoodName()).collect(Collectors.toList());
+        List<String> foodnames = this.shopList.stream().map(a -> a.getFoodName()).collect(Collectors.toList());
 
         if(!foodnames.contains(foodname)) {
             throw new IllegalArgumentException("There is no such food in the list");
@@ -186,7 +157,7 @@ public class ShopeeList {
      * @return foodItem bought
      */
     public FoodItem getBoughtItem(int index) {
-        return bought_list.get(index);
+        return boughtList.get(index);
     }
 
     /**
@@ -195,7 +166,7 @@ public class ShopeeList {
      * @return shop_list
      */
     public List<FoodItem> getShopList() {
-        return this.shop_list;
+        return this.shopList;
     }
 
     /**
@@ -204,12 +175,21 @@ public class ShopeeList {
      * @return bought_list
      */
     public List<FoodItem> getBoughtList() {
-        return this.bought_list;
+        return this.boughtList;
     }
     
+    
+
+    @Override
+    public String toString() {
+        return "listName=" + listName + "\n shopList=" + shopList + "\n boughtList=" + boughtList + "]\n";
+    }
+
 
     public static void main(String[] args) {
         ShopeeList hall = new ShopeeList();
+        hall.setListName("jajajajjjjaaj");
+        System.out.println(hall.getListName());
         hall.addFoodShopList("kiwi", 5);
         hall.addFoodShopList("kiwi", 5);
         hall.addFoodShopList("tomat", 3);
