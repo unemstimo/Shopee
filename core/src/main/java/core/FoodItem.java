@@ -1,9 +1,11 @@
 package core;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FoodItem {
-    
-private final String food;
-private int amount;
+   
+private String foodName;
+private int foodAmount;
 
 
 /**
@@ -13,9 +15,9 @@ private int amount;
  * @param food
  * @param amount
  */
-public FoodItem(String food, int amount) {
-    this.food = food;
-    this.amount = amount;
+public FoodItem(@JsonProperty("foodName") String foodName, @JsonProperty("foodAmount") int foodAmount) {
+    this.foodName = foodName;
+    this.foodAmount = foodAmount;
 }
 
 /**
@@ -24,8 +26,8 @@ public FoodItem(String food, int amount) {
  * @param amount
  */
 
-public void setAmount(int amount) {
-    this.amount = amount;
+public void setFoodAmount(int foodAmount) {
+    this.foodAmount = foodAmount;
 }
 
 /**
@@ -34,7 +36,7 @@ public void setAmount(int amount) {
  * @return the foodname
  */
 public String getFoodName() {
-    return this.food;
+    return this.foodName;
 }
 
 
@@ -44,7 +46,7 @@ public String getFoodName() {
  * @return the amount
  */
 public int getFoodAmount() {
-    return this.amount;
+    return this.foodAmount;
 }
 
 
@@ -54,7 +56,7 @@ public int getFoodAmount() {
  */
 @Override
 public String toString() {
-    return food + "," + amount;
+    return foodName + "," + foodAmount;
 }
 
 }

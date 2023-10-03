@@ -1,0 +1,36 @@
+[ {
+  "listName" : "Oskar",
+  "shopList" : [ {
+    "foodName" : "hest",
+    "foodAmount" : 19
+  }, {
+    "foodName" : "pikk",
+    "foodAmount" : 1
+  }, {
+    "foodName" : "fitte",
+    "foodAmount" : 7
+  } ],
+  "boughtList" : [ {
+    "foodName" : "mais",
+    "foodAmount" : 100
+  }, {
+    "foodName" : "kjott",
+    "foodAmount" : 7
+  } ]
+}, {
+  "listName" : "Peder",
+  "shopList" : [ ],
+  "boughtList" : [ {
+    "foodName" : "tomat",
+    "foodAmount" : 100
+  }, {
+    "foodName" : "fisk",
+    "foodAmount" : 1
+  }, {
+    "foodName" : "kjott",
+    "foodAmount" : 7
+  }, {
+    "foodName" : "ost",
+    "foodAmount" : 19
+  } ]
+} ]
