@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import core.User;
-import core.Storage.ReadFromFile;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
