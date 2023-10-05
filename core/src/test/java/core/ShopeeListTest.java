@@ -2,13 +2,13 @@ package core;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import core.ShopeeList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ShopeeListTest {
 
-    
+
 
     @Test
     public void testShopeeList(){

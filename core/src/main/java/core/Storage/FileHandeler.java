@@ -17,7 +17,7 @@ import core.User;
 
 public class FileHandeler {
 
-    private final String filePath = "/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/core/Storage/DataStorage.json";
+    private final String filePath = "../core/src/main/java/core/Storage/DataStorage.json";
 
     public void writeToFile(User object) {
         try {
@@ -26,21 +26,25 @@ public class FileHandeler {
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
             List<User> objects = JsonToObj();
+            
 
             // Check if an instance with the same name already exists
             String userName = "";
             if (object instanceof User) {
                 userName = ((User) object).getUsername();
+                System.out.println("Halla jeg kom litt inn");
                 boolean instanceExists = false;
                 for (int i = 0; i < objects.size(); i++) {
                     Object existingObject = objects.get(i);
-                    if (existingObject instanceof ShopeeList) {
+                    System.out.println("heheh nærmer meg");
+                    if (existingObject instanceof User) {
+                        System.out.println("Hva faen hvorfor funker det ikke");
                         String existingListName = ((User) existingObject).getUsername();
                         if (userName.equals(existingListName)) {
                             // Update the existing instance
                             objects.set(i, object);
                             instanceExists = true;
-                            System.out.println("hallllllla");
+                            System.out.println("brukernavnet matcher oppdaterer filen");
                             break;
                         }
                     }
@@ -75,7 +79,6 @@ public class FileHandeler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    
         return new ArrayList<>();
     }
 
@@ -84,6 +87,7 @@ public class FileHandeler {
     }
 
     public void clearFileContent() {
+        
         try {
             File file = new File(filePath);
             if (file.exists()) {
@@ -97,6 +101,7 @@ public class FileHandeler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
 
 public static void main(String[] args) {
@@ -131,28 +136,29 @@ public static void main(String[] args) {
     shopeeL.addFoodBoughtList(ite5);
 
 
-
+    
     User oskar = new User("Osk.voldsund@gmail.no", "Oskar123@");
-    oskar.addShopeeList(shopeeList);
-    oskar.addShopeeList(shopeeL);
+    //oskar.addShopeeList(shopeeList);
+    oskar.setShopeeList(shopeeList);
+    //oskar.addShopeeList(shopeeL);
 
     User johan = new User("Johan.legreid@gmail.no", "turbkka!r5Hs");
-    johan.addShopeeList(shopeeL);
+    //johan.addShopeeList(shopeeL);
+    johan.setShopeeList(shopeeL);
 
     User une = new User("Une.marie@gmail.no", "9Gt21312312!");
-    une.addShopeeList(shopeeList);
+    //une.addShopeeList(shopeeList);
 
     User hanna = new User("Hanna.kongleif@gmail.no", "Oskar123@");
-    hanna.addShopeeList(shopeeList);
+    //hanna.addShopeeList(shopeeList);
     
     User filip = new User("filip.johnsen@gmail.no", "Oskar123@");
-    filip.addShopeeList(shopeeList);
+    //filip.addShopeeList(shopeeList);
 
     
 
 
     FileHandeler handeler = new FileHandeler();
-    handeler.clearFileContent();
     handeler.writeToFile(oskar);
     handeler.writeToFile(une);
     handeler.writeToFile(johan);
@@ -160,10 +166,10 @@ public static void main(String[] args) {
     handeler.writeToFile(filip);
 
 
-    System.out.println(handeler.JsonToObj().get(0).getUsername());
-    System.out.println(handeler.JsonToObj().get(1).getUsername());
-    System.out.println(handeler.JsonToObj().get(2).getUsername());
-    System.out.println(handeler.JsonToObj().get(3).getUsername());
+    //System.out.println(handeler.JsonToObj().get(0).getShopeeList().get(0));
+    // System.out.println(handeler.JsonToObj().get(1).getUsername());
+    // System.out.println(handeler.JsonToObj().get(2).getUsername());
+    // System.out.println(handeler.JsonToObj().get(3).getUsername());
         }
 }
 
