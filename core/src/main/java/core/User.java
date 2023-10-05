@@ -22,7 +22,7 @@ protected List<String> newList = Arrays.asList(cc);
  * @param shoppingLists
  */
 public User(String username, String password) {
-    if (validateArguments(username, password)) {
+    if (validUsername(username) && validPassword(password)) {
         this.username = username;
         this.password = password;
         shopeeLists = new ArrayList<>();
@@ -40,33 +40,33 @@ public User(){
  * @return True if username and password meets usercriteria, False otherwise
  */
 
-private boolean validateArguments(String username, String password){
+private boolean validUsername(String username){
     boolean usernameValid = false;
-    boolean passwordValid = false;
     
-    // validate username: email
     if (username.indexOf('@') == -1) {
         throw new IllegalArgumentException("Missing @");
     }
     String [] usernameSplit = username.split("@");
     String nameSplit = usernameSplit[0];
-    String [] domeneSplit = usernameSplit[1].split("\\.");
+    String domeneSplit = usernameSplit[1].split("\\.")[1];
 
     char firstLetter = nameSplit.charAt(0);
     
     if (!(Character.isLetter(firstLetter) ||  nameSplit.length() >= 2)) {
         throw new IllegalArgumentException("The username must begin with a letter, and have a length of minimum two letters before @");
     }
-    if (domeneSplit.length != 2 || (((domeneSplit.length) == 3) && domeneSplit.equals("com"))){
-
-        throw new IllegalArgumentException("The domain needs to be two letters long or 'com'");  //
-    }
-    if (!newList.contains(domeneSplit[1])) {
+    
+    if (!newList.contains(domeneSplit)) {
         throw new IllegalArgumentException("This domain doesnt exist.");
     }
     usernameValid = true;
     
-    // validate password
+    return usernameValid;
+}
+
+private boolean validPassword(String password){
+    boolean passwordValid = false;
+
     if (password.length() < 8) {
         throw new IllegalArgumentException("The password needs to be at least 8 characters long");
     }
@@ -74,9 +74,9 @@ private boolean validateArguments(String username, String password){
     if (!password.matches(regex)) {
         throw new IllegalArgumentException("The password must contain letters, digits and special characters");
     }
+
     passwordValid = true;
-    
-    return (usernameValid && passwordValid);
+    return passwordValid;
 }
 
 public String getUsername(){
