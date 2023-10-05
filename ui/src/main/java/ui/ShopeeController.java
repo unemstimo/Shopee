@@ -3,22 +3,18 @@ import core.ShopeeList;
 import core.User;
 import core.Storage.FileHandeler;
 import core.FoodItem;
-
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
 
-public class ShopeeController implements Initializable {
+public class ShopeeController{
     
     /**
     * Using the empty constructor in the ShopeeList class to create a new shopping list. 
@@ -26,9 +22,9 @@ public class ShopeeController implements Initializable {
     * Now we can set and validate the input from the user.
     */
     
-    private ReadFromFile fileReader = new ReadFromFile();
-    private ShopeeList shopeeList = fileReader.filereader();
+   
     private User user;
+    private FileHandeler jsonFile = new FileHandeler();
 
     @FXML private TextField newFood, amountNewFood; 
     @FXML private Button addFood, foodBought, removeFood;
@@ -38,13 +34,14 @@ public class ShopeeController implements Initializable {
 
     public void setUser(User user){
         this.user = user;
-    }
+        showShoppingList(user.getShopeeList().getShopList());
+        showBoughtList(user.getShopeeList().getBoughtList());
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        showShoppingList(shopeeList.getShopList());
-        showBoughtList(shopeeList.getBoughtList());
+        System.out.println(user.getUsername());
+        System.out.println(this.user.getShopeeList());
     }
+    
+
 
 
     /**
@@ -58,11 +55,13 @@ public class ShopeeController implements Initializable {
         String food = newFood.getText();
         int amount = Integer.parseInt(amountNewFood.getText());
 
-        shopeeList.addFoodShopList(food, amount);
+        this.user.getShopeeList().addFoodShopList(food, amount);
 
-        showShoppingList(shopeeList.getShopList());
+        showShoppingList(this.user.getShopeeList().getShopList());
+       
         newFood.clear();
         amountNewFood.clear();
+        jsonFile.writeToFile(this.user); //Må fikser at listen oppdateres og ikke duplikeres
     }
 
 
@@ -97,11 +96,12 @@ public class ShopeeController implements Initializable {
     public void markAsBought(ActionEvent event) {
         int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
         if(selectedIndex >= 0) {
-            FoodItem foodItem = shopeeList.getFood(selectedIndex);
-            shopeeList.addFoodBoughtList(foodItem);
+            FoodItem foodItem = user.getShopeeList().getFood(selectedIndex);
+            user.getShopeeList().addFoodBoughtList(foodItem);
+            jsonFile.writeToFile(user);
         }
-        showShoppingList(shopeeList.getShopList());
-        showBoughtList(shopeeList.getBoughtList());
+        showShoppingList(user.getShopeeList().getShopList());
+        showBoughtList(user.getShopeeList().getBoughtList());
     }
 
     /**
@@ -113,9 +113,10 @@ public class ShopeeController implements Initializable {
     public void removeItem(ActionEvent event) {
          int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
         if(selectedIndex >= 0) {
-            shopeeList.removeFood(shopeeList.getFood(selectedIndex).getFoodName());
+            user.getShopeeList().removeFood(user.getShopeeList().getFood(selectedIndex).getFoodName());
         }
-        showShoppingList(shopeeList.getShopList());
+        jsonFile.writeToFile(user);
+        showShoppingList(user.getShopeeList().getShopList());
     }
 
     
