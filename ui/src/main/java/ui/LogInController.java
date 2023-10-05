@@ -100,8 +100,7 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
             this.user.setUsername(username);
             this.user.setPassword(password);
             loadNewPage(new ActionEvent());
-            usernameInput.clear();
-            passwordInput.clear();
+            
         }
         else{
             output.setText("Feil brukernavn eller passord. Vennligst prøv igjen.");
