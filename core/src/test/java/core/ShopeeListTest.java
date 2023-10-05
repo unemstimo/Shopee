@@ -17,7 +17,7 @@ public class ShopeeListTest {
 
     @Test
     public void testAddFood(){
-        ShopeeList list1 = new ShopeeList("yee");
+        ShopeeList list1 = new ShopeeList("Hanna");
         list1.addFoodShopList("apple", 4);
         Assertions.assertEquals("apple", list1.getFood(0).getFoodName());
         Assertions.assertEquals(4, list1.getFood(0).getFoodAmount());
