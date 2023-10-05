@@ -4,6 +4,7 @@ import core.User;
 import core.Storage.FileHandeler;
 import core.FoodItem;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,11 +12,14 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 
 public class ShopeeController implements Initializable {
@@ -31,7 +35,7 @@ public class ShopeeController implements Initializable {
     private User user;
 
     @FXML private TextField newFood, amountNewFood; 
-    @FXML private Button addFood, foodBought, removeFood;
+    @FXML private Button addFood, foodBought, removeFood, logOut;
     @FXML private VBox shoppingListContainer;
     @FXML private ListView<FoodItem> shoppingListView;
     @FXML private ListView<FoodItem> boughtListView;
@@ -118,5 +122,28 @@ public class ShopeeController implements Initializable {
         showShoppingList(shopeeList.getShopList());
     }
 
+    /**
+     * This method handles the action when user clicks on "log out" button
+     * go back to first page where user can log in if wanted
+     * @param actionEvent
+     * loads LogIn.fxml
+     */
+    private void backToLogInPage(ActionEvent actionEvent) {
+        try{  
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
+        
+        Scene logInScene = new Scene(loader.load());
+
+        LogInController logInController = loader.getController();
+
+        Stage stage = (Stage) logOut.getScene().getWindow();
+        stage.setScene(logInScene);
+        
+        stage.show();
+        
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    }
     
 }

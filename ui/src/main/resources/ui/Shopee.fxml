@@ -46,6 +46,7 @@
          <image>
             <Image url="@shopee.png" />
          </image>
-      </ImageView>     
+      </ImageView>
+      <Button fx:id="logOut" layoutX="517.0" layoutY="362.0" mnemonicParsing="false" onAction="#backToLogInPage" text="Logg ut" />     
    </children>
 </AnchorPane>
