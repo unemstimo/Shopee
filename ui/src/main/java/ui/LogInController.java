@@ -21,7 +21,7 @@ public class LogInController {
 
 private String username;
 private String password;
-private User user;
+private User user = new User();
 
 private FileHandeler jsonFile = new FileHandeler();
 
@@ -115,8 +115,7 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
 private void loadNewPage(ActionEvent actionEvent) {
     try{  
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Shopee.fxml"));
-        //Parent root = loader.load();
-        //Stage stage = new Stage();
+        
         Scene shopeeScene = new Scene(loader.load());
 
         ShopeeController shopeeController = loader.getController();
@@ -129,8 +128,6 @@ private void loadNewPage(ActionEvent actionEvent) {
         passwordInput.clear();
         
         stage.show();
-        
-        
         
     } catch (IOException e) {
         e.printStackTrace();
