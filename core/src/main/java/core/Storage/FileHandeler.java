@@ -17,7 +17,7 @@ import core.User;
 
 public class FileHandeler {
 
-    private final String filePath = "core/src/main/java/core/Storage/DataStorage.json";
+    private final String filePath = "../core/src/main/java/core/Storage/DataStorage.json";
 
     public void writeToFile(User object) {
         try {
@@ -136,7 +136,7 @@ public static void main(String[] args) {
     shopeeL.addFoodBoughtList(ite5);
 
 
-
+    
     User oskar = new User("Osk.voldsund@gmail.no", "Oskar123@");
     //oskar.addShopeeList(shopeeList);
     oskar.setShopeeList(shopeeList);

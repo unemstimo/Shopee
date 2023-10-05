@@ -3,11 +3,15 @@ import core.ShopeeList;
 import core.User;
 import core.Storage.FileHandeler;
 import core.FoodItem;
+
+import java.io.IOException;
 import java.util.List;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -43,7 +47,9 @@ public class ShopeeController{
     }
     
 
-
+    public ShopeeList getShopList(){
+        return this.user.getShopeeList();
+    }
 
     /**
      * Collect the user input from food- and amount-textfield, and adds the food object to the shopping list.
@@ -126,7 +132,7 @@ public class ShopeeController{
      * @param actionEvent
      * loads LogIn.fxml
      */
-    private void backToLogInPage(ActionEvent actionEvent) {
+    public void backToLogInPage(ActionEvent actionEvent) {
         try{  
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
         

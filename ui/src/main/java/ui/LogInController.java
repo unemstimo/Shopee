@@ -93,9 +93,9 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
 
         boolean userExist = false;
         for (User userInFile : users) {
-            if(userInFile.getUsername().equals(username) && userInFile.getPassword().equals(password)){
+            if(userInFile.getUsername().equals(this.username) && userInFile.getPassword().equals(this.password)){
                 userExist = true;
-                output.setText(username + password);
+                //output.setText(userInFile.getShopeeList().getFood(0).getFoodName());
                 break;
             }
         }
@@ -105,7 +105,7 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
             ShopeeList list = users.get(this.indexUser(userExist)).getShopeeList();
             this.user.setShopeeList(list);
 
-            //output.setText(this.user.getShopeeList()); // This user finnes og har innhold
+            //output.setText("plis a "); // This user finnes og har innhold
             System.out.println(this.user.getShopeeList());
             loadNewPage(new ActionEvent());
             
@@ -129,7 +129,7 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
 private void loadNewPage(ActionEvent actionEvent) {
     try{  
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Shopee.fxml"));
-        
+        output.setText("jeessirr");
         Scene shopeeScene = new Scene(loader.load());
 
         ShopeeController shopeeController = loader.getController();

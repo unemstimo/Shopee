@@ -4,25 +4,37 @@
   "shopeeList" : {
     "listName" : "osk@.no",
     "shopList" : [ {
-      "foodName" : "fiettta",
-      "foodAmount" : 10
+      "foodName" : "eple ",
+      "foodAmount" : 4
+    }, {
+      "foodName" : "banan",
+      "foodAmount" : 8
+    }, {
+      "foodName" : "brød ",
+      "foodAmount" : 18
     } ],
-    "boughtList" : [ ]
+    "boughtList" : [ {
+      "foodName" : "yeyey",
+      "foodAmount" : 10
+    } ]
   }
 }, {
   "username" : "joh@.no",
-  "password" : "Johann123@",
+  "password" : "Johan123@",
   "shopeeList" : {
     "listName" : "joh@.no",
     "shopList" : [ {
-      "foodName" : "sææd",
+      "foodName" : "beast",
+      "foodAmount" : 12
+    }, {
+      "foodName" : "dinosaur",
+      "foodAmount" : 1
+    }, {
+      "foodName" : "gullfisk",
       "foodAmount" : 9
     } ],
     "boughtList" : [ {
-      "foodName" : "mannekuk",
-      "foodAmount" : 5
-    }, {
-      "foodName" : "fisk",
+      "foodName" : "hester",
       "foodAmount" : 4
     } ]
   }
