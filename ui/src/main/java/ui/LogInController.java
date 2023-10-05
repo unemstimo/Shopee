@@ -120,6 +120,12 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
 
 }
 
+/**
+ * Method to take the user to the mainpage after successful log-in
+ * 
+ * @param actionEvent
+ * loads Shopee.fxml
+ */
 private void loadNewPage(ActionEvent actionEvent) {
     try{  
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Shopee.fxml"));
