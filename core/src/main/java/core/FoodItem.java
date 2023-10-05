@@ -18,8 +18,10 @@ private int foodAmount;
  */
 
 public FoodItem(@JsonProperty("foodName") String foodName, @JsonProperty("foodAmount") int foodAmount) {
-    this.foodName = foodName;
-    this.foodAmount = foodAmount;
+    if (validFoodName(foodName)) {
+        this.foodName = foodName;
+        this.foodAmount = foodAmount;
+    }
 }
 
 /**
@@ -49,6 +51,20 @@ public String getFoodName() {
  */
 public int getFoodAmount() {
     return this.foodAmount;
+}
+
+/**
+ * helper method to check if the foodname consists of letters only
+ * @param foodname
+ * @return true if foodname only consists of letters
+ */
+private boolean validFoodName(String foodname) {
+    if (foodname.matches("^[A-Za-z]+$")) {
+        return true;
+    }
+    else{
+        throw new IllegalArgumentException("The food name can only contain letters.");
+    }
 }
 
 
