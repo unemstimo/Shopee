@@ -52,7 +52,7 @@ private boolean validUsername(String username){
 
     char firstLetter = nameSplit.charAt(0);
     
-    if (!(Character.isLetter(firstLetter) ||  nameSplit.length() >= 2)) {
+    if (!(Character.isLetter(firstLetter) &&  nameSplit.length() >= 2)) {
         throw new IllegalArgumentException("The username must begin with a letter, and have a length of minimum two letters before @");
     }
     
