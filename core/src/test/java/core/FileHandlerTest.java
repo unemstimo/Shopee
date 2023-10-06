@@ -82,4 +82,22 @@ public class FileHandlerTest {
         assertEquals(3, testUser.getShopeeList().getShopList().get(0).getFoodAmount());
     }
 
+    @Test
+    public void testClearFileContent() {
+        // Create a User object for testing
+        User testUser = new User("Une@outlook.com", "Umulig18%");
+
+        // Write the User object to the test file
+        fileHandler.writeToFile(testUser);
+
+        // Clear the file content
+        fileHandler.clearFileContent();
+
+        // Read the User object from the test file
+        List<User> userList = fileHandler.JsonToObj();
+
+        // Assert that the file content was cleared
+        assertNotNull(userList);
+        assertEquals(0, userList.size());
+    }
 }
