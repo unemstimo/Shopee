@@ -6,6 +6,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import core.Storage.FileHandeler;
 
-public class FileHandler {
+public class FileHandlerTest {
     
 }
