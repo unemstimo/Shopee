@@ -38,4 +38,12 @@
       "foodAmount" : 4
     } ]
   }
+}, {
+  "username" : "jo@.no",
+  "password" : "johan123@",
+  "shopeeList" : {
+    "listName" : "jo@.no",
+    "shopList" : [ ],
+    "boughtList" : [ ]
+  }
 } ]
