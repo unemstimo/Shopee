@@ -1,5 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.configuration.updateBuildConfiguration": "automatic",
     "java.debug.settings.onBuildFailureProceed": true,
     "plantuml.render": "PlantUMLServer",
     "plantuml.server": "https://www.plantuml.com/plantuml"
