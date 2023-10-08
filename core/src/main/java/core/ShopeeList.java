@@ -104,8 +104,6 @@ public class ShopeeList {
     public void removeFood(String foodname) {
         hasFood(foodname);
         this.shopList.remove(this.getFood(foodname));
-        
-        
     }
 
     /**
