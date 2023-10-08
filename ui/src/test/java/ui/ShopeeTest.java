@@ -31,6 +31,7 @@ public class ShopeeTest extends ApplicationTest {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Shopee.fxml"));
         root = fxmlLoader.load();
+        
         stage.setScene(new Scene(root));
         stage.show();
     }
