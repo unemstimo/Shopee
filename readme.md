@@ -1,5 +1,8 @@
 # Group gr2334 repository
 
+[<img src="https://eclipse.dev/che/docs/_/img/icon-eclipse-che.svg" width="25" /> open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/todo-list?new)
+
+
 ## Description
 This group project is a developing project through the course IT1901. The purpose of this project is to create an app that can handle data managed as a cloud service. This project is intended to familiarize the group with working collaboratively and using GitLab to become well-versed in agile practices.
 ______________
