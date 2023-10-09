@@ -4,12 +4,6 @@
   "shopeeList" : {
     "listName" : "osk@.no",
     "shopList" : [ {
-      "foodName" : "halla",
-      "foodAmount" : 3
-    }, {
-      "foodName" : "fårikål",
-      "foodAmount" : 5
-    }, {
       "foodName" : "Mat",
       "foodAmount" : 4
     } ],
@@ -18,6 +12,9 @@
       "foodAmount" : 4
     }, {
       "foodName" : "Ost",
+      "foodAmount" : 3
+    }, {
+      "foodName" : "halla",
       "foodAmount" : 3
     } ]
   }
@@ -39,6 +36,23 @@
     }, {
       "foodName" : "halla",
       "foodAmount" : 4
+    } ]
+  }
+}, {
+  "username" : "mar@.no",
+  "password" : "Maren123@",
+  "shopeeList" : {
+    "listName" : "mar@.no",
+    "shopList" : [ {
+      "foodName" : "Halla",
+      "foodAmount" : 2
+    }, {
+      "foodName" : "På",
+      "foodAmount" : 4
+    } ],
+    "boughtList" : [ {
+      "foodName" : "Deg",
+      "foodAmount" : 6
     } ]
   }
 } ]

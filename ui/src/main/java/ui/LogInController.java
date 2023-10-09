@@ -96,10 +96,6 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
         }
         if(userExist){
             this.user = users.get(this.indexUser(userExist));
-
-            // ShopeeList list = users.get(this.indexUser(userExist)).getShopeeList();
-            // this.user.setShopeeList(list);
-
             loadNewPage(new ActionEvent());
             
         }
@@ -143,13 +139,10 @@ public int indexUser(boolean exist) {
 private void loadNewPage(ActionEvent actionEvent) {
     try{  
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Shopee.fxml"));
-        output.setText("jeessirr");
         Scene shopeeScene = new Scene(loader.load());
 
         ShopeeController shopeeController = loader.getController();
         shopeeController.setUser(this.user);
-
-        System.out.println(this.user.getUsername());
 
         Stage stage = (Stage) signIn.getScene().getWindow();
         stage.setScene(shopeeScene);

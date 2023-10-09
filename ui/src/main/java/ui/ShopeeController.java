@@ -42,8 +42,6 @@ public class ShopeeController{
         showShoppingList(user.getShopeeList().getShopList());
         showBoughtList(user.getShopeeList().getBoughtList());
 
-        System.out.println(user.getUsername());
-        System.out.println(this.user.getShopeeList());
     }
     
 

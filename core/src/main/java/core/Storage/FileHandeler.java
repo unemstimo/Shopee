@@ -52,7 +52,6 @@ public class FileHandeler {
                              // Update the existing instance
                              objects.set(i, object);
                              instanceExists = true;
-                             System.out.println("brukernavnet matcher oppdaterer filen");
                              break;
                          }
                      }
