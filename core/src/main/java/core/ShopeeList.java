@@ -189,24 +189,5 @@ public class ShopeeList {
         return "listName=" + listName + "\n shopList=" + shopList + "\n boughtList=" + boughtList + "]\n";
     }
 
-
-    public static void main(String[] args) {
-        ShopeeList hall = new ShopeeList("uke4");
-        hall.setListName("jajajajjjjaaj");
-        System.out.println(hall.getListName());
-        hall.addFoodShopList("kiwi", 5);
-        hall.addFoodShopList("kiwi", 5);
-        hall.addFoodShopList("tomat", 3);
-        System.out.println(hall);
-        System.out.println(hall.getFood("kiwi"));
-        System.out.println(hall.getFoodAmount("kiwi"));
-        hall.addFoodBoughtList(hall.getFood("kiwi"));
-        //hall.removeFood("kiwi");
-        System.out.println("halla");
-        System.out.println(hall.getFood("tomat"));
-        hall.addFoodShopList("hanna", 4);
-        System.out.println(hall);
-        // System.out.println(hall.getFoodAmount("kiwi"));
-    }
    
 }

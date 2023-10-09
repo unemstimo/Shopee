@@ -42,8 +42,6 @@ public class ShopeeController{
         showShoppingList(user.getShopeeList().getShopList());
         showBoughtList(user.getShopeeList().getBoughtList());
 
-        System.out.println(user.getUsername());
-        System.out.println(this.user.getShopeeList());
     }
     
 
@@ -138,7 +136,7 @@ public class ShopeeController{
         
         Scene logInScene = new Scene(loader.load());
 
-        LogInController logInController = loader.getController();
+        //LogInController logInController = loader.getController();
 
         Stage stage = (Stage) logOut.getScene().getWindow();
         stage.setScene(logInScene);

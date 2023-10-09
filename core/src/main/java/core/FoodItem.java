@@ -1,6 +1,5 @@
 package core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FoodItem {
@@ -59,7 +58,7 @@ public int getFoodAmount() {
  * @return true if foodname only consists of letters
  */
 private boolean validFoodName(String foodname) {
-    if (foodname.matches("^[A-Za-z]+$")) {
+    if (foodname.matches("^[A-Za-zåÅ]+$")) {
         return true;
     }
     else{
@@ -74,7 +73,7 @@ private boolean validFoodName(String foodname) {
  */
 @Override
 public String toString() {
-    return foodName + "," + foodAmount;
+    return foodName + " : " + foodAmount + "  STK";
 }
 
 }
