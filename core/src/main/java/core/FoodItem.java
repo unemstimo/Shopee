@@ -59,7 +59,7 @@ public int getFoodAmount() {
  * @return true if foodname only consists of letters
  */
 private boolean validFoodName(String foodname) {
-    if (foodname.matches("^[A-Za-z]+$")) {
+    if (foodname.matches("^[A-Za-zåÅ]+$")) {
         return true;
     }
     else{

@@ -3,8 +3,11 @@ package core.Storage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,10 +20,15 @@ import core.User;
 
 public class FileHandeler {
 
-    //the relavtive path to DataStorage.json
-    private final String filePath = "/core/src/main/java/core/Storage/DataStorage.json";
 
+    // Use your local path to the file when running maven
+   //private String filePath = "/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/core/Storage/DataStorage.json";
 
+   // Use this relative path when running in launch
+   private String filePath = "core/src/main/java/core/Storage/DataStorage.json";
+    
+
+   
     //new method which writes to the DataStorage.json file
     public void writeToFile(User object) {
         try {
@@ -32,30 +40,30 @@ public class FileHandeler {
 
             //copies all User objects in the file and puts it to a list
             List<User> objects = JsonToObj();
-            objects.add(object);
+            
 
             // Check if an instance with the same name already exists
-            // String userName = "";
-            // if (object instanceof User) {
-            //     userName = ((User) object).getUsername();
-            //     boolean instanceExists = false;
-            //     for (int i = 0; i < objects.size(); i++) {
-            //         Object existingObject = objects.get(i);
-            //         if (existingObject instanceof User) {
-            //             String existingListName = ((User) existingObject).getUsername();
-            //             if (userName.equals(existingListName)) {
-            //                 // Update the existing instance
-            //                 objects.set(i, object);
-            //                 instanceExists = true;
-            //                 System.out.println("brukernavnet matcher oppdaterer filen");
-            //                 break;
-            //             }
-            //         }
-            //     }
-            //     if (!instanceExists) {
-            //         objects.add(object);
-            //     }
-            // }
+              String userName = "";
+              if (object instanceof User) {
+                  userName = ((User) object).getUsername();
+                  boolean instanceExists = false;
+                  for (int i = 0; i < objects.size(); i++) {
+                      Object existingObject = objects.get(i);
+                      if (existingObject instanceof User) {
+                          String existingListName = ((User) existingObject).getUsername();
+                         if (userName.equals(existingListName)) {
+                             // Update the existing instance
+                             objects.set(i, object);
+                             instanceExists = true;
+                             System.out.println("brukernavnet matcher oppdaterer filen");
+                             break;
+                         }
+                     }
+                 }
+                 if (!instanceExists) {
+                     objects.add(object);
+                 }
+             }
             // works without this, because we validate in the loginController, dont know if we should move validation here though
             // so i wont remove it yet
 
@@ -64,7 +72,6 @@ public class FileHandeler {
 
             // Write the updated list of objects to the file
             mapper.writeValue(new File(filePath), objects);
-
             System.out.println("Object written to file\n");
 
         } catch (Exception e) {

@@ -57,14 +57,10 @@ public void handleSignUpButtonClick (ActionEvent event){
             try{
                 this.user = new User(username, password);
                 this.user.setShopeeList(new ShopeeList(this.username));
-                users.add(user);
                 jsonFile.writeToFile(this.user); //adds user to file
             } catch(Exception e) {
                 output.setText("Brukernavnet eller passordet oppfyller ikke gitte krav. Brukernavn må være på formatet navn@epost.domene , passordet må være minst 8 tegn langt, og innholde både bokstaver, tall og spesialtegn.");
             }
-            // for (User userToFile : users) {
-            //     jsonFile.writeToFile(userToFile);
-            // }
             
             output.setText("Brukeren er blitt opprettet. Du kan nå logge inn");
             usernameInput.clear();
@@ -95,18 +91,15 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
         for (User userInFile : users) {
             if(userInFile.getUsername().equals(this.username) && userInFile.getPassword().equals(this.password)){
                 userExist = true;
-                //output.setText(userInFile.getShopeeList().getFood(0).getFoodName());
                 break;
             }
         }
         if(userExist){
-            this.user = new User(this.username, this.password);
+            this.user = users.get(this.indexUser(userExist));
 
-            ShopeeList list = users.get(this.indexUser(userExist)).getShopeeList();
-            this.user.setShopeeList(list);
+            // ShopeeList list = users.get(this.indexUser(userExist)).getShopeeList();
+            // this.user.setShopeeList(list);
 
-            //output.setText("plis a "); // This user finnes og har innhold
-            System.out.println(this.user.getShopeeList());
             loadNewPage(new ActionEvent());
             
         }
