@@ -1,6 +1,6 @@
 # Group gr2334 repository
 
-[<img src="https://eclipse.dev/che/docs/_/img/icon-eclipse-che.svg" width="25" /> open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/todo-list?new)
+[<img src="https://eclipse.dev/che/docs/_/img/icon-eclipse-che.svg" width="25" /> open in Eclipse Che](https://che.stud.ntnu.no/unems-stud-ntnu-no/shopee/3100/)
 
 
 ## Description
