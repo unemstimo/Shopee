@@ -3,7 +3,6 @@ package core.Storage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,6 @@ import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import core.FoodItem;
-import core.ShopeeList;
 import core.User;
 
 
@@ -28,7 +25,7 @@ public class FileHandeler {
    private String filePath = "core/src/main/java/core/Storage/DataStorage.json";
     
 
-   
+
     //new method which writes to the DataStorage.json file
     public void writeToFile(User object) {
         try {
@@ -122,27 +119,6 @@ public class FileHandeler {
         
     }
 
-public static void main(String[] args) {
-
-    ShopeeList shopeeList = new ShopeeList("Oskar");
-    FoodItem item1 = new FoodItem("mais", 100);
-    FoodItem item2 = new FoodItem("hest", 19);
-    FoodItem item3 = new FoodItem("pølse", 1);
-    FoodItem item4 = new FoodItem("kjott", 7);
-    shopeeList.addFoodShopList(item1.getFoodName(), item1.getFoodAmount());
-    shopeeList.addFoodShopList(item2.getFoodName(), item2.getFoodAmount());
-    shopeeList.addFoodShopList(item3.getFoodName(), item3.getFoodAmount());
-    shopeeList.addFoodShopList(item4.getFoodName(), item4.getFoodAmount());
-    shopeeList.addFoodBoughtList(item1);
-    shopeeList.addFoodBoughtList(item4);
-
-    
-    User oskar = new User("Osk.voldsund@gmail.no", "Oskar123@");
-    //oskar.addShopeeList(shopeeList);
-    oskar.setShopeeList(shopeeList);
-    FileHandeler handeler = new FileHandeler();
-    handeler.writeToFile(oskar);
-        }
 }
 
 

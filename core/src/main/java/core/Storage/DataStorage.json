@@ -9,10 +9,16 @@
     }, {
       "foodName" : "fårikål",
       "foodAmount" : 5
+    }, {
+      "foodName" : "Mat",
+      "foodAmount" : 4
     } ],
     "boughtList" : [ {
       "foodName" : "på",
       "foodAmount" : 4
+    }, {
+      "foodName" : "Ost",
+      "foodAmount" : 3
     } ]
   }
 }, {

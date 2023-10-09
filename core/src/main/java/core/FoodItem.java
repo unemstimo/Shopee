@@ -1,6 +1,5 @@
 package core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FoodItem {
@@ -74,7 +73,7 @@ private boolean validFoodName(String foodname) {
  */
 @Override
 public String toString() {
-    return foodName + "," + foodAmount;
+    return foodName + " : " + foodAmount + "  STK";
 }
 
 }

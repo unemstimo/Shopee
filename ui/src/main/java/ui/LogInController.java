@@ -114,6 +114,27 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
 }
 
 /**
+ * Used to find the index of user object in the jsonfile. 
+ * @param exist
+ * @return int where the user object is located
+ */
+public int indexUser(boolean exist) {
+    List<User> users = jsonFile.JsonToObj();
+    if(exist) {
+        
+        int i = 0;
+        for(User user : users) {
+            if(user.getUsername().equals(this.username)) {
+                return i;
+            }
+            i++;
+        }
+    }
+    return users.size() - 1;
+    
+}
+
+/**
  * Method to take the user to the mainpage after successful log-in
  * 
  * @param actionEvent
@@ -141,36 +162,6 @@ private void loadNewPage(ActionEvent actionEvent) {
     } catch (IOException e) {
         e.printStackTrace();
     }
-    }
-
-    public int indexUser(boolean exist) {
-        List<User> users = jsonFile.JsonToObj();
-        if(exist) {
-            
-            int i = 0;
-            for(User user : users) {
-                if(user.getUsername().equals(this.username)) {
-                    return i;
-                }
-                i++;
-            }
-        }
-        return users.size() - 1;
-        
-    }
-
-    public static void main(String[] args) {
-        LogInController cont = new LogInController();
-        List<User> lista = cont.jsonFile.JsonToObj();
-        cont.username = "Une.marie@gmail.no";
-        ShopeeController shop = new ShopeeController();
-        shop.setUser(lista.get(0));
-        System.out.println("");
-        System.out.println(cont.indexUser(true));
-        System.out.println("");
-        //System.out.println(lista.get(0).getShopeeList().get(0));
-        System.out.println("hallaa \n");
-        //System.out.println(shop.getUser().getShopeeList().get(0));
     }
     
 }

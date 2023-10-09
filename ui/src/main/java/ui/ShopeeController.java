@@ -138,7 +138,7 @@ public class ShopeeController{
         
         Scene logInScene = new Scene(loader.load());
 
-        LogInController logInController = loader.getController();
+        //LogInController logInController = loader.getController();
 
         Stage stage = (Stage) logOut.getScene().getWindow();
         stage.setScene(logInScene);
