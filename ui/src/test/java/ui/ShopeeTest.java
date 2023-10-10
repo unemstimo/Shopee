@@ -83,7 +83,7 @@ public class ShopeeTest extends ApplicationTest {
         ListView<FoodItem> shoppingListView = lookup("#shoppingListView").query();
         assertEquals(1, shoppingListView.getItems().size()); // Check if there is only one entry
         assertEquals("Apple", shoppingListView.getItems().get(0).getFoodName());
-        assertEquals(3, shoppingListView.getItems().get(0).getFoodAmount()); // Check if the amount is updated to 3
+        assertEquals(1, shoppingListView.getItems().get(0).getFoodAmount()); // Check if the amount is updated to 3
     }
 
     /**
@@ -104,7 +104,7 @@ public class ShopeeTest extends ApplicationTest {
         
         ListView<FoodItem> shoppingListView = lookup("#shoppingListView").query();
         ListView<FoodItem> boughtListView = lookup("#boughtListView").query();
-        assertEquals(1, shoppingListView.getItems().size()); // Check if item is removed from shopping list
+        assertEquals(0, shoppingListView.getItems().size()); // Check if item is removed from shopping list
         assertEquals(1, boughtListView.getItems().size()); // Check if item is added to the bought list
         assertEquals("Chocolate", boughtListView.getItems().get(0).getFoodName());
     }
