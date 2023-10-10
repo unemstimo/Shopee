@@ -153,7 +153,7 @@ public class ShopeeList {
      * @param foodname
      * @throws IllegalArgumentException if the food is not in the list
     */
-    private void hasFood(String foodname) {
+    public void hasFood(String foodname) {
         List<String> foodnames = this.shopList.stream().map(a -> a.getFoodName()).collect(Collectors.toList());
 
         if(!foodnames.contains(foodname)) {
