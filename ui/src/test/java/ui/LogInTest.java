@@ -47,8 +47,8 @@ public class LogInTest extends ApplicationTest {
     @Test
     public void testSignInWithInvalidCredentials() {
         
-        clickOn("#usernameInput").write("invalid@example.com");
-        clickOn("#passwordInput").write("validpassword");
+        clickOn("#usernameInput").write("invalid@example");
+        clickOn("#passwordInput").write("validpwd123/");
         clickOn("#signIn");
 
         
@@ -70,8 +70,8 @@ public class LogInTest extends ApplicationTest {
     @Test
     public void testSignUpWithValidCredentials() {
         
-        clickOn("#usernameInput").write("newuser@example.com");
-        clickOn("#passwordInput").write("newuserpassword");
+        clickOn("#usernameInput").write("valid@example.com");
+        clickOn("#passwordInput").write("validpwd123/");
         clickOn("#signUp");
 
         
@@ -86,12 +86,12 @@ public class LogInTest extends ApplicationTest {
     @Test
     public void testSignUpWithExistingUsername() {
         
-        clickOn("#usernameInput").write("existing@example.com");
-        clickOn("#passwordInput").write("existingpassword");
+        clickOn("#usernameInput").write("valid@example.com");
+        clickOn("#passwordInput").write("validpwd123/");
         clickOn("#signUp");
 
-        clickOn("#usernameInput").write("existing@example.com");
-        clickOn("#passwordInput").write("existingpassword");
+        clickOn("#usernameInput").write("valid@example.com");
+        clickOn("#passwordInput").write("validpwd123/");
         clickOn("#signUp");
 
         
