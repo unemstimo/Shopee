@@ -3,7 +3,6 @@ package ui;
 import java.io.IOException;
 import java.util.List;
 
-import core.ShopeeList;
 import core.User;
 import core.Storage.FileHandeler;
 import javafx.event.ActionEvent;
@@ -56,7 +55,6 @@ public void handleSignUpButtonClick (ActionEvent event){
         } else{
             try{
                 this.user = new User(username, password);
-                this.user.setShopeeList(new ShopeeList(this.username));
                 jsonFile.writeToFile(this.user); //adds user to file
             } catch(Exception e) {
                 output.setText("Brukernavnet eller passordet oppfyller ikke gitte krav. Brukernavn må være på formatet navn@epost.domene , passordet må være minst 8 tegn langt, og innholde både bokstaver, tall og spesialtegn.");

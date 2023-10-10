@@ -7,34 +7,38 @@ public class FoodItem {
 private String foodName;
 private int foodAmount;
 
-
 /**
- *Constructor for a food item that sets the name, 
- *the amount and initialize the boolean bought value 
+ * Constructor for a food item that sets the name, 
+ * the amount and initialize the boolean bought value 
  * 
  * @param food
  * @param amount
  */
-
 public FoodItem(@JsonProperty("foodName") String foodName, @JsonProperty("foodAmount") int foodAmount) {
-    if (validFoodName(foodName)) {
+    setFoodName(foodName);
+    setFoodAmount(foodAmount);
+}
+
+/**
+ * Sets the food name if the name is valid
+ * 
+ * @param foodName
+ */
+public void setFoodName(String foodName) {
+    if(validFoodName(foodName)) {
         this.foodName = foodName;
-        this.foodAmount = foodAmount;
     }
 }
 
 /**
- * A setter to change the amount of the food
+ * A setter to change the amount of the food.
+ * The amount needs to be greater than zero, if not: an exception will be thrown.
  * 
  * @param amount
  */
-
 public void setFoodAmount(int foodAmount) {
-    if(foodAmount > 0) {
+    if(validFoodAmount(foodAmount)) {
         this.foodAmount = foodAmount;
-    }
-    else{
-        throw new IllegalArgumentException("The amount of food needs to be 1 or higher");
     }
 }
 
@@ -58,9 +62,10 @@ public int getFoodAmount() {
 }
 
 /**
- * helper method to check if the foodname consists of letters only
+ * Helper method to check if the food name consists of letters only
+ * 
  * @param foodname
- * @return true if foodname only consists of letters
+ * @return True if foodname only consists of letters, throws an exception otherwise
  */
 private boolean validFoodName(String foodname) {
     if (foodname.matches("^[A-Za-zåÅ]+$")) {
@@ -71,9 +76,23 @@ private boolean validFoodName(String foodname) {
     }
 }
 
+/**
+ * Helper method to check if the amount of food is 1 or higher
+ * 
+ * @param foodAmount
+ * @return True if foodname only consists of letters, throws an exception otherwise
+ */
+private boolean validFoodAmount(int foodAmount) {
+    if(foodAmount > 0) {
+        return true;
+    }
+    else{
+        throw new IllegalArgumentException("The amount of food needs to be 1 or higher");
+    }
+}
 
 /**
- * Proper to-wtring to represent the object
+ * Proper to-string to represent the object
  * 
  */
 @Override
