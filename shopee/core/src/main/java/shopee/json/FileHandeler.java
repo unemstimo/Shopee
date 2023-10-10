@@ -1,4 +1,4 @@
-package core.Storage;
+package shopee.json;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,7 +11,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import core.User;
+import shopee.User;
 
 
 
@@ -22,7 +22,7 @@ public class FileHandeler {
    //private String filePath = "/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/core/Storage/DataStorage.json";
 
    // Use this relative path when running in launch
-   private String filePath = "core/src/main/java/core/Storage/DataStorage.json";
+   private String filePath = "core/src/main/java/shopee/json/DataStorage.json";
     
 
 

@@ -1,4 +1,4 @@
-package core;
+package shopee.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import core.Storage.FileHandeler; 
+import shopee.json.FileHandeler; 
 public class FileHandlerTest {
 
     private FileHandeler fileHandler = new FileHandeler();

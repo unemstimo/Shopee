@@ -6,11 +6,13 @@
 
     <parent>
         <groupId>it1901</groupId>
-        <artifactId>shopee</artifactId>
+        <artifactId>parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
+    <artifactId>core</artifactId>
+    
     <dependencies>
 
         <!-- junit testing with jupiter -->

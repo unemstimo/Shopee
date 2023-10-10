@@ -1,4 +1,4 @@
-package core;
+package shopee.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

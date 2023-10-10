@@ -1,4 +1,4 @@
-package core;
+package shopee.core;
 
 import java.util.Arrays;
 import java.util.List;
