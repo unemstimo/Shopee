@@ -2,31 +2,23 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.Storage.FileHandeler;
-import core.ShopeeList;
-import core.FoodItem; 
+import core.Storage.FileHandeler; 
 public class FileHandlerTest {
 
     private FileHandeler fileHandler = new FileHandeler();
     //private final String testFilePath = "testDataStorage.json"; // Use a temporary test file
 
    
-
     @Test
     public void testWriteAndReadUserToFile() {
         // Create a User object for testing
         fileHandler.clearFileContent();
         User testUser = new User("Johan@gmail.no", "johan123@");
-        //Add a shopeelist to User 
+        // Add a shopeelist to User 
         ShopeeList newList = new ShopeeList("Onsdag");
         newList.addFoodShopList("Chips",7);
         newList.addFoodBoughtList(newList.getFood("Chips"));
