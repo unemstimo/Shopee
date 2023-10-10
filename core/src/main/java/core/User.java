@@ -66,7 +66,7 @@ private boolean validPassword(String password){
     if (password.length() < 8) {
         throw new IllegalArgumentException("The password needs to be at least 8 characters long");
     }
-    String regex = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).*$";
+    String regex = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!/]).*$";
     if (!password.matches(regex)) {
         throw new IllegalArgumentException("The password must contain letters, digits and special characters");
     }

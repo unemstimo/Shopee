@@ -30,7 +30,12 @@ public FoodItem(@JsonProperty("foodName") String foodName, @JsonProperty("foodAm
  */
 
 public void setFoodAmount(int foodAmount) {
-    this.foodAmount = foodAmount;
+    if(foodAmount > 0) {
+        this.foodAmount = foodAmount;
+    }
+    else{
+        throw new IllegalArgumentException("The amount of food needs to be 1 or higher");
+    }
 }
 
 /**
