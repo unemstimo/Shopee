@@ -33,6 +33,10 @@ public class LogInTest extends ApplicationTest {
     public void testSignIn() {
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("validpwd123/");
+        clickOn("#signUp");
+
+        clickOn("#usernameInput").write("valid@example.com");
+        clickOn("#passwordInput").write("validpwd123/");
         clickOn("#signIn");
 
         verifyThat("#shoppingListView", isVisible());
@@ -45,18 +49,18 @@ public class LogInTest extends ApplicationTest {
      * This method tests if correct text shows up when invalid username or password is entered
      */
     @Test
-    public void testSignInWithInvalidCredentials() {
+    public void testSignUpWithInvalidCredentials() {
         
         clickOn("#usernameInput").write("invalid@example");
         clickOn("#passwordInput").write("validpwd123/");
-        clickOn("#signIn");
+        clickOn("#signUp");
 
         
         verifyThat("#output", hasText("Feil brukernavn eller passord. Vennligst prøv igjen."));
 
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("invalidpassword");
-        clickOn("#signIn");
+        clickOn("#signUp");
 
         
         verifyThat("#output", hasText("Feil brukernavn eller passord. Vennligst prøv igjen."));
