@@ -4,18 +4,18 @@
   "shopeeList" : {
     "listName" : "osk@.no",
     "shopList" : [ {
-      "foodName" : "eple ",
+      "foodName" : "Mat",
       "foodAmount" : 4
-    }, {
-      "foodName" : "banan",
-      "foodAmount" : 8
-    }, {
-      "foodName" : "brød ",
-      "foodAmount" : 18
     } ],
     "boughtList" : [ {
-      "foodName" : "yeyey",
-      "foodAmount" : 10
+      "foodName" : "på",
+      "foodAmount" : 4
+    }, {
+      "foodName" : "Ost",
+      "foodAmount" : 3
+    }, {
+      "foodName" : "halla",
+      "foodAmount" : 3
     } ]
   }
 }, {
@@ -24,18 +24,35 @@
   "shopeeList" : {
     "listName" : "joh@.no",
     "shopList" : [ {
-      "foodName" : "beast",
-      "foodAmount" : 12
-    }, {
-      "foodName" : "dinosaur",
-      "foodAmount" : 1
-    }, {
-      "foodName" : "gullfisk",
-      "foodAmount" : 9
+      "foodName" : "deg",
+      "foodAmount" : 2
     } ],
     "boughtList" : [ {
-      "foodName" : "hester",
+      "foodName" : "på",
+      "foodAmount" : 2
+    }, {
+      "foodName" : "halla",
       "foodAmount" : 4
+    }, {
+      "foodName" : "halla",
+      "foodAmount" : 4
+    } ]
+  }
+}, {
+  "username" : "mar@.no",
+  "password" : "Maren123@",
+  "shopeeList" : {
+    "listName" : "mar@.no",
+    "shopList" : [ {
+      "foodName" : "Halla",
+      "foodAmount" : 2
+    }, {
+      "foodName" : "På",
+      "foodAmount" : 4
+    } ],
+    "boughtList" : [ {
+      "foodName" : "Deg",
+      "foodAmount" : 6
     } ]
   }
 } ]

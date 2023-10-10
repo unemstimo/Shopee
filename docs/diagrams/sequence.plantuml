@@ -1,0 +1,28 @@
+@startuml Shopee
+
+
+ skinparam Style strictuml
+ skinparam SequenceMessageAlignment center
+
+
+
+ actor User 
+ User -> Login : User Info
+ Login -> Storage : Sing In/Up
+ Storage --> Storage : Save New User
+ Storage --> Login : Created User
+ Login -> ShopeeLists: Log In
+ Storage -> ShopeeLists : Log In
+ ShopeeLists -> List : Create/Edit/Display List
+ List -> List : Add/Del/Buy FoodItem 
+ List -> Storage : Save New List
+ List -> ShopeeLists : Display new List
+ loop endre
+ alt Want to change more lists
+     ShopeeLists -> List : edit 
+ else want to log out
+     ShopeeLists -> Login
+end 
+
+@enduml
+

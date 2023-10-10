@@ -56,6 +56,10 @@ The project is organized with these directories for managing source code, docume
     - **pom.xml**  This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
     - **readme.md**  Description of the app project, illustration of the app, user story and important functuality to the app.
 
+- **Sequence Diagram**
+A sequence diagram to show the functionality of the code. In a lesson George said that we needed a sequence diagram, don't know if it is for release 2. But we made it anyways, or we tried to. Please give feedback if it wrong and what not (I know it contains a class we havent created yet, but we included it to give insight to the finished project). 
+![ShopeeApp](https://www.plantuml.com/plantuml/svg/RL91RiCW4BppYlr0v7iELTocbIAblLXHpyXC7LGC5DQD_FkkxJgE9NC0j3Cxmm27p3fnrpgghY42POmgVriVTT8jLTmxKEPawu7pYE2dWw_nZfnrWzBPnhVmJBLCI4g6hZaakcGaKkEyUw9pQAod_LGz-Q-Wfef0bR15IS3A-aR0uXBLNDoj2VeNz87RABFYpFel2PfX9i9YCKOysynvFr35PEbUmRJW3yN1G3Pt_UBLM2wEDaUd-n5I8xxmIcEA8rpntFNq5e8vCLgwapOIhKJM1vfz_4np8KI2DmbAEwPFBTVFWUghzYBQXWHoGwyY6Tiv8058mMNGxR_TIUxGyMRJS95A74cUzo2h_8a_ "ShopeeApp")
+
 
 ## Configuration of tools for code quality
 * __jaCoCo:__ Gathers and presents information and testcode coverage

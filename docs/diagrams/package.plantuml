@@ -1,0 +1,37 @@
+@startuml Shopee
+
+' Pakkediagram som viser de ulike pakkene som ligger i de 
+' ulike modulene og hvilke pakker som ligger i dem.
+' Litt usikker på strukturen, og her må vi endre på 
+' mappestrukturen i prosjektet for at dette diagrammet skal
+' funke.
+
+
+component core{
+    package shopee.core
+    package shopee.json
+}
+
+shopee.core ..> shopee.json
+
+component jackson {
+}
+
+shopee.json ..> jackson
+
+component ui {
+    package shopee.ui
+}
+
+component javafx {
+    component fxml {
+
+    }
+}
+
+ui ..> javafx
+ui ..> fxml
+shopee.ui ..> shopee.core
+shopee.ui ..> shopee.json
+
+@enduml
