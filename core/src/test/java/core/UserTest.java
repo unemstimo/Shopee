@@ -1,12 +1,22 @@
 package core;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
+
+/**
+ * In this test class, all the main methods of the User.java class are being tested.
+ * Some of the smaller methods (such ass getters) are being indirectly tested and do not have their own tests. 
+*/
 
 public class UserTest {
     
     private User user;
 
+    /**
+     * Tests if the validUsername(String username) method works.
+     * The test checks if exceptions are being thrown for all the cases where the criteria is not met. 
+    */
     @Test
     public void testValidUsername(){
         String correctUsername = "olanordmann@gmail.com";
@@ -44,10 +54,14 @@ public class UserTest {
         }
     }
 
+    /**
+     * Tests if the validPassword(String password) method works.
+     * The test checks if exceptions are being thrown for all the cases where the criteria is not met. 
+    */
     @Test
     public void testValidPassword() {
-        String correctUsername = "olanordmann@gmail.com";
-        String correctPassword = "ola123//";
+        // example String correctUsername = "olanordmann@gmail.com";
+        // example String correctPassword = "ola123//";
 
         // checking if exception is being thrown if the password length < 8
         try {
@@ -78,6 +92,9 @@ public class UserTest {
         }
     }
 
+    /**
+     * Tests the setUsername(String username) method.
+    */
     @Test
     public void testSetUsername() {
         user = new User("olanordmann@gmail.com", "ola123//");
@@ -86,6 +103,9 @@ public class UserTest {
         Assertions.assertEquals("karinordmann@gmail.com", user.getUsername());
     }
 
+    /**
+     * Tests the setPassword(String password) method.
+    */
     @Test
     public void testSetPassword() {
         user = new User("olanordmann@gmail.com", "ola123//");
@@ -94,6 +114,9 @@ public class UserTest {
         Assertions.assertEquals("kari123//", user.getPassword());
     }
 
+    /**
+     * Tests the setShopeeList(ShopeeList list) method.
+    */
     @Test
     public void testSetShopeeList() {
         user = new User();
