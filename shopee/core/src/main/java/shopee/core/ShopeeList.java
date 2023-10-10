@@ -18,7 +18,7 @@ public class ShopeeList {
      * 
      * @param listName
     */
-    public ShopeeList(@JsonProperty("listName") String listName){ //Må endre denne til å måtte ha et navn, Kan ikke lage en handleliste uten navn
+    public ShopeeList(@JsonProperty("listName") String listName){ 
         setListName(listName);
         this.shopList = new ArrayList<>();
         this.boughtList = new ArrayList<>();
