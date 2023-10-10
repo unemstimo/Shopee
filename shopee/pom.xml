@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>it1901.shopee</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>shopee</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 

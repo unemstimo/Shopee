@@ -5,8 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-
+import shopee.core.User;
+import shopee.core.FoodItem;
+import shopee.core.ShopeeList;
 import shopee.json.FileHandeler; 
+
+
 public class FileHandlerTest {
 
     private FileHandeler fileHandler = new FileHandeler();

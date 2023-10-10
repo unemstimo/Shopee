@@ -1,11 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <artifactId>shopee</artifactId>
     
 
     <parent>
         <groupId>it1901.shopee</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>shopee</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
@@ -14,7 +15,7 @@
 
         <dependency>
             <groupId>it1901.shopee</groupId>
-            <artifactId>modules-core</artifactId>
+            <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -93,7 +94,7 @@
                     </systemPropertyVariables>
                     <argLine>
                     @{argLine} -Dtestfx.robot=awt
-                    --add-opens GR2334.ui/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    --add-opens shopee.ui/shopee.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
                     --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
                     </argLine>
@@ -108,7 +109,7 @@
                     <!-- Usage: mvn javafx:run -->
                     <configuration>
                         <!-- syntax: module-name/full-app-class-name -->
-                        <mainClass>GR2334.ui/ui.Shopee</mainClass>
+                        <mainClass>shopee.ui/shopee.ui.Shopee</mainClass>
                     </configuration>
             </plugin>
             <plugin>
@@ -120,7 +121,7 @@
         		<artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <argLine>
-                        @{argLine} --add-opens GR2334.ui/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        @{argLine} --add-opens shopee.ui/shopee.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
                 </configuration>
 	        </plugin>
