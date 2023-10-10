@@ -1,4 +1,4 @@
-package ui;
+package shopee.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +22,6 @@ public class Shopee extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(Shopee.class, args);
     }
 }

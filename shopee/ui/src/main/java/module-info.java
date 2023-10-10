@@ -1,7 +1,7 @@
-module ui {
-    requires core;
+module shopee.ui {
+    requires shopee.core;
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens ui to javafx.graphics, javafx.fxml;
+    opens shopee.ui to javafx.graphics, javafx.fxml;
 }

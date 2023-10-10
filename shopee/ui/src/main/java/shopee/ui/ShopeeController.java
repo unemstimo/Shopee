@@ -1,4 +1,4 @@
-package ui;
+package shopee.ui;
 import core.ShopeeList;
 import core.User;
 import core.Storage.FileHandeler;

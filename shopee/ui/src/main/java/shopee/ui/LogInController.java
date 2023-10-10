@@ -1,4 +1,4 @@
-package ui;
+package shopee.ui;
 
 import java.io.IOException;
 import java.util.List;

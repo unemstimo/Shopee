@@ -1,4 +1,4 @@
-package ui;
+package shopee.ui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import core.FoodItem;
+import shopee.core.FoodItem;
 
 /**
  * TestFX App test
