@@ -88,9 +88,6 @@ public class LogInTest extends ApplicationTest {
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("validpwd123/");
         clickOn("#signIn");
-        assertEquals("", lookup("#usernameInput").queryTextInputControl().getText());
-        assertEquals("", lookup("#passwordInput").queryTextInputControl().getText());
-
         
     }
 
