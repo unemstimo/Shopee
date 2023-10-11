@@ -35,7 +35,7 @@ public class FileHandlerTest {
         fileHandler.writeToFile(testUser);
 
         // Read the User object from the test file
-        List<User> userList = fileHandler.JsonToObj();
+        List<User> userList = fileHandler.jsonToObj();
 
         // Assert that the User object was successfully written and read
         assertNotNull(userList);
@@ -68,7 +68,7 @@ public class FileHandlerTest {
         fileHandler.writeToFile(testUser);
 
         // Read the User object from the test file
-        List<User> userList = fileHandler.JsonToObj();
+        List<User> userList = fileHandler.jsonToObj();
 
         // Assert that the User object was successfully updated
         assertNotNull(userList);
@@ -90,7 +90,7 @@ public class FileHandlerTest {
         fileHandler.clearFileContent();
 
         // Read the User object from the test file
-        List<User> userList = fileHandler.JsonToObj();
+        List<User> userList = fileHandler.jsonToObj();
 
         // Assert that the file content was cleared
         assertNotNull(userList);
