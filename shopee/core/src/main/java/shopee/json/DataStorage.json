@@ -1,0 +1,15 @@
+[ {
+  "username" : "johan@ntnu.no",
+  "password" : "Johan123@",
+  "shopeeList" : {
+    "listName" : "Test",
+    "shopList" : [ {
+      "foodName" : "Apple",
+      "foodAmount" : 4
+    } ],
+    "boughtList" : [ {
+      "foodName" : "Chocolate",
+      "foodAmount" : 3
+    } ]
+  }
+} ]

@@ -22,12 +22,12 @@ public class FileHandeler {
 
 
     // Use your local path to the file when running maven
-   //private String filePath = "/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/core/Storage/DataStorage.json";
+   private String filePath = "/Users/johan/Desktop/gr2334-1/shopee/core/src/main/java/shopee/json/DataStorage.json";
 
    // Use this relative path when running in launch
    //private String filePath = "core/src/main/java/shopee/json/DataStorage.json";
     
-   private static String filePath = getAbsolutePathOfFileName("DataStorage.json");
+   //private static String filePath = getAbsolutePathOfFileName("DataStorage.json");
 
     //new method which writes to the DataStorage.json file
     public void writeToFile(User object) {
