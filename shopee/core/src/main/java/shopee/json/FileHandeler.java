@@ -3,6 +3,9 @@ package shopee.json;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +25,9 @@ public class FileHandeler {
    //private String filePath = "/Users/oskarvoldsund/ITP/gr2334/core/src/main/java/core/Storage/DataStorage.json";
 
    // Use this relative path when running in launch
-   private String filePath = "core/src/main/java/shopee/json/DataStorage.json";
+   //private String filePath = "core/src/main/java/shopee/json/DataStorage.json";
     
-
+   private static String filePath = getAbsolutePathOfFileName("DataStorage.json");
 
     //new method which writes to the DataStorage.json file
     public void writeToFile(User object) {
@@ -116,6 +119,29 @@ public class FileHandeler {
             e.printStackTrace();
         }
         
+    }
+
+
+    public static String getAbsolutePathOfFileName(String fileName) {
+        Path root = Paths.get(System.getProperty("user.dir")); // Set the root directory for your search
+
+        try {
+            // Walk through the file system starting from the root
+            Path result = Files.walk(root)
+                .filter(path -> path.getFileName().toString().equals(fileName))
+                .findFirst()
+                .orElse(null);
+
+            if (result != null) {
+                return result.toAbsolutePath().toString();
+            } else {
+                System.out.println("File not found: " + fileName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
     }
 
 }
