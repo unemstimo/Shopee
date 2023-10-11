@@ -23,16 +23,12 @@ public class FileHandeler {
     // Use this relative path when running in launch
     // private String filePath = "core/src/main/java/shopee/json/DataStorage.json";
 
-    // private static String filePath =
-    // getAbsolutePathOfFileName("DataStorage.json");
-
     // new method which writes to the DataStorage.json file
     public void writeToFile(User object) {
         try {
             ObjectMapper mapper = new ObjectMapper();
 
             // makes the text more readable when written to file
-
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
             // copies all User objects in the file and puts it to a list
@@ -59,9 +55,6 @@ public class FileHandeler {
                 objects.add(object);
             }
 
-            // works without this, because we validate in the loginController, dont know if
-            // we should move validation here though
-            // so i wont remove it yet
 
             // self created method which wipes the file such that no duplicates are saved
             this.clearFileContent();
@@ -95,11 +88,6 @@ public class FileHandeler {
         return new ArrayList<>();
     }
 
-    // //returns a list of all User objects
-    // public List<User> getAllObjectsFromFile(File file) {
-    // return JsonToObj();
-    // }
-
     // Helper method that removes all content in the file
     public void clearFileContent() {
 
@@ -122,7 +110,6 @@ public class FileHandeler {
 
     public static String getAbsolutePathOfFileName(String fileName) {
         Path root = Paths.get(System.getProperty("user.dir")); // Set the root directory for your search
-
         try {
             // Walk through the file system starting from the root
             Path result = Files.walk(root)
@@ -138,7 +125,6 @@ public class FileHandeler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
