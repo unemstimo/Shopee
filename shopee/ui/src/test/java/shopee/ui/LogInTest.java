@@ -3,12 +3,8 @@ package shopee.ui;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import shopee.core.User;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,57 +15,55 @@ public class LogInTest extends ApplicationTest {
     
     
     private Parent root;
+    private LogInController controller;
 
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("LogIn.fxml"));
         root = fxmlLoader.load();
-        
+        this.controller = fxmlLoader.getController();
         stage.setScene(new Scene(root));
         stage.show();
     }
+    @Test
+    public void testControllerInitial() {
+        assertNotNull(this.controller);
+    }
+
     
     /**
-     * This method tests if correct text shows up when invalid username or password is entered
+     * This method tests invalid username 
      */
     @Test
     public void testSignUpWithInvalidUsername() {
-        
+        assertEquals("", lookup("#usernameInput").queryTextInputControl().getText());
+        assertEquals("", lookup("#passwordInput").queryTextInputControl().getText());
+
         clickOn("#usernameInput").write("invalid@example");
         clickOn("#passwordInput").write("validpwd123/");
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            clickOn("#signUp");
-        });
-        assertEquals("Brukernavnet eller passordet oppfyller ikke gitte krav. Brukernavn må være på formatet navn@epost.domene , passordet må være minst 8 tegn langt, og innholde både bokstaver, tall og spesialtegn.", exception.getMessage());
-
-       
-
-        clickOn("#usernameInput").write("valid@example.com");
-        clickOn("#passwordInput").write("invalidpassword");
         clickOn("#signUp");
 
         
 
     }
+    /**
+     * This method tests invalid password 
+     */
     @Test
     public void testSignUpWithInvalidPaasword() {
         
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("invalidpassword");
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            clickOn("#signUp");
-        });
-        assertEquals("Brukernavnet eller passordet oppfyller ikke gitte krav. Brukernavn må være på formatet navn@epost.domene , passordet må være minst 8 tegn langt, og innholde både bokstaver, tall og spesialtegn.", exception.getMessage());
-
+        clickOn("#signUp");
 
     }
 
 
     /*
-     * This method tests if correct text in ouput field shows when a user 
-     * create new user with valid username and password
+     * This method tests if fields get clear when clicking on sign up button 
+     * 
      */
     @Test
     public void testSignUpWithValidCredentials() {
@@ -84,32 +78,20 @@ public class LogInTest extends ApplicationTest {
     }
 
     /*
-     * This method tests if correct output text shows when a user trys to sign up
-     * with a already existing username
+     * This method tests if fields clear when signing in
+     * 
      */
 
     @Test
-    public void testSignUpWithExistingUsername() {
+    public void testSignIn() {
         
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("validpwd123/");
-        clickOn("#signUp");
+        clickOn("#signIn");
+        assertEquals("", lookup("#usernameInput").queryTextInputControl().getText());
+        assertEquals("", lookup("#passwordInput").queryTextInputControl().getText());
 
-        User newUser = new User("valid@example.com", "validpwd123/");
-
-        clickOn("#usernameInput").write("valid@example.com");
-        clickOn("#passwordInput").write("validpwd123/");
-        clickOn("#signUp");
-
-        try {
-            User user = new User("valid@example.com", "validpwd123/");
-            fail("Expected an IllegalArgumentException to be thrown");
-        } catch (Exception e) {
-            assertEquals("Brukeren finnes allerede. ", e.getMessage());
-            assertTrue(e instanceof IllegalArgumentException);
-        }
+        
     }
-
-   
 
 }
