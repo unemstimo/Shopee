@@ -27,21 +27,22 @@ To run the app you can either:
 _______________________
 ## Project Structure
 The project is organized with these directories for managing source code, documentation and resources.
-- **shopee/core/src/main/java/shopee/core** : The core module for the app, contains core Java classes for the app.
+**shopee/core**
+- **/src/main/java/shopee/core** : The core module for the app, contains core Java classes for the app.
     - __FoodItem.java:__  Java class for food object
     - __ShopeeList.java:__ Java class for shopping list
     - **User.java:** Java class for user
-- **shopee/core/src/main/java/shopee/json** Folder contains persistance for code project.
+- **/src/main/java/shopee/json** Folder contains persistance for code project.
     - **DataStorage.json** 
     - **FileHandeler.java** Handles the json file methods, read/write to file
-- **shopee/core/src/main/java/module-info.java** contains module info for the module in core   
-- **shopee/core/src/test/java/shopee/core** Contains test classes for the java classes that holds the logic.
+- **/src/main/java/module-info.java** contains module info for the module in core   
+- **/src/test/java/shopee/core** Contains test classes for the java classes that holds the logic.
     - **FoodItemTest.java**
     - **ShopeeListTest.java**
     - **UserTest.java**
-- **shopee/core/src/test/java/shopee/json** Holds testing for file handler class
+- **/src/test/java/shopee/json** Holds testing for file handler class
     - **FileHandlerTest.java**
-- **shopee/core/pom.xml** This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
+- **/pom.xml** This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
 
 
 - **docs**:  This folder contains the documentation for app. Releases is placed in this folder.
@@ -50,16 +51,22 @@ The project is organized with these directories for managing source code, docume
 
 
 
+**shopee/ui**  
+- **/src/main/java/shopee/ui**  This contains the main java classes for ui.
+    - **LogInController.java**  Controller class for handling log in page.
+    - **Shopee.java**  This is the main application class for the UI. The shopee class launches the JavaFX app, sets up the first page of the app. 
+    - **ShopeeController.java**  The JavaFX controller class for handeling UI. 
+- **/src/main/java/module-info.java**  Module info for ui folder. 
+- **/src/main/resources/ui**  Contains the fxml files used for the app.
+    - **LogIn.fxml** Fxml for the first page the user sees, contains log in ui
+    - **Shopee.fxml**  This is the fxml file defying the user interface layout.
+- **/src/test/java/shopee/ui** Contains test classes for controller and fxml
+    - **LogInTest.java**
+    - **ShopeeTest.java**
+- **pom.xml**  This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
+- **readme.md**  Description on ui module.
 
-- **ui**  
-    - **/src/main/java/ui**  This contains the main java classes for ui.
-        - **Shopee.java**  This is the main application class for the UI. The shopee class launches the JavaFX app, sets up the first page of the app. 
-        - **ShopeeController.java**  The JavaFX controller class for handeling UI. 
-     **/src/main/java/module-info.java**  Module info for ui folder. 
-    - **/src/main/resources/ui**  Contains the fxml files used for the app.
-        - **Shopee.fxml**  This is the fxml file defying the user interface layout.
-    - **pom.xml**  This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
-    - **readme.md**  Description of the app project, illustration of the app, user story and important functuality to the app.
+**shopee/readme.md** Description of the app project, illustration of the app, user story and important functuality to the app.
 
 ## Package diagram explaining folder structure
 [Package diagram](ShopeePackage.png)
