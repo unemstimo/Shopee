@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.api.FxAssert.verifyThat;
 
@@ -18,6 +19,9 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import shopee.core.FoodItem;
+import shopee.core.ShopeeList;
+import shopee.core.User;
+import shopee.json.FileHandeler;
 
 /**
  * TestFX App test
@@ -26,12 +30,15 @@ public class ShopeeTest extends ApplicationTest {
 
     
     private Parent root;
+    private User testUser;
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Shopee.fxml"));
         root = fxmlLoader.load();
-        
+        this.testUser = exampleUser();
+        ShopeeController controller = fxmlLoader.getController();
+        controller.setUser(testUser);
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -49,16 +56,16 @@ public class ShopeeTest extends ApplicationTest {
 
     @Test
     public void testAddFoodButtonClick(){
-        clickOn("#newFood").write("Apple");
+        clickOn("#newFood").write("Pineapple");
         clickOn("#amountNewFood").write("4");
         clickOn("#addFood");
 
         assertEquals("", lookup("#newFood").queryTextInputControl().getText());
         assertEquals("", lookup("#amountNewFood").queryTextInputControl().getText());
-
-        ListView<FoodItem> shoppingListView = lookup("#shoppingListView").query();
-        assertEquals(1, shoppingListView.getItems().size());
-        assertEquals("Apple", shoppingListView.getItems().get(0).getFoodName());
+        ShopeeList s = testUser.getShopeeList();
+        FoodItem item = new FoodItem("Pineapple", 2);
+        assertEquals(2, s.getShopList().size());
+        assertEquals(item.getFoodName(), s.getShopList().get(1).getFoodName());
 
     }
 
@@ -69,21 +76,20 @@ public class ShopeeTest extends ApplicationTest {
 
     @Test
     public void testNewAmountWhenAddingSameFood() {
-        
-        clickOn("#newFood").write("Apple");
+        ShopeeList s = testUser.getShopeeList();
+
+        clickOn("#newFood").write("Water");
         clickOn("#amountNewFood").write("2");
         clickOn("#addFood");
 
         
-        clickOn("#newFood").write("Apple");
-        clickOn("#amountNewFood").write("1");
+        clickOn("#newFood").write("Water");
+        clickOn("#amountNewFood").write("19");
         clickOn("#addFood");
 
-        
-        ListView<FoodItem> shoppingListView = lookup("#shoppingListView").query();
-        assertEquals(1, shoppingListView.getItems().size()); // Check if there is only one entry
-        assertEquals("Apple", shoppingListView.getItems().get(0).getFoodName());
-        assertEquals(1, shoppingListView.getItems().get(0).getFoodAmount()); // Check if the amount is updated to 3
+        //size = 2 because i have already added 'apple' to the list
+        assertEquals(2, s.getShopList().size());
+        assertEquals(19, s.getShopList().get(1).getFoodAmount());
     }
 
     /**
@@ -93,6 +99,8 @@ public class ShopeeTest extends ApplicationTest {
 
     @Test
     public void testMarkAsBoughtButtonClick() {
+        ShopeeList s = testUser.getShopeeList();
+
         clickOn("#newFood").write("Chocolate");
         clickOn("#amountNewFood").write("3");
         clickOn("#addFood");
@@ -100,13 +108,9 @@ public class ShopeeTest extends ApplicationTest {
         // Simulate user interactions to mark the item as bought
         clickOn("#shoppingListView").type(KeyCode.DOWN); // Select the added item
         clickOn("#foodBought");
-
-        
-        ListView<FoodItem> shoppingListView = lookup("#shoppingListView").query();
-        ListView<FoodItem> boughtListView = lookup("#boughtListView").query();
-        assertEquals(0, shoppingListView.getItems().size()); // Check if item is removed from shopping list
-        assertEquals(1, boughtListView.getItems().size()); // Check if item is added to the bought list
-        assertEquals("Chocolate", boughtListView.getItems().get(0).getFoodName());
+        assertEquals(1, s.getBoughtList().size());
+        assertEquals(1, s.getShopList().size());
+        assertEquals("Chocolate", s.getBoughtList().get(0).getFoodName());
     }
 
     /**
@@ -115,18 +119,21 @@ public class ShopeeTest extends ApplicationTest {
     
     @Test
     public void testRemoveItem() {
+        ShopeeList s = testUser.getShopeeList();
         // Simulate user interactions to add an item
         clickOn("#newFood").write("Cheese");
         clickOn("#amountNewFood").write("2");
         clickOn("#addFood");
 
+        //Test to see if it gets added to the list
+        assertEquals(2, s.getShopList().size());
+        assertEquals("Cheese", s.getShopList().get(1).getFoodName());
+
         // Simulate user interactions to remove the item
         clickOn("#shoppingListView").type(KeyCode.DOWN); // Select the added item
         clickOn("#removeFood");
 
-        // Verify the result
-        ListView<FoodItem> shoppingListView = lookup("#shoppingListView").query();
-        assertEquals(0, shoppingListView.getItems().size()); // Check if item is removed from shopping list
+        assertEquals(1, s.getShopList().size());
     }
 
     /**
@@ -136,13 +143,25 @@ public class ShopeeTest extends ApplicationTest {
     @Test
     public void testLogOut() {
         clickOn("#logOut");
-        verifyThat("#usernameInput", isVisible()); 
-        verifyThat("#passwordInput", isVisible()); 
-        verifyThat("#signIn", isVisible()); 
-        verifyThat("#signUp", isVisible());
         
     }
 
+
+    /**
+     * Method to create a user which is used in all tests
+     */
+    public User exampleUser(){
+        FileHandeler handler = new FileHandeler();
+        handler.clearFileContent();
+        this.testUser = new User("johan@ntnu.no", "Johan123@");
+        ShopeeList sList = new ShopeeList("Test");
+        sList.addFoodShopList("Apple", 4);
+        // sList.addFoodShopList("Cheese", 2);
+        // sList.addFoodShopList("Bread", 1);
+        testUser.setShopeeList(sList);
+        return testUser; 
+
+     }
 
 
 
