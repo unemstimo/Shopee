@@ -4,24 +4,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import shopee.core.FoodItem;
+import shopee.core.ShopeeList;
+import shopee.core.User;
+import shopee.json.FileHandeler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.testfx.matcher.base.NodeMatchers.isVisible;
-import static org.testfx.api.FxAssert.verifyThat;
-
 import java.io.IOException;
 
 
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import shopee.core.FoodItem;
-import shopee.core.ShopeeList;
-import shopee.core.User;
-import shopee.json.FileHandeler;
 
 /**
  * TestFX App test

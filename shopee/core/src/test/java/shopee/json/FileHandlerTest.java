@@ -6,9 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import shopee.core.User;
-import shopee.core.FoodItem;
-import shopee.core.ShopeeList;
-import shopee.json.FileHandeler; 
+import shopee.core.ShopeeList; 
 
 
 public class FileHandlerTest {
@@ -74,7 +72,6 @@ public class FileHandlerTest {
         assertNotNull(userList);
         assertEquals(2, userList.size());
         assertEquals("NewPwd4$", userList.get(0).getPassword());
-        System.out.println(newList.getShopList());
         assertEquals(3, testUser.getShopeeList().getShopList().get(0).getFoodAmount());
     }
 
