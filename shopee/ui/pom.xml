@@ -82,36 +82,16 @@
 
     <build>
         <plugins>
-                <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <!-- Default configuration for running -->
+                <!-- Usage: mvn javafx:run -->
                 <configuration>
-                    <skipTests>${skipUiTests}</skipTests>
-                    <systemPropertyVariables>
-                        <headless>${headlessTests}</headless>
-                    </systemPropertyVariables>
-                    <argLine>
-                    @{argLine} -Dtestfx.robot=awt
-                    --add-opens shopee.ui/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
-                    --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
-                    --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
-                    </argLine>
+                    <!-- syntax: module-name/full-app-class-name -->
+                    <mainClass>ui/shopee.ui.Shopee</mainClass>
                 </configuration>
-            </plugin>
-
-                <plugin>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-maven-plugin</artifactId>
-                    <version>0.0.8</version>
-                    <!-- Default configuration for running -->
-                    <!-- Usage: mvn javafx:run -->
-                    <configuration>
-                        <!-- syntax: module-name/full-app-class-name -->
-                        <mainClass>ui/shopee.ui.Shopee</mainClass>
-                    </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
