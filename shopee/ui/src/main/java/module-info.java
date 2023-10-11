@@ -1,5 +1,7 @@
-module shopee.ui {
-    requires shopee.core;
+module ui {
+    requires com.fasterxml.jackson.databind;
+    
+    requires core;
     requires javafx.controls;
     requires javafx.fxml;
 

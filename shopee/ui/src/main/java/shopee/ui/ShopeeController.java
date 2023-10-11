@@ -1,8 +1,5 @@
 package shopee.ui;
-import core.ShopeeList;
-import core.User;
-import core.Storage.FileHandeler;
-import core.FoodItem;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -17,6 +14,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import shopee.core.FoodItem;
+import shopee.core.ShopeeList;
+import shopee.core.User;
+import shopee.json.FileHandeler;
 import javafx.collections.FXCollections;
 
 public class ShopeeController{

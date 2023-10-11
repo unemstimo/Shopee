@@ -3,8 +3,7 @@ package shopee.ui;
 import java.io.IOException;
 import java.util.List;
 
-import core.User;
-import core.Storage.FileHandeler;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import shopee.core.User;
+import shopee.json.FileHandeler;
 
 public class LogInController {
 
