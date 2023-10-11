@@ -43,7 +43,7 @@ private void readTextFields(){
 public void handleSignUpButtonClick (ActionEvent event){
     readTextFields();
     try {
-        List<User> users = jsonFile.JsonToObj();
+        List<User> users = jsonFile.jsonToObj();
         boolean usernameTaken = false;
         for (User userInFile : users) {
             if(userInFile.getUsername().equals(username)){
@@ -84,7 +84,7 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
     readTextFields();
 
     try {
-        List<User> users = jsonFile.JsonToObj();
+        List<User> users = jsonFile.jsonToObj();
 
         boolean userExist = false;
         for (User userInFile : users) {
@@ -114,7 +114,7 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
  * @return int where the user object is located
  */
 public int indexUser(boolean exist) {
-    List<User> users = jsonFile.JsonToObj();
+    List<User> users = jsonFile.jsonToObj();
     if(exist) {
         
         int i = 0;
