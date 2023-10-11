@@ -22,7 +22,7 @@ protected List<String> newList = Arrays.asList(cc);
 public User(String username, String password) {
     setUsername(username);
     setPassword(password);
-    shopeeList = new ShopeeList(username);
+    shopeeList = new ShopeeList("List");
 }
 
 // Used for testing
