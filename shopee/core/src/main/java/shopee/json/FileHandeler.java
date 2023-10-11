@@ -18,7 +18,7 @@ import shopee.core.User;
 public class FileHandeler {
 
     // Use your local path to the file when running maven
-    private String filePath = "/Users/johan/Desktop/gr2334-1/shopee/core/src/main/java/shopee/json/DataStorage.json";
+   private String filePath = "ui/src/main/resources/shopee/DataStorage.json";
 
     // Use this relative path when running in launch
     // private String filePath = "core/src/main/java/shopee/json/DataStorage.json";
