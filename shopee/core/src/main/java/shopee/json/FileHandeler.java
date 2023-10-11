@@ -22,7 +22,7 @@ public class FileHandeler {
 
 
     // Use your local path to the file when running maven
-   private String filePath = "/Users/hannakongelf/Documents/semester-3/ITP/gr2334/shopee/core/src/main/java/shopee/json/DataStorage.json";
+   private String filePath = "ui/src/main/resources/shopee/DataStorage.json";
 
    // Use this relative path when running in launch
    //private String filePath = "core/src/main/java/shopee/json/DataStorage.json";
