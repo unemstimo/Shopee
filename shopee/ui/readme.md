@@ -1,29 +1,17 @@
-# Shopee Project
+# **UI Module**
+This folder contains the ui module of the shopee application. The ui module manages the user experience through the fxml-files while ensuring seamless integration among the domain logic layer, persistence layer, and UI layer through the controller classes. The user interface is made using JavaFX- and fxml- technologies and shows the shopee list to a user, i.e. the users shopping list and bought list. In the ui, the user can move food items from the shopping list to the bought list and add new food items to the shopping list.  
 
-## App Description
-The shopee app is an application that works as a shopping list. The app allows a user to create a shopping list and manage the shopping list. The shopee app makes it easy to keep track of what the user need to purchase by adding food items along with the amount of the item. 
-___
-## Illustrative screenshot of the application
+## **User interface**
+This folder contains the controller classes as well as the class that makes the application run. The controller classes connects the domain logic in the core module with the user input from the fxml-files found under resources. 
 
-The pictures illustrate how the group thinks the final product of the app will look like. 
+**Classes:**
+- __LogInController.java__ which is connected to the first page the user meets: the log-in page. Also makes sure that the program moves on to the next page when its time. 
+- __ShopeeController.java__ is connected to the second page the user meets: the shopee list page. 
+- __Shopee.java__ is the class that extends Application and launches the Shopee application
 
-### FrontPage:
-![FrontPage](frame1.png)
+## **Resources**
+This folder contains the fxml-files which comprises the user interface appearing at the users screen.
 
-### New Shopee List:
-![New Shopee List](frame2.png)
-
-### Edit Shopee List:
-![Edit Shopee List](frame3.png)
-
-## User story
-As a user I want to be able to add food items to my shopping list, and also mark item as bought or remove items, for an efficient and simple shopping.
-_____
-### important to be able to see
-1. **Shopping List** : The user should be able to see the food items added to the shopping list along with the amount of food items. Food items that is bought should not be shown in the list.
-
-### important to be able to do
-1. **Add food** : User should be able to use input field to add food item to shopping list
-2. **Buy food** : User should be able to mark a food item in the list and then click button to mark as bought. 
-3. **Remove food** : User should be able to mark a food item and click the button for removing the item. 
-
+**Files**
+- __LogIn.fxml__ the first page the user meets. Here the user can either log in or create a new user.
+- __Shopee.fxml__ the second page the user meets. Here the user can interact with and view its shopee list. 
