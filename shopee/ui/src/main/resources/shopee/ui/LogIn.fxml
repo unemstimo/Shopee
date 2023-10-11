@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shopee.ui.LogInController">
+   <children>
+      <Button fx:id="signUp" layoutX="214.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleSignUpButtonClick" text="Opprett bruker" />
+      <Button fx:id="signIn" layoutX="317.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleSignInButtonClick" text="Logg inn" />
+      <TextField fx:id="usernameInput" layoutX="221.0" layoutY="174.0" />
+      <TextField fx:id="passwordInput" layoutX="222.0" layoutY="211.0" />
+      <Label fx:id="output" layoutX="237.0" layoutY="300.0" prefHeight="53.0" prefWidth="160.0" />
+      <Label layoutX="205.0" layoutY="96.0" prefHeight="37.0" prefWidth="194.0" text="Logg inn eller opprett en ny bruker  " />
+      <Label layoutX="102.0" layoutY="181.0" text="Brukernavn (epost):" />
+      <Label layoutX="161.0" layoutY="216.0" text="Passord:" />
+      <ImageView fx:id="logo" fitHeight="88.0" fitWidth="173.0" layoutX="214.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@shopee.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="204.0" layoutY="126.0" text="for å komme i gang med handlingen" />
+   </children>
+</AnchorPane>
