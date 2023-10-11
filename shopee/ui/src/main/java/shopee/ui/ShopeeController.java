@@ -67,7 +67,7 @@ public class ShopeeController{
        
         newFood.clear();
         amountNewFood.clear();
-        jsonFile.writeToFile(this.user); //Må fikser at listen oppdateres og ikke duplikeres
+        jsonFile.writeToFile(this.user); 
     }
 
 
@@ -136,8 +136,6 @@ public class ShopeeController{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
         
         Scene logInScene = new Scene(loader.load());
-
-        //LogInController logInController = loader.getController();
 
         Stage stage = (Stage) logOut.getScene().getWindow();
         stage.setScene(logInScene);

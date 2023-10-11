@@ -19,8 +19,8 @@ public class UserTest {
     */
     @Test
     public void testValidUsername(){
-        String correctUsername = "olanordmann@gmail.com";
-        String correctPassword = "ola123//";
+        // String correctUsername = "olanordmann@gmail.com";
+        // String correctPassword = "ola123//";
         
         // checking if exception is being thrown for either: number first, or first part of email address having length < 2
         try {
