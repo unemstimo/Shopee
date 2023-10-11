@@ -33,7 +33,6 @@ The project is organized with these directories for managing source code, docume
     - __ShopeeList.java:__ Java class for shopping list
     - **User.java:** Java class for user
 - **/src/main/java/shopee/json** Folder contains persistance for code project.
-    - **DataStorage.json** 
     - **FileHandeler.java** Handles the json file methods, read/write to file
 - **/src/main/java/module-info.java** contains module info for the module in core   
 - **/src/test/java/shopee/core** Contains test classes for the java classes that holds the logic.
@@ -63,6 +62,7 @@ The project is organized with these directories for managing source code, docume
 - **/src/test/java/shopee/ui** Contains test classes for controller and fxml
     - **LogInTest.java**
     - **ShopeeTest.java**
+- **/src/main/resources/shopee/DataStorage.json** Json file that is written to file and read from file
 - **pom.xml**  This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
 - **readme.md**  Description on ui module.
 
