@@ -27,24 +27,26 @@ To run the app you can either:
 _______________________
 ## Project Structure
 The project is organized with these directories for managing source code, documentation and resources.
-
-- __core:__  The core module for the app.
-    - __src/ main/ java/ core__ :  This directory contains core Java classes for the app
-        - __FoodItem.java:__  Java class for food object
-        - __ShopeeList.java:__ Java class for shopping list
-    - __src/ main/ java/ core/ Storage:__ This directory contains file handling classes and files
-        - __boughtList.txt:__ This file holds the food items the user have marked as bought in the app
-        - __shopeList.txt:__ This file holds the food items the user have added to the shopping list
-        - __ReadFromFile.java:__ Java class containing file handling for reading from file
-        - __WriteToFile.java:__ Java class containg file handling for writing to file
-    - __src/main/java/module-info:__ contains module info for the module in core
-    - __src/test/java/core:__ This contains all test classes for the Java classes in core
-    - __pom.xml:__ This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
-
+- **shopee/core/src/main/java/shopee/core** : The core module for the app, contains core Java classes for the app.
+    - __FoodItem.java:__  Java class for food object
+    - __ShopeeList.java:__ Java class for shopping list
+    - **User.java:** Java class for user
+- **shopee/core/src/main/java/shopee/json** Folder contains persistance for code project.
+    - **DataStorage.json** 
+    - **FileHandeler.java** Handles the json file methods, read/write to file
+- **shopee/core/src/main/java/module-info.java** contains module info for the module in core   
+- **shopee/core/src/test/java/shopee/core** Contains test classes for the java classes that holds the logic.
+    - **FoodItemTest.java**
+    - **ShopeeListTest.java**
+    - **UserTest.java**
+- **shopee/core/src/test/java/shopee/json** Holds testing for file handler class
+    - **FileHandlerTest.java**
+- **shopee/core/pom.xml** This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
 
 
 - **docs**:  This folder contains the documentation for app. Releases is placed in this folder.
-    - **release1** : Documentation of what has been accomplished for the first sprint in this project.
+    - **release1.md** : Documentation of what has been accomplished for the first sprint in this project.
+    - **release2.md** : Documentation on what has been accomplished since first release, reflection on this sprint and how the group has cooporated.
 
 
 
@@ -59,13 +61,15 @@ The project is organized with these directories for managing source code, docume
     - **pom.xml**  This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
     - **readme.md**  Description of the app project, illustration of the app, user story and important functuality to the app.
 
-- **Sequence Diagram**
-A sequence diagram to show the functionality of the code. In a lesson George said that we needed a sequence diagram, don't know if it is for release 2. But we made it anyways, or we tried to. Please give feedback if it wrong and what not (I know it contains a class we havent created yet, but we included it to give insight to the finished project). 
-![ShopeeApp](https://www.plantuml.com/plantuml/svg/RL91RiCW4BppYlr0v7iELTocbIAblLXHpyXC7LGC5DQD_FkkxJgE9NC0j3Cxmm27p3fnrpgghY42POmgVriVTT8jLTmxKEPawu7pYE2dWw_nZfnrWzBPnhVmJBLCI4g6hZaakcGaKkEyUw9pQAod_LGz-Q-Wfef0bR15IS3A-aR0uXBLNDoj2VeNz87RABFYpFel2PfX9i9YCKOysynvFr35PEbUmRJW3yN1G3Pt_UBLM2wEDaUd-n5I8xxmIcEA8rpntFNq5e8vCLgwapOIhKJM1vfz_4np8KI2DmbAEwPFBTVFWUghzYBQXWHoGwyY6Tiv8058mMNGxR_TIUxGyMRJS95A74cUzo2h_8a_ "ShopeeApp")
+## Package diagram explaining folder structure
+[Package diagram](ShopeePackage.png)
+
 
 
 ## Configuration of tools for code quality
 * __jaCoCo:__ Gathers and presents information and testcode coverage
+* __checkstyle:__ Checks code quality
+*__spotBugs:__ Finds bugs in code
 
 
 
