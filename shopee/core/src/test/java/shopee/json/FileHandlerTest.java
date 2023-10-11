@@ -16,7 +16,11 @@ public class FileHandlerTest {
     private FileHandeler fileHandler = new FileHandeler();
     //private final String testFilePath = "testDataStorage.json"; // Use a temporary test file
 
-   
+    /**
+     * Test the writeToFile(User) method and jsonToObj()
+     * Checks if new login info i saved properly plus shopping list info. Sees if the added fooditems 
+     * match with what we write when creating a list.
+     */
     @Test
     public void testWriteAndReadUserToFile() {
         // Create a User object for testing
@@ -48,6 +52,11 @@ public class FileHandlerTest {
         assertEquals("Chips", testUser.getShopeeList().getBoughtItem(0).getFoodName());
     }
 
+    /**
+     * Test the writeToFile(User) method further.
+     * Checks if the amount updates when adding the same ingredient to the list 
+     * it should not be duplicates and only the last given amount should be saved.
+     */
     @Test
     public void testUpdateUserInFile() {
         fileHandler.clearFileContent();
@@ -78,6 +87,10 @@ public class FileHandlerTest {
         assertEquals(3, testUser.getShopeeList().getShopList().get(0).getFoodAmount());
     }
 
+    /**
+     * Test the clearFileContent() helper method 
+     * Checks if all stored data is removed from the file, such that an empty file can be used in other methods.
+     */
     @Test
     public void testClearFileContent() {
         // Create a User object for testing
