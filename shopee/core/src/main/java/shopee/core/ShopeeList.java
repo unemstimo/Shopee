@@ -49,7 +49,7 @@ public class ShopeeList {
      * @param listName
      */
     private void ValidName(String listName) {
-        if (!listName.matches("[A-Za-z0-9]+")) {
+        if (!listName.matches("[A-Za-z0-9 ]+")) {
             throw new IllegalArgumentException("Shoplist name is not valid");
         }
     }
