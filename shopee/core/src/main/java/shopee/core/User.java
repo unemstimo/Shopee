@@ -164,15 +164,10 @@ public ShopeeList getShopeeList(String name){
     throw new IllegalArgumentException("No such list name for this user");
 }
 
-public void deleteShopeeList(String name) {
-    for(ShopeeList list : this.shopeeLists) {
-        if(list.getListName().equals(name)) {
-            this.shopeeLists.remove(list);
-        }
-        else {
-            throw new IllegalArgumentException("The list does not exist");
-        }
-    }  
+public void deleteShopeeList(int index) {
+   if(index >= 0){
+    this.shopeeLists.remove(index);
+   }
 }
 
 }
