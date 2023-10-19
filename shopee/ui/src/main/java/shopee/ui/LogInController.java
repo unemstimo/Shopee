@@ -138,13 +138,13 @@ public int indexUser(boolean exist) {
 private void loadNewPage(ActionEvent actionEvent) {
     try{  
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-        Scene shopeeScene = new Scene(loader.load());
+        Scene homeScene = new Scene(loader.load());
 
         HomePageController homepage = loader.getController();
         homepage.setUser(this.user);
 
         Stage stage = (Stage) signIn.getScene().getWindow();
-        stage.setScene(shopeeScene);
+        stage.setScene(homeScene);
 
         usernameInput.clear();
         passwordInput.clear();

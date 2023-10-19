@@ -11,7 +11,7 @@
    <children>
       <ScrollPane fx:id="ListView" layoutX="272.0" layoutY="42.0" prefHeight="316.0" prefWidth="200.0" />
       <Text layoutX="272.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ShopeeLists" textAlignment="CENTER" wrappingWidth="218.21630859375" />
-      <Button fx:id="logOut" layoutX="487.0" layoutY="187.0" mnemonicParsing="false" text="Log Out " />
+      <Button fx:id="logOut" layoutX="487.0" layoutY="187.0" mnemonicParsing="false" onAction="#logOut" text="Log Out " />
       <Button fx:id="deleteList" layoutX="280.0" layoutY="363.0" mnemonicParsing="false" onAction="#deleteList" text="Delete List" />
       <Button fx:id="modifyList" layoutX="395.0" layoutY="363.0" mnemonicParsing="false" onAction="#modifyList" text="Modify List" />
       <Text layoutX="51.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new shopping list" wrappingWidth="145.21630859375" />

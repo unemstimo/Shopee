@@ -30,6 +30,7 @@ public class ShopeeController{
     
    
     private User user;
+    private String listName;
     private FileHandeler jsonFile = new FileHandeler();
 
     @FXML private TextField newFood, amountNewFood; 
@@ -40,14 +41,14 @@ public class ShopeeController{
 
     public void setUser(User user){
         this.user = user;
-        showShoppingList(user.getShopeeList().getShopList());
-        showBoughtList(user.getShopeeList().getBoughtList());
+        showShoppingList(user.getShopeeList(this.listName).getShopList());
+        showBoughtList(user.getShopeeList(this.listName).getBoughtList());
 
     }
     
 
     public ShopeeList getShopList(){
-        return this.user.getShopeeList();
+        return this.user.getShopeeList(this.listName);
     }
 
     /**
