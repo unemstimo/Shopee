@@ -8,7 +8,7 @@ module shopee.rest {
     requires org.glassfish.hk2.api;
     requires org.slf4j;
 
-    requires todolist.core;
+    requires shopee.core;
 
     opens shopee.restapi to jersey.server;
 }
