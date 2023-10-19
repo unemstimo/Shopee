@@ -2,6 +2,7 @@ package shopee.ui;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.ObservableList;
@@ -30,25 +31,26 @@ public class ShopeeController{
     
    
     private User user;
-    private String listName;
     private FileHandeler jsonFile = new FileHandeler();
+    private int index; 
 
     @FXML private TextField newFood, amountNewFood; 
-    @FXML private Button addFood, foodBought, removeFood, logOut;
+    @FXML private Button addFood, foodBought, removeFood, back;
     @FXML private VBox shoppingListContainer;
     @FXML private ListView<FoodItem> shoppingListView;
     @FXML private ListView<FoodItem> boughtListView;
 
-    public void setUser(User user){
+    public void setUser(User user, int index){
         this.user = user;
-        showShoppingList(user.getShopeeList(this.listName).getShopList());
-        showBoughtList(user.getShopeeList(this.listName).getBoughtList());
+        this.index = index;
+        showShoppingList(this.getShopeeList().getShopList());
+        showBoughtList(this.getShopeeList().getBoughtList());
 
     }
     
 
-    public ShopeeList getShopList(){
-        return this.user.getShopeeList(this.listName);
+    public ShopeeList getShopeeList(){
+        return this.user.getShopeeLists().get(this.index);
     }
 
     /**
@@ -62,9 +64,9 @@ public class ShopeeController{
         String food = newFood.getText();
         int amount = Integer.parseInt(amountNewFood.getText());
 
-        this.user.getShopeeList().addFoodShopList(food, amount);
+        this.getShopeeList().addFoodShopList(food, amount);
 
-        showShoppingList(this.user.getShopeeList().getShopList());
+        showShoppingList(this.getShopeeList().getShopList());
        
         newFood.clear();
         amountNewFood.clear();
@@ -103,12 +105,12 @@ public class ShopeeController{
     public void markAsBought(ActionEvent event) {
         int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
         if(selectedIndex >= 0) {
-            FoodItem foodItem = user.getShopeeList().getFood(selectedIndex);
-            user.getShopeeList().addFoodBoughtList(foodItem);
+            FoodItem foodItem = this.getShopeeList().getShopList().get(selectedIndex);
+            this.getShopeeList().addFoodBoughtList(foodItem);
             jsonFile.writeToFile(user);
         }
-        showShoppingList(user.getShopeeList().getShopList());
-        showBoughtList(user.getShopeeList().getBoughtList());
+        showShoppingList(this.getShopeeList().getShopList());
+        showBoughtList(this.getShopeeList().getBoughtList());
     }
 
     /**
@@ -120,26 +122,33 @@ public class ShopeeController{
     public void removeItem(ActionEvent event) {
          int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
         if(selectedIndex >= 0) {
-            user.getShopeeList().removeFood(user.getShopeeList().getFood(selectedIndex).getFoodName());
+            this.getShopeeList().removeFood(this.getShopeeList().getShopList().get(selectedIndex).getFoodName());
         }
         jsonFile.writeToFile(user);
-        showShoppingList(user.getShopeeList().getShopList());
+        showShoppingList(this.getShopeeList().getShopList());
     }
 
     /**
-     * This method handles the action when user clicks on "log out" button
-     * go back to first page where user can log in if wanted
+     * This method handles the action when user clicks on "go back" button
+     * go back to home page where user can log in if wanted
      * @param actionEvent
-     * loads LogIn.fxml
+     * loads Home.fxml
      */
-    public void backToLogInPage(ActionEvent actionEvent) {
-        try{  
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-        
-        Scene logInScene = new Scene(loader.load());
+    
 
-        Stage stage = (Stage) logOut.getScene().getWindow();
-        stage.setScene(logInScene);
+    public void backToShoppingList(ActionEvent actionEvent) {
+    try{ 
+        showShoppingList(new ArrayList<>());
+        showBoughtList(new ArrayList<>());
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+        Scene homeScene = new Scene(loader.load());
+
+        HomePageController homepage = loader.getController();
+        homepage.setUser(this.user);
+
+        Stage stage = (Stage) back.getScene().getWindow();
+        stage.setScene(homeScene);
         
         stage.show();
         
@@ -147,5 +156,4 @@ public class ShopeeController{
         e.printStackTrace();
     }
     }
-    
 }
