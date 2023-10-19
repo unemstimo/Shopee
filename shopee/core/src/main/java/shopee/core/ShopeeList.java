@@ -194,7 +194,7 @@ public class ShopeeList {
      */
     @Override
     public String toString() {
-        return "listName=" + listName + "\n shopList=" + shopList + "\n boughtList=" + boughtList + "]\n";
+        return listName;
     }
    
 }
