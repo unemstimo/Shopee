@@ -126,8 +126,8 @@ public class UserTest {
         ShopeeList list1 = new ShopeeList("Ola");
         list1.addFoodShopList("apple", 4);
         
-        user.setShopeeList(list1);
-        Assertions.assertEquals(list1, user.getShopeeList());
+        user.addShopeeList(list1);
+        Assertions.assertEquals(list1, user.getShopeeList(list1.getListName()));
     }
 
 }
