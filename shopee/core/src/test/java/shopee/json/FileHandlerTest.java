@@ -31,7 +31,7 @@ public class FileHandlerTest {
         newList.addFoodShopList("Apple", 4);
         newList.addFoodShopList("Bread", 1);
 
-        testUser.setShopeeList(newList);
+        testUser.addShopeeList(newList);
 
         // Write the User object to the test file
         fileHandler.writeToFile(testUser);
@@ -44,10 +44,10 @@ public class FileHandlerTest {
         assertEquals(1, userList.size());
         assertEquals(testUser.getUsername(), userList.get(0).getUsername());
         assertEquals(testUser.getPassword(), userList.get(0).getPassword());
-        assertEquals(2, testUser.getShopeeList().getShopList().size());
-        assertEquals("Apple", testUser.getShopeeList().getShopList().get(0).getFoodName());
-        assertEquals(1, testUser.getShopeeList().getShopList().get(1).getFoodAmount());
-        assertEquals("Chips", testUser.getShopeeList().getBoughtItem(0).getFoodName());
+        assertEquals(2, testUser.getShopeeList(newList.getListName()).getShopList().size());
+        assertEquals("Apple", testUser.getShopeeList(newList.getListName()).getShopList().get(0).getFoodName());
+        assertEquals(1, testUser.getShopeeList(newList.getListName()).getShopList().get(1).getFoodAmount());
+        assertEquals("Chips", testUser.getShopeeList(newList.getListName()).getBoughtItem(0).getFoodName());
     }
 
     /**
@@ -64,7 +64,7 @@ public class FileHandlerTest {
         ShopeeList newList = new ShopeeList("Onsdag");
         newList.addFoodShopList("Chips",7);
         newList.addFoodShopList("Chips",3);
-        testUser.setShopeeList(newList);
+        testUser.addShopeeList(newList);
 
         // Write the User object to the test file
         fileHandler.writeToFile(testUser);
@@ -81,7 +81,7 @@ public class FileHandlerTest {
         assertNotNull(userList);
         assertEquals(2, userList.size());
         assertEquals("NewPwd4$", userList.get(0).getPassword());
-        assertEquals(3, testUser.getShopeeList().getShopList().get(0).getFoodAmount());
+        assertEquals(3, testUser.getShopeeList(newList.getListName()).getShopList().get(0).getFoodAmount());
     }
 
     /**
