@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane fx:id="ListView" layoutX="272.0" layoutY="42.0" prefHeight="316.0" prefWidth="200.0" />
+      <Text layoutX="272.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ShopeeLists" textAlignment="CENTER" wrappingWidth="218.21630859375" />
+      <Button fx:id="logOut" layoutX="487.0" layoutY="187.0" mnemonicParsing="false" text="Log Out " />
+      <Button fx:id="deleteList" layoutX="280.0" layoutY="363.0" mnemonicParsing="false" onAction="#deleteList" text="Delete List" />
+      <Button fx:id="modifyList" layoutX="395.0" layoutY="363.0" mnemonicParsing="false" onAction="#modifyList" text="Modify List" />
+      <Text layoutX="51.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new shopping list" wrappingWidth="145.21630859375" />
+      <TextField fx:id="listName" layoutX="76.0" layoutY="201.0" />
+      <Text layoutX="14.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List name:" />
+      <Button fx:id="addList" layoutX="117.0" layoutY="237.0" mnemonicParsing="false" onAction="#addNewList" text="Add list" />
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</AnchorPane>

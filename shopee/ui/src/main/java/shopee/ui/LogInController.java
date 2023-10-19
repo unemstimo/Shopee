@@ -137,11 +137,11 @@ public int indexUser(boolean exist) {
  */
 private void loadNewPage(ActionEvent actionEvent) {
     try{  
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Shopee.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
         Scene shopeeScene = new Scene(loader.load());
 
-        ShopeeController shopeeController = loader.getController();
-        shopeeController.setUser(this.user);
+        HomePageController homepage = loader.getController();
+        homepage.setUser(this.user);
 
         Stage stage = (Stage) signIn.getScene().getWindow();
         stage.setScene(shopeeScene);
