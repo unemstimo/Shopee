@@ -10,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * JavaFX App remote
+ */
 public class ShopeeAppRemote extends Application {
 
     @Override
@@ -18,7 +21,7 @@ public class ShopeeAppRemote extends Application {
         LogInController controller = new LogInController();
         controller.setDataAccess(new RemoteShopeeAccess(uriSetup())); //This comes from AbstractController.java and RemoteShopeeAccess.java
         loader.setController(controller);
-        loader.setLocation(Shopee.class.getResource("LogIn.fxml"));
+        loader.setLocation(ShopeeApp.class.getResource("LogIn.fxml"));
         final Parent parent = loader.load();
         stage.setScene(new Scene(parent));
         stage.show();
