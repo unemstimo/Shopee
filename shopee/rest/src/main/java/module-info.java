@@ -1,14 +1,17 @@
 module shopee.rest {
-    requires jakarta.ws.rs;
 
-    requires jersey.common;
-    requires jersey.server;
-    requires jersey.media.json.jackson;
+    requires com.fasterxml.jackson.databind;
 
-    requires org.glassfish.hk2.api;
-    requires org.slf4j;
+    requires transitive shopee.core;
 
-    requires shopee.core;
+    requires spring.web;
+    requires spring.boot;
+    requires spring.core;
+    requires spring.beans;
+    requires spring.context;
+    requires spring.boot.autoconfigure;
+    requires java.net.http;
 
-    opens shopee.restapi to jersey.server;
+    opens shopee.rest to spring.web, spring.beans, spring.context, spring.core;
+    exports shopee.rest.properties to spring.beans, spring.boot;
 }
