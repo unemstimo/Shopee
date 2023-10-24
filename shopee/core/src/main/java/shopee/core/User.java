@@ -181,9 +181,10 @@ public ShopeeList getShopeeList(String name){
  * @param index
  */
 public void deleteShopeeList(int index) {
-   if(index >= 0){
-    this.shopeeLists.remove(index);
+   if(index >= 0 || index < this.shopeeLists.size()){
+        this.shopeeLists.remove(index);
    }
+   
 }
 
 }

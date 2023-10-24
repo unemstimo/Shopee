@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * In this test class, all the main methods of the User.java class are being tested.
@@ -23,7 +24,7 @@ public class UserTest {
      * Add a BeforeAll to avoid creating a new User object in each method
      */
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() {
         user2 = new User("olanordmann@gmail.com", "ola123//");
     }
@@ -113,7 +114,7 @@ public class UserTest {
     @Test
     public void testSetUsername() {
         user2.setUsername("karinordmann@gmail.com");
-        Assertions.assertEquals("karinordmann@gmail.com", user.getUsername());
+        Assertions.assertEquals("karinordmann@gmail.com", user2.getUsername());
     }
 
     /**
@@ -191,7 +192,7 @@ public class UserTest {
 
         assertEquals(list1, user2.getShopeeList("Week 12"));
         assertEquals(list2, user2.getShopeeList("Week 13"));
-          try {
+        try {
             user2.getShopeeList("NonExistentList");
         } catch (Exception e) {
             assertEquals("No such list name for this user", e.getMessage());
@@ -211,17 +212,17 @@ public class UserTest {
         user2.addShopeeList(list1);
         user2.addShopeeList(list2);
         user2.addShopeeList(list3);
-
+        assertEquals(3, user2.getShopeeLists().size());
         user2.deleteShopeeList(1); // Delete "List2"
         List<ShopeeList> shopeeLists = user2.getShopeeLists();
 
         assertTrue(shopeeLists.contains(list1));
         assertFalse(shopeeLists.contains(list2));
         assertTrue(shopeeLists.contains(list3));
+        
+        assertThrows(IndexOutOfBoundsException.class, () -> user2.deleteShopeeList(4) );
 
-        // Index out of bounds, should not throw an exception because it
-        // is only used in the controller where it cant be out of bounds
-        user2.deleteShopeeList(5); 
+        
     }
 
 }
