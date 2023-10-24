@@ -5,5 +5,16 @@
 }, {
   "username" : "osk@.no",
   "password" : "Oskar123@",
+  "shopeeLists" : [ {
+    "listName" : "halla",
+    "shopList" : [ {
+      "foodName" : "halla",
+      "foodAmount" : 4
+    } ],
+    "boughtList" : [ ]
+  } ]
+}, {
+  "username" : "une@.no",
+  "password" : "Oskar@123",
   "shopeeLists" : [ ]
 } ]
