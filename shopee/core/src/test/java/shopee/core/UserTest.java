@@ -3,6 +3,7 @@ package shopee.core;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * In this test class, all the main methods of the User.java class are being tested.
@@ -12,6 +13,15 @@ import org.junit.jupiter.api.Assertions;
 public class UserTest {
     
     private User user;
+
+    /**
+     * Add a BeforeAll to avoid creating new objects in each method
+     */
+
+    @BeforeAll
+    public void setUp() {
+        user = new User("testuser@example.com", "Passw0rd");
+    }
 
     /**
      * Tests if the validUsername(String username) method works.
