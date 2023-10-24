@@ -2,7 +2,12 @@ package shopee.core;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * In this test class, all the main methods of the User.java class are being tested.
@@ -12,6 +17,16 @@ import org.junit.jupiter.api.Assertions;
 public class UserTest {
     
     private User user;
+    private User user2;
+
+    /**
+     * Add a BeforeAll to avoid creating a new User object in each method
+     */
+
+    @BeforeAll
+    public void setUp() {
+        user2 = new User("olanordmann@gmail.com", "ola123//");
+    }
 
     /**
      * Tests if the validUsername(String username) method works.
@@ -97,9 +112,7 @@ public class UserTest {
     */
     @Test
     public void testSetUsername() {
-        user = new User("olanordmann@gmail.com", "ola123//");
-
-        user.setUsername("karinordmann@gmail.com");
+        user2.setUsername("karinordmann@gmail.com");
         Assertions.assertEquals("karinordmann@gmail.com", user.getUsername());
     }
 
@@ -108,26 +121,107 @@ public class UserTest {
     */
     @Test
     public void testSetPassword() {
-        user = new User("olanordmann@gmail.com", "ola123//");
-
-        user.setPassword("kari123//");
-        Assertions.assertEquals("kari123//", user.getPassword());
+        user2.setPassword("kari123//");
+        Assertions.assertEquals("kari123//", user2.getPassword());
     }
 
     /**
-     * Tests the setShopeeList(ShopeeList list) method.
+     * Tests the setShopeeList(List<ShopeeList> list) method.
     */
     @Test
     public void testSetShopeeList() {
-        user = new User();
-        user.setUsername("olanordmann@gmail.com");
-        user.setPassword("ola123//");
-
+        List<ShopeeList> shopeeLists = new ArrayList<>();
         ShopeeList list1 = new ShopeeList("Ola");
-        list1.addFoodShopList("apple", 4);
+        ShopeeList list2 = new ShopeeList("Week 42");
+        shopeeLists.add(0,list1);
+        shopeeLists.add(1, list2);
+        user2.setShopeeLists(shopeeLists);
         
-        user.addShopeeList(list1);
-        Assertions.assertEquals(list1, user.getShopeeList(list1.getListName()));
+        Assertions.assertEquals(list1.getListName(), user2.getShopeeLists().get(0).getListName());
+        Assertions.assertEquals(2, user2.getShopeeLists().size());
+    }
+
+
+    /**
+     * Tests the getShopeeList(List<ShopeeList>) method
+     */
+    @Test public void getShopeeLists(){
+        List<ShopeeList> shopeeLists = new ArrayList<>();
+        ShopeeList list1 = new ShopeeList("Ola");
+        ShopeeList list2 = new ShopeeList("Week 42");
+        shopeeLists.add(list1);
+        shopeeLists.add(list2);
+        user2.setShopeeLists(shopeeLists);
+
+        Assertions.assertEquals(shopeeLists.size(), user2.getShopeeLists().size());
+    }
+
+    /**
+     * Tests the addShopeeList(ShopeeList) method
+     */
+     @Test
+     public void testAddShopeeList(){
+         ShopeeList list1 = new ShopeeList("Ove");
+         ShopeeList list2 = new ShopeeList("Henrik");
+ 
+         user2.addShopeeList(list1);
+         List<ShopeeList> shopeeLists = user2.getShopeeLists();
+         assertTrue(shopeeLists.contains(list1));
+         assertFalse(shopeeLists.contains(list2));
+ 
+         //Adding the same list twice should throw an exception
+         try {
+            user2.addShopeeList(list1);
+        } catch (Exception e) {
+            assertEquals("Cant use same list name twice", e.getMessage());
+            assertTrue(e instanceof IllegalArgumentException);
+        }  
+    }
+
+    /**
+     * Tests the method getShopeeList(String)
+     */
+    @Test
+    public void testGetShopeeList() {
+        ShopeeList list1 = new ShopeeList("Week 12");
+        ShopeeList list2 = new ShopeeList("Week 13");
+
+        user2.addShopeeList(list1);
+        user2.addShopeeList(list2);
+
+        assertEquals(list1, user2.getShopeeList("Week 12"));
+        assertEquals(list2, user2.getShopeeList("Week 13"));
+          try {
+            user2.getShopeeList("NonExistentList");
+        } catch (Exception e) {
+            assertEquals("No such list name for this user", e.getMessage());
+            assertTrue(e instanceof IllegalArgumentException);
+        }  
+    }
+    
+      /**
+     * Tests the method deleteShopeeList(int)
+     */
+    @Test
+    public void testDeleteShopeeList() {
+        ShopeeList list1 = new ShopeeList("Week 42");
+        ShopeeList list2 = new ShopeeList("Week 43");
+        ShopeeList list3 = new ShopeeList("Week 44");
+
+        user2.addShopeeList(list1);
+        user2.addShopeeList(list2);
+        user2.addShopeeList(list3);
+
+        user2.deleteShopeeList(1); // Delete "List2"
+        List<ShopeeList> shopeeLists = user2.getShopeeLists();
+
+        assertTrue(shopeeLists.contains(list1));
+        assertFalse(shopeeLists.contains(list2));
+        assertTrue(shopeeLists.contains(list3));
+
+        // Index out of bounds, should not throw an exception because it
+        // is only used in the controller where it cant be out of bounds
+        user2.deleteShopeeList(5); 
     }
 
 }
