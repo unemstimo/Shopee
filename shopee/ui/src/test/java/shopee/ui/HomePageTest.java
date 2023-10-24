@@ -7,19 +7,14 @@ import javafx.scene.Scene;
 
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import shopee.core.FoodItem;
-import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -81,6 +76,10 @@ public class HomePageTest extends ApplicationTest{
 
     }
 
+
+    /**
+     * Tests that the user is able to modify on of its existing shopee lists
+     */
     @Test
     public void modifyShopeeList() {
         clickOn("#shoppingListView").type(KeyCode.DOWN);
@@ -106,7 +105,11 @@ public class HomePageTest extends ApplicationTest{
 
     }
 
-
+    /**
+     * Makes a User that will be the used in the tests
+     * 
+     * @return User
+     */
     public User exampleUser(){
         FileHandeler handler = new FileHandeler();
         handler.clearFileContent();
