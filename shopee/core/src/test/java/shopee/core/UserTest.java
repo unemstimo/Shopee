@@ -13,14 +13,15 @@ import org.junit.jupiter.api.BeforeAll;
 public class UserTest {
     
     private User user;
+    private User user2;
 
     /**
-     * Add a BeforeAll to avoid creating new objects in each method
+     * Add a BeforeAll to avoid creating a new User object in each method
      */
 
     @BeforeAll
     public void setUp() {
-        user = new User("testuser@example.com", "Passw0rd");
+        user2 = new User("olanordmann@gmail.com", "ola123//");
     }
 
     /**
@@ -107,9 +108,7 @@ public class UserTest {
     */
     @Test
     public void testSetUsername() {
-        user = new User("olanordmann@gmail.com", "ola123//");
-
-        user.setUsername("karinordmann@gmail.com");
+        user2.setUsername("karinordmann@gmail.com");
         Assertions.assertEquals("karinordmann@gmail.com", user.getUsername());
     }
 
@@ -118,10 +117,8 @@ public class UserTest {
     */
     @Test
     public void testSetPassword() {
-        user = new User("olanordmann@gmail.com", "ola123//");
-
-        user.setPassword("kari123//");
-        Assertions.assertEquals("kari123//", user.getPassword());
+        user2.setPassword("kari123//");
+        Assertions.assertEquals("kari123//", user2.getPassword());
     }
 
     /**
