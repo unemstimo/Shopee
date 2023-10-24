@@ -25,6 +25,7 @@ public class LogInTest extends ApplicationTest {
         stage.setScene(new Scene(root));
         stage.show();
     }
+    
     @Test
     public void testControllerInitial() {
         assertNotNull(this.controller);
