@@ -172,11 +172,32 @@ public class UserTest {
          //Adding the same list twice should throw an exception
          try {
             user2.addShopeeList(list1);
-         } catch (Exception e) {
+        } catch (Exception e) {
             assertEquals("Cant use same list name twice", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
-         }  
-     }
+        }  
+    }
+
+    /**
+     * Tests the method getShopeeList(String)
+     */
+    @Test
+    public void testGetShopeeList() {
+        ShopeeList list1 = new ShopeeList("Week 12");
+        ShopeeList list2 = new ShopeeList("Week 13");
+
+        user2.addShopeeList(list1);
+        user2.addShopeeList(list2);
+
+        assertEquals(list1, user2.getShopeeList("Week 12"));
+        assertEquals(list2, user2.getShopeeList("Week 13"));
+          try {
+            user2.getShopeeList("NonExistentList");
+        } catch (Exception e) {
+            assertEquals("No such list name for this user", e.getMessage());
+            assertTrue(e instanceof IllegalArgumentException);
+        }  
+    }
  
 
 }
