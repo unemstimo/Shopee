@@ -1,6 +1,7 @@
 package shopee.ui;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -11,7 +12,9 @@ import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
@@ -20,6 +23,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
 
 public class HomePageTest extends ApplicationTest{
@@ -74,6 +78,31 @@ public class HomePageTest extends ApplicationTest{
         } catch (Exception e) {
             assertEquals("No such list name for this user", e.getMessage());
         }  
+
+    }
+
+    @Test
+    public void modifyShopeeList() {
+        clickOn("#shoppingListView").type(KeyCode.DOWN);
+        clickOn("#modifyList");
+
+        WaitForAsyncUtils.waitForFxEvents();
+
+        Node modifyShopeeElement = lookup("#newFood").query();
+        assertNotNull(modifyShopeeElement);
+
+        clickOn("#newFood").write("fisk");
+        clickOn("#amountNewFood").write("4");
+        clickOn("#addFood");
+
+        clickOn("#back");
+        
+        Node homepageElement = lookup("#listName").query();
+        assertNotNull(homepageElement);
+
+        int lenght = testUser.getShopeeLists().get(0).getShopList().size();
+
+        assertNotEquals(0, lenght);
 
     }
 
