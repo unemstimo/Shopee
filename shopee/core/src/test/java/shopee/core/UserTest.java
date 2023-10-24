@@ -198,6 +198,30 @@ public class UserTest {
             assertTrue(e instanceof IllegalArgumentException);
         }  
     }
- 
+    
+      /**
+     * Tests the method deleteShopeeList(int)
+     */
+    @Test
+    public void testDeleteShopeeList() {
+        ShopeeList list1 = new ShopeeList("Week 42");
+        ShopeeList list2 = new ShopeeList("Week 43");
+        ShopeeList list3 = new ShopeeList("Week 44");
+
+        user2.addShopeeList(list1);
+        user2.addShopeeList(list2);
+        user2.addShopeeList(list3);
+
+        user2.deleteShopeeList(1); // Delete "List2"
+        List<ShopeeList> shopeeLists = user2.getShopeeLists();
+
+        assertTrue(shopeeLists.contains(list1));
+        assertFalse(shopeeLists.contains(list2));
+        assertTrue(shopeeLists.contains(list3));
+
+        // Index out of bounds, should not throw an exception because it
+        // is only used in the controller where it cant be out of bounds
+        user2.deleteShopeeList(5); 
+    }
 
 }
