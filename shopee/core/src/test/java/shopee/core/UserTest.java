@@ -156,4 +156,27 @@ public class UserTest {
         Assertions.assertEquals(shopeeLists.size(), user2.getShopeeLists().size());
     }
 
+    /**
+     * Tests the addShopeeList(ShopeeList) method
+     */
+     @Test
+     public void testAddShopeeList(){
+         ShopeeList list1 = new ShopeeList("Ove");
+         ShopeeList list2 = new ShopeeList("Henrik");
+ 
+         user2.addShopeeList(list1);
+         List<ShopeeList> shopeeLists = user2.getShopeeLists();
+         assertTrue(shopeeLists.contains(list1));
+         assertFalse(shopeeLists.contains(list2));
+ 
+         //Adding the same list twice should throw an exception
+         try {
+            user2.addShopeeList(list1);
+         } catch (Exception e) {
+            assertEquals("Cant use same list name twice", e.getMessage());
+            assertTrue(e instanceof IllegalArgumentException);
+         }  
+     }
+ 
+
 }
