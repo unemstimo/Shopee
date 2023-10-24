@@ -2,7 +2,7 @@ package shopee.ui;
 
 import java.io.IOException;
 
-import shopee.ui.dataaccess.ShopeeAccess;
+import shopee.ui.dataaccess.UserAccess;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public abstract class AbstractController {
     
-    protected ShopeeAccess dataAccess;
+    protected UserAccess dataAccess;
 
     /**
      * Creating an enum for the controllers. An enumeration is used to define controllers and fxml
@@ -41,11 +41,11 @@ public abstract class AbstractController {
         }
     }
 
-    public void setDataAccess(ShopeeAccess dataAccess) {
+    public void setDataAccess(UserAccess dataAccess) {
         this.dataAccess = dataAccess;
     }
 
-    public ShopeeAccess getDataAccess() {
+    public UserAccess getDataAccess() {
         return this.dataAccess;
     }
 
@@ -56,7 +56,7 @@ public abstract class AbstractController {
      * @param event
      * @param shopeeAccess
      */
-    public void setScene(Controllers controllerType, Event event, ShopeeAccess shopeeAccess) {
+    public void setScene(Controllers controllerType, Event event, UserAccess shopeeAccess) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         try {
             AbstractController controller = controllerType.getController();

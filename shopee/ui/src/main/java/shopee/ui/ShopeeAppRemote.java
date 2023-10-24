@@ -3,7 +3,7 @@ package shopee.ui;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import shopee.ui.dataaccess.RemoteShopeeAccess;
+import shopee.ui.dataaccess.RemoteUserAccess;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +19,7 @@ public class ShopeeAppRemote extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         LogInController controller = new LogInController();
-        controller.setDataAccess(new RemoteShopeeAccess(uriSetup())); //This comes from AbstractController.java and RemoteShopeeAccess.java
+        controller.setDataAccess(new RemoteUserAccess(uriSetup())); //This comes from AbstractController.java and RemoteShopeeAccess.java
         loader.setController(controller);
         loader.setLocation(ShopeeApp.class.getResource("LogIn.fxml"));
         final Parent parent = loader.load();

@@ -9,7 +9,7 @@ module ui {
     requires transitive core;
 
     exports shopee.ui;
-    exports shopee.ui.dataaccess; // Mappen må fylles med filer for at denne streken skal gå bort. Det blir gjort i et annet issue. 
+    exports shopee.ui.dataaccess; 
 
     opens shopee.ui to javafx.graphics, javafx.fxml;
 }
