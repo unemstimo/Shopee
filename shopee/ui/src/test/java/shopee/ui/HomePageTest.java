@@ -36,12 +36,25 @@ public class HomePageTest extends ApplicationTest{
         stage.show();
     }
 
+    /**
+     * Tests that the user creates and adds new lists
+     */
+    @Test
+    public void createNewShopeeList() {
+        assertEquals("", lookup("#listName").queryTextInputControl().getText());
+
+        clickOn("#listName").write("Uke 40");
+        clickOn("#addList");
+
+        assertEquals("Uke 40", this.testUser.getShopeeLists().get(0).getListName());
+    }
+
+
     public User exampleUser(){
         FileHandeler handler = new FileHandeler();
         handler.clearFileContent();
         this.testUser = new User("johan@ntnu.no", "Johan123@");
         return testUser; 
-
      }
 
 
