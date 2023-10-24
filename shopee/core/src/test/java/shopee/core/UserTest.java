@@ -137,8 +137,23 @@ public class UserTest {
         shopeeLists.add(1, list2);
         user2.setShopeeLists(shopeeLists);
         
-        Assertions.assertEquals(list1.getListName(), user.getShopeeLists().get(0).getListName());
-        Assertions.assertEquals(2, user.getShopeeLists().size());
+        Assertions.assertEquals(list1.getListName(), user2.getShopeeLists().get(0).getListName());
+        Assertions.assertEquals(2, user2.getShopeeLists().size());
+    }
+
+
+    /**
+     * Tests the getShopeeList(List<ShopeeList>) method
+     */
+    @Test public void getShopeeLists(){
+        List<ShopeeList> shopeeLists = new ArrayList<>();
+        ShopeeList list1 = new ShopeeList("Ola");
+        ShopeeList list2 = new ShopeeList("Week 42");
+        shopeeLists.add(list1);
+        shopeeLists.add(list2);
+        user2.setShopeeLists(shopeeLists);
+
+        Assertions.assertEquals(shopeeLists.size(), user2.getShopeeLists().size());
     }
 
 }
