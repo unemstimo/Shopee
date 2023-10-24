@@ -2,6 +2,10 @@ package shopee.core;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -122,19 +126,19 @@ public class UserTest {
     }
 
     /**
-     * Tests the setShopeeList(ShopeeList list) method.
+     * Tests the setShopeeList(List<ShopeeList> list) method.
     */
     @Test
     public void testSetShopeeList() {
-        user = new User();
-        user.setUsername("olanordmann@gmail.com");
-        user.setPassword("ola123//");
-
+        List<ShopeeList> shopeeLists = new ArrayList<>();
         ShopeeList list1 = new ShopeeList("Ola");
-        list1.addFoodShopList("apple", 4);
+        ShopeeList list2 = new ShopeeList("Week 42");
+        shopeeLists.add(0,list1);
+        shopeeLists.add(1, list2);
+        user2.setShopeeLists(shopeeLists);
         
-        user.addShopeeList(list1);
-        Assertions.assertEquals(list1, user.getShopeeList(list1.getListName()));
+        Assertions.assertEquals(list1.getListName(), user.getShopeeLists().get(0).getListName());
+        Assertions.assertEquals(2, user.getShopeeLists().size());
     }
 
 }
