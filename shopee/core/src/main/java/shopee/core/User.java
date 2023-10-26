@@ -217,7 +217,24 @@ public void deleteShopeeList(String listName) {
     return this.active;
  }
 
- 
+ /**
+  *sets the index of the list that we will handle 
+  *
+  * @param index
+  */
+ public void setListIndex(int index) {
+    this.indexOfList = index;
+ }
+
+
+ /**
+  *a getter for the index of the list we want to handle 
+  *
+  * @return index
+  */
+ public int getListIndex() {
+    return this.indexOfList;
+ }
 
 
 
