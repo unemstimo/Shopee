@@ -1,4 +1,4 @@
-package shopee.rest;
+package shopee.rest.properties;
 
 public class FileStorageProperties {
 

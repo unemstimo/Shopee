@@ -11,7 +11,8 @@ The Spring Application
 public class ShopeeAppApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ShopeeAppApplication.class, args);
+        SpringApplication.
+        //SpringApplication.run(ShopeeAppApplication.class, args);
     }
 
 }
