@@ -187,6 +187,15 @@ public void deleteShopeeList(int index) {
    
 }
 
+/**
+ * This method removes a shopee list with a certain list name
+ * @param listName
+ */
+public void deleteShopeeList(String listName) {
+   this.shopeeLists.remove(this.getShopeeList(listName));
+    
+ }
+
 }
 
 
