@@ -95,6 +95,7 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
         }
         if(userExist){
             this.user = users.get(this.indexUser(userExist));
+            this.user.setActiveState(true); //Sets that the active state is true when user is logged in
             loadNewPage(new ActionEvent());
             
         }

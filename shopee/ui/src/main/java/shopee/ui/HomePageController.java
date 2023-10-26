@@ -109,6 +109,8 @@ private void loadShopeePage(ActionEvent actionEvent) {
 
 private void loadLogIn(ActionEvent actionEvent) {
     try{  
+        this.user.setActiveState(false);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
         Scene LoginScene = new Scene(loader.load());
 
