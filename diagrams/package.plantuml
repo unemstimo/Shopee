@@ -6,21 +6,16 @@
 ' mappestrukturen i prosjektet for at dette diagrammet skal
 ' funke.
 
+component ui {
+    package shopee.ui
+}
 
 component core{
     package shopee.core
     package shopee.json
 }
 
-shopee.core ..> shopee.json
-
 component jackson {
-}
-
-shopee.json ..> jackson
-
-component ui {
-    package shopee.ui
 }
 
 component javafx {
@@ -29,9 +24,26 @@ component javafx {
     }
 }
 
+component restapi {
+    package shopee.rest {
+
+    }
+}
+
+component springboot {
+}
+
+
+
+shopee.ui ..> shopee.core
 ui ..> javafx
 ui ..> fxml
-shopee.ui ..> shopee.core
+shopee.core ..> shopee.json
+shopee.json ..> jackson
+shopee.rest ..> springboot
+shopee.rest ..> shopee.core
+shopee.rest ..> shopee.json
+ui ..> shopee.rest 
 shopee.ui ..> shopee.json
 
 @enduml
