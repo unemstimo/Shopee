@@ -145,6 +145,11 @@ public List<ShopeeList> getShopeeLists(){
     return this.shopeeLists;
 }
 
+
+/**
+ * This ads a shopee list object to the users list
+ * @param list
+ */
 public void addShopeeList(ShopeeList list){
     for (ShopeeList shopeeList : this.shopeeLists) {
         if(shopeeList.getListName().equals(list.getListName())){
@@ -155,6 +160,13 @@ public void addShopeeList(ShopeeList list){
     this.shopeeLists.add(list);
     }
 
+
+/**
+ *Returns a shopeelist with a given name
+ * 
+ * @param name
+ * @return
+ */
 public ShopeeList getShopeeList(String name){
     for (ShopeeList list : this.shopeeLists) {
         if(list.getListName().equals(name)){
@@ -164,15 +176,15 @@ public ShopeeList getShopeeList(String name){
     throw new IllegalArgumentException("No such list name for this user");
 }
 
-public void deleteShopeeList(String name) {
-    for(ShopeeList list : this.shopeeLists) {
-        if(list.getListName().equals(name)) {
-            this.shopeeLists.remove(list);
-        }
-        else {
-            throw new IllegalArgumentException("The list does not exist");
-        }
-    }  
+/**
+ * This method removes a shopee list at a certain index
+ * @param index
+ */
+public void deleteShopeeList(int index) {
+   if(index >= 0 || index < this.shopeeLists.size()){
+        this.shopeeLists.remove(index);
+   }
+   
 }
 
 }
