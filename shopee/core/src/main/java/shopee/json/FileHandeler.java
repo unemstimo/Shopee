@@ -108,6 +108,15 @@ public class FileHandeler {
 
     }
 
+    /**
+     * Helper method to create a new object mapper
+     * 
+     * @return a new object mapper
+     */
+    public static ObjectMapper createObjectMapper() {
+        return new ObjectMapper();
+    }
+
     public static String getAbsolutePathOfFileName(String fileName) {
         Path root = Paths.get(System.getProperty("user.dir")); // Set the root directory for your search
         try {
