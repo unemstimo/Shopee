@@ -16,7 +16,7 @@ __Test coverage__
 
 
 ## **User experience improvements**
-__added new page homepage and homepagecontroller__ 
+__For the final release we have improved the user experience of the app.__ The primary improvement centers around the introduction of a new feature – the addition of a user-friendly homepage. This page provides users with a comprehensive view of all their Shopee lists. Users can easily create new Shopee lists and make modifications or deletions to existing ones. The page is simple but includes all the functions we feel is needed. Clicking the 'modify' button directs users to the page where the shopping list is displayed. This is the page that the user was sent to after login in release 2. The app offers intuitive navigation, and in case any prohibited actions are attempted, a default error message will promptly describe the issue.
 
 ## **REST API**
 - __UNE OG HANNA__
