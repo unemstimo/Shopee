@@ -55,8 +55,8 @@ public class ShopeeUserService {
         return true;
     }
 
-    public boolean deleteShopeeList(int i){
-        shopeeUser.deleteShopeeList(i);
+    public boolean deleteShopeeList(string listName){
+        shopeeUser.deleteShopeeList(listName);
         writeToFile(shopeeUser);
         return true;
     }
