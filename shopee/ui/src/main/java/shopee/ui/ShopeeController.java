@@ -21,7 +21,7 @@ import shopee.core.User;
 import shopee.json.FileHandeler;
 import javafx.collections.FXCollections;
 
-public class ShopeeController{
+public class ShopeeController extends AbstractController{
     
     /**
     * Using the empty constructor in the ShopeeList class to create a new shopping list. 

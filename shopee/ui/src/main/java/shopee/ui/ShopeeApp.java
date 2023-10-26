@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * JavaFX App
  */
-public class Shopee extends Application {
+public class ShopeeApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -22,6 +22,6 @@ public class Shopee extends Application {
     }
 
     public static void main(String[] args) {
-        launch(Shopee.class, args);
+        launch(ShopeeApp.class, args);
     }
 }

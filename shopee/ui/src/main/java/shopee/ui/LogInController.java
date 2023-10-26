@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import shopee.core.User;
 import shopee.json.FileHandeler;
 
-public class LogInController {
+public class LogInController extends AbstractController{
 
 @FXML private TextField usernameInput, passwordInput;
 @FXML private Button signIn, signUp;
