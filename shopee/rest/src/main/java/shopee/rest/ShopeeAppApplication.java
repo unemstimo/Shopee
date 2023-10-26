@@ -1,4 +1,4 @@
-package shopee.rest;
+package rest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,8 +11,7 @@ The Spring Application
 public class ShopeeAppApplication {
 
     public static void main(String[] args) {
-        SpringApplication.
-        //SpringApplication.run(ShopeeAppApplication.class, args);
+        SpringApplication.run(ShopeeAppApplication.class, args);
     }
 
 }
