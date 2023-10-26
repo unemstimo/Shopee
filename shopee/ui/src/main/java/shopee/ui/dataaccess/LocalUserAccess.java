@@ -1,8 +1,9 @@
 package shopee.ui.dataaccess;
 
-import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
+import shopee.core.FoodItem;
 import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler;
@@ -15,27 +16,44 @@ public class LocalUserAccess implements UserAccess {
 
     private final FileHandeler persistence = new FileHandeler();
     private User user = new User();
+    private ShopeeList shopeeList;
 
     /**
      * Constructor to initialize persistence
      */
     public LocalUserAccess() {
-        persistence.setSaveFilePath("Shopee.json");
-        try {
-        this.user = persistence.loadUser();
-        } catch (IllegalStateException | IOException e) {
-        this.user = new User();
-        }
+        //persistence.setSaveFilePath("Shopee.json");
+        //try {
+        //this.user = persistence.loadUser();
+            List<User> users = persistence.jsonToObj();
+
+            boolean newUser = true;
+            for (User userInFile : users) {
+                if(userInFile.getUsername().equals(user.getUsername()) && userInFile.getPassword().equals(user.getPassword())){
+                    this.user = userInFile;
+                    newUser = false;
+                    break;
+                }
+            }
+
+            if(newUser) {
+                this.user = new User();
+                persistence.writeToFile(user);
+            }
+
+        //} catch (IllegalStateException | IOException e) {
+        //    this.user = new User();
+       // }
     }
 
-    public LocalUserAccess(String path) {
+    /*public LocalUserAccess(String path) {
         persistence.setSaveFilePath(path);
         try {
         this.user = persistence.loadUser();
         } catch (IllegalStateException | IOException e) {
         this.user = new User();
         } 
-    }
+    }*/
 
     @Override
     public User loadUser(String username, String password) {
@@ -51,35 +69,83 @@ public class LocalUserAccess implements UserAccess {
         }
     }
 
-    @Override
+    /*@Override
     public boolean editShopeeList(String listName, ShopeeList editedList) {
         ShopeeList existingList = user.getShopeeList(listName);
         existingList.setShopList(editedList.getShopList());
         existingList.setBoughtList(editedList.getBoughtList());
-    }
+    }*/
 
     @Override
     public boolean addShopeeList(ShopeeList shopeeList) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addShopeeList'");
+        try{
+            user.addShopeeList(shopeeList);
+            persistence.writeToFile(user);
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public boolean deleteShopeeList(ShopeeList shopeeList) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteShopeeList'");
+    public boolean deleteShopeeList(String listName) {
+       try{
+            user.deleteShopeeList(listName);
+            persistence.writeToFile(user);
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addFoodItem(String listName, FoodItem foodItem) {
+        try{
+            shopeeList = user.getShopeeList(listName);
+            shopeeList.addFoodShopList(foodItem.getFoodName(), foodItem.getFoodAmount());
+            persistence.writeToFile(user);
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeFoodItem(String listName, FoodItem foodItem) {
+        try{
+            shopeeList = user.getShopeeList(listName);
+            shopeeList.removeFood(foodItem.getFoodName());
+            persistence.writeToFile(user);
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean markAsBought(String listName, FoodItem foodItem) {
+        try{
+            shopeeList = user.getShopeeList(listName);
+            shopeeList.addFoodBoughtList(foodItem);
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public void setUser(User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setUser'");
+        this.user = user;
     }
 
     @Override
     public User getUser() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUser'");
+        return this.user;
     }
     
 }

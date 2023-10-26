@@ -1,6 +1,7 @@
 package shopee.ui.dataaccess;
 
 import shopee.core.User;
+import shopee.core.FoodItem;
 import shopee.core.ShopeeList;
 
 /**
@@ -17,7 +18,7 @@ public interface UserAccess {
      * @param editedList
      * @return true if the Shopee list was edited 
      */
-    boolean editShopeeList(String listName, ShopeeList editedList);
+    //boolean editShopeeList(String listName, ShopeeList editedList);
 
     /**
      * Adds a new Shopee list to the user
@@ -33,7 +34,31 @@ public interface UserAccess {
      * @param shopeeList
      * @return true if the Shopee list was deleted from the user successfully
      */
-    boolean deleteShopeeList(ShopeeList shopeeList);
+    boolean deleteShopeeList(String listName);
+
+    /**
+     * Adds a food item to the shop list
+     * 
+     * @param foodItem
+     * @return true if the food item was added to the shop list successfully
+     */
+    boolean addFoodItem(String listName, FoodItem foodItem);
+
+    /**
+     * Removes a food item from the shop list
+     * 
+     * @param foodItem
+     * @return true if the food item was removed from the shop list successfully
+     */
+    boolean removeFoodItem(String listName, FoodItem foodItem);
+
+    /**
+     * Adds the food item into the bought list, removes the same item from the shop list
+     * 
+     * @param foodItem
+     * @return true if the food item was moved successfully
+     */
+    boolean markAsBought(String listName, FoodItem foodItem);
 
     /**
      * Sets the user
