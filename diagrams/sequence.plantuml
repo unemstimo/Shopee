@@ -10,7 +10,7 @@
  User -> Login : User Info
  Login -> Storage : Sign Up
  Storage --> Storage : Save New User
- Storage --> HomePage : Log in
+ Storage --> Login : Created user
  Login -> HomePage: Log In
  HomePage -> ShopeeList : Create/Edit/Display ShopeeList
  ShopeeList -> ShopeeList : Add/Del/Buy FoodItem 
