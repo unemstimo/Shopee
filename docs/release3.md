@@ -1,13 +1,14 @@
 # **Release 3**
 
-**Goal: Functionality, user experience, REST API (CHANGE THIS LATER)**
+**Goal: Implement rest API, Extend code functionality and user experience and reflect on project growth and teamwork**
 
 ## **Extend code functionality**
 
-__The group has expanded the functionality__ the biggest change in functionality from release 2 is that each User has a list of shopeeList. Wich resulted in a 
+__The group has expanded the functionality__ and improved the code in this final release. The most notable changes from Release 2 include the expansion of the user interface and the successful implementation of a REST API.
 
 
-The biggest change from Release 2, is that we initiated a significant shift in the functionality of our project. In the initial phase of the project, we had a model where each user was associated with a single ShoppeeList. However, recognizing the need for enhanced flexibility and a more User oriented experience, we decided to evolve the architecture.
+The change in functionality includes implementation of a new homepage for the user. In the initial phase of the project, we had a model where each user was associated with a single ShoppeeList. However, recognizing the need for enhanced flexibility and a more User oriented experience, we decided to evolve the architecture. The user will now be able to oranize multiple shopee lists. 
+
 The key change we implemented was transitioning from a single ShoppeeList per user to a model where a user could now manage multiple ShoppeeLists
 
 
@@ -15,12 +16,24 @@ __Test coverage__
 
 
 ## **User experience improvements**
-__added new page homepage and homepagecontroller__ 
+__For the final release we have improved the user experience of the app.__ The primary improvement centers around the introduction of a new feature – the addition of a user-friendly homepage. This page provides users with a comprehensive view of all their Shopee lists. Users can easily create new Shopee lists and make modifications or deletions to existing ones. The page is simple but includes all the functions we feel is needed. Clicking the 'modify' button directs users to the page where the shopping list is displayed. This is the page that the user was sent to after login in release 2. The app offers intuitive navigation, and in case any prohibited actions are attempted, a default error message will promptly describe the issue.
 
 ## **REST API**
-__UNE OG HANNA__
+- __UNE OG HANNA__
 
-## Working habits and task managment though release 3
+## **Working habits and task managment though release 3**
+As we got back the feedback from release two we had to sit down and discuss how we could improve our teamwork. It is important for the project that we communicate well and work together as a group. 
+
+For this release we have focused on a better planning phase. We used more time planning and discussing before we started working on the project. We felt that this really made the teamwork easier because we knew what the others where doing. We actively useed the assignee function in gitlab so there was no doubt who was in charge of the issue. 
+
+We where also stricter with the reviewing of eachothers code when merging. As a security point we always reviewed each others work before merging it into the project. By leaving comments it was easier to go back and check up on the project. 
 
 
 ## Afterthoughts and conclusion
+__At the conclusion of this sprint__, we are confident that the app effectively fulfills its primary purpose, although there is potential for further development to enhance the completeness of the Shopee application if desired.
+
+In retrospect, we'd like to share some reflections to provide a better understanding of our project journey. This project marked our group's initial foray into GitLab, and we faced initial challenges in the proper assignment of tasks to issues, which we progressively improved upon as the project advanced. At the beginning of the semester, our group established a group contract, stipulating weekly meetings, which formed a strong basis for effective cross-group communication.
+
+Utilizing communication channels such as Microsoft Teams and Messenger, in combination with practices like pair programming and regular meetings, ensured that none of our group members confronted significant challenges in isolation. Instead, we collectively tackled issues as a team. Our adherence to the group contract also ensured that working hours were consistently met.
+
+In conclusion, every member of our group has gained valuable experience from participating in this project, particularly as it marks our first involvement in a larger programming endeavor.
