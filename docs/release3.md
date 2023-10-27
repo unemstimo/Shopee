@@ -30,3 +30,10 @@ We where also stricter with the reviewing of eachothers code when merging. As a 
 
 
 ## Afterthoughts and conclusion
+__At the conclusion of this sprint__, we are confident that the app effectively fulfills its primary purpose, although there is potential for further development to enhance the completeness of the Shopee application if desired.
+
+In retrospect, we'd like to share some reflections to provide a better understanding of our project journey. This project marked our group's initial foray into GitLab, and we faced initial challenges in the proper assignment of tasks to issues, which we progressively improved upon as the project advanced. At the beginning of the semester, our group established a group contract, stipulating weekly meetings, which formed a strong basis for effective cross-group communication.
+
+Utilizing communication channels such as Microsoft Teams and Messenger, in combination with practices like pair programming and regular meetings, ensured that none of our group members confronted significant challenges in isolation. Instead, we collectively tackled issues as a team. Our adherence to the group contract also ensured that working hours were consistently met.
+
+In conclusion, every member of our group has gained valuable experience from participating in this project, particularly as it marks our first involvement in a larger programming endeavor.
