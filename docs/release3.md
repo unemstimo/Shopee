@@ -4,10 +4,10 @@
 
 ## **Extend code functionality**
 
-__The group has expanded the functionality__ the biggest change in functionality from release 2 is that each User has a list of shopeeList. Wich resulted in a 
+__The group has expanded the functionality__ and improved the code in this final release. The most notable changes from Release 2 include the expansion of the user interface and the successful implementation of a REST API.
 
 
-The biggest change from Release 2, is that we initiated a significant shift in the functionality of our project. In the initial phase of the project, we had a model where each user was associated with a single ShoppeeList. However, recognizing the need for enhanced flexibility and a more User oriented experience, we decided to evolve the architecture.
+The change in functionality includes implementation of a new homepage for the user. In the initial phase of the project, we had a model where each user was associated with a single ShoppeeList. However, recognizing the need for enhanced flexibility and a more User oriented experience, we decided to evolve the architecture. The user will now be able to oranize multiple shopee lists. 
 
 The key change we implemented was transitioning from a single ShoppeeList per user to a model where a user could now manage multiple ShoppeeLists
 
