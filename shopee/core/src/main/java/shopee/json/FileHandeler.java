@@ -1,15 +1,12 @@
 package shopee.json;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -17,14 +14,31 @@ import shopee.core.User;
 
 public class FileHandeler {
 
-    // Use your local path to the file when running maven
-   private String filePath = "shopee/ui/src/main/resources/shopee/DataStorage.json";
+    // private Path filePath;
+
+    //  public FileHandeler(String filepath) {
+    //      try {
+    //      setFilePath(filepath);
+    //      } catch (FileNotFoundException e) {
+    //          e.printStackTrace();
+    //      }
+    //  }
 
     // Use this relative path when running in launch
-    // private String filePath = "core/src/main/java/shopee/json/DataStorage.json";
+    private String filePath = "/shopee/ui/src/main/resources/shopee/DataStorage.json";
+
+    /**
+   * Method for setting the filepath. 
+   *
+   * @param filename  the name of the file to use
+   */
+//    public void setFilePath(String filename) throws FileNotFoundException{
+//      String filePath = filename;
+//      this.filePath = Paths.get(System.getProperty("user.home"), filePath);
+//    }
 
     // new method which writes to the DataStorage.json file
-    public void writeToFile(User object) {
+    public void writeToFile(User object) throws FileNotFoundException {
         try {
             ObjectMapper mapper = new ObjectMapper();
 
@@ -63,13 +77,13 @@ public class FileHandeler {
             mapper.writeValue(new File(filePath), objects);
             System.out.println("Object written to file\n");
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new FileNotFoundException("Failed to write to file" +e);
         }
     }
 
     // method for reading from file
-    public List<User> jsonToObj() {
+    public List<User> jsonToObj() throws FileNotFoundException  {
         try {
 
             ObjectMapper mapper = new ObjectMapper();
@@ -83,16 +97,28 @@ public class FileHandeler {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new FileNotFoundException("Failed to read file" +e);
         }
         return new ArrayList<>();
     }
 
+    public User jsonToUser(String jsonUser) throws FileNotFoundException {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            User user = mapper.readValue(jsonUser, User.class);
+            
+            return user;
+
+        } catch (IOException e) {
+            throw new FileNotFoundException("Failed to read file" +e);
+        }
+    }
+
     // Helper method that removes all content in the file
     public void clearFileContent() {
-
         try {
-            File file = new File(filePath);
+            File file = new File(filePath.toString());
             if (file.exists()) {
                 try (FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8)) {
                     writer.write(""); // Clear the content by writing an empty string
@@ -117,24 +143,6 @@ public class FileHandeler {
         return new ObjectMapper();
     }
 
-    public static String getAbsolutePathOfFileName(String fileName) {
-        Path root = Paths.get(System.getProperty("user.dir")); // Set the root directory for your search
-        try {
-            // Walk through the file system starting from the root
-            Path result = Files.walk(root)
-                    .filter(path -> path.getFileName().toString().equals(fileName))
-                    .findFirst()
-                    .orElse(null);
-
-            if (result != null) {
-                return result.toAbsolutePath().toString();
-            } else {
-                System.out.println("File not found: " + fileName);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    
 
 }
