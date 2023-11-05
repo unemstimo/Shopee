@@ -2,6 +2,8 @@ package shopee.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -18,9 +20,10 @@ public class FileHandlerTest {
      * Test the writeToFile(User) method and jsonToObj()
      * Checks if new login info i saved properly plus shopping list info. Sees if the added fooditems 
      * match with what we write when creating a list.
+     * @throws FileNotFoundException
      */
     @Test
-    public void testWriteAndReadUserToFile() {
+    public void testWriteAndReadUserToFile() throws FileNotFoundException {
         // Create a User object for testing
         fileHandler.clearFileContent();
         User testUser = new User("Johan@gmail.no", "johan123@");
@@ -54,9 +57,10 @@ public class FileHandlerTest {
      * Test the writeToFile(User) method further.
      * Checks if the amount updates when adding the same ingredient to the list 
      * it should not be duplicates and only the last given amount should be saved.
+     * @throws FileNotFoundException
      */
     @Test
-    public void testUpdateUserInFile() {
+    public void testUpdateUserInFile() throws FileNotFoundException {
         fileHandler.clearFileContent();
         // Create a User object for testing
         User testUser = new User("oskar@gmail.com", "Password12!");
@@ -87,9 +91,10 @@ public class FileHandlerTest {
     /**
      * Test the clearFileContent() helper method 
      * Checks if all stored data is removed from the file, such that an empty file can be used in other methods.
+     * @throws FileNotFoundException
      */
     @Test
-    public void testClearFileContent() {
+    public void testClearFileContent() throws FileNotFoundException {
         // Create a User object for testing
         User testUser = new User("Une@outlook.com", "Umulig18%");
 
