@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -14,32 +17,38 @@ import shopee.core.User;
 
 public class FileHandeler {
 
-    // private Path filePath;
+    private Path filePath;
 
-    //  public FileHandeler(String filepath) {
-    //      try {
-    //      setFilePath(filepath);
-    //      } catch (FileNotFoundException e) {
-    //          e.printStackTrace();
-    //      }
-    //  }
+    public FileHandeler(String filepath) {
+          try {
+          setFilePath(filepath);
+          } catch (FileNotFoundException e) {
+              e.printStackTrace();
+          }
+      }
 
-    // Use this relative path when running in launch
-    private String filePath = "/shopee/ui/src/main/resources/shopee/DataStorage.json";
+
+    public FileHandeler() {
+    }
 
     /**
    * Method for setting the filepath. 
    *
    * @param filename  the name of the file to use
    */
-//    public void setFilePath(String filename) throws FileNotFoundException{
-//      String filePath = filename;
-//      this.filePath = Paths.get(System.getProperty("user.home"), filePath);
-//    }
+      public void setFilePath(String filename) throws FileNotFoundException{
+        String filePath = filename;
+        this.filePath = Paths.get(System.getProperty("user.home"), filePath);
+    }
 
     // new method which writes to the DataStorage.json file
     public void writeToFile(User object) throws FileNotFoundException {
         try {
+
+            if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
+              }
+
             ObjectMapper mapper = new ObjectMapper();
 
             // makes the text more readable when written to file
@@ -74,7 +83,7 @@ public class FileHandeler {
             this.clearFileContent();
 
             // Write the updated list of objects to the file
-            mapper.writeValue(new File(filePath), objects);
+            mapper.writeValue(filePath.toFile(), objects);
             System.out.println("Object written to file\n");
 
         } catch (IOException e) {
@@ -86,8 +95,12 @@ public class FileHandeler {
     public List<User> jsonToObj() throws FileNotFoundException  {
         try {
 
+            if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
+              }
+
             ObjectMapper mapper = new ObjectMapper();
-            File file = new File(filePath);
+            File file = filePath.toFile();
 
             // Creates a list of all saved User objects
             if (file.exists() && file.length() > 0) {
@@ -104,6 +117,9 @@ public class FileHandeler {
 
     public User jsonToUser(String jsonUser) throws FileNotFoundException {
         try {
+
+
+
             ObjectMapper mapper = new ObjectMapper();
 
             User user = mapper.readValue(jsonUser, User.class);
