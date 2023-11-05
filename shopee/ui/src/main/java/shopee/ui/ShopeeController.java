@@ -1,24 +1,20 @@
 package shopee.ui;
 
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import shopee.core.FoodItem;
 import shopee.core.ShopeeList;
 import shopee.core.User;
-import shopee.json.FileHandeler;
+import shopee.ui.dataaccess.UserAccess;
 import javafx.collections.FXCollections;
 
 public class ShopeeController extends AbstractController{
@@ -29,50 +25,85 @@ public class ShopeeController extends AbstractController{
     * Now we can set and validate the input from the user.
     */
     
-   
-    private User user;
-    private FileHandeler jsonFile = new FileHandeler();
-    private int index; 
-
     @FXML private TextField newFood, amountNewFood; 
     @FXML private Button addFood, foodBought, removeFood, back;
     @FXML private VBox shoppingListContainer;
     @FXML private ListView<FoodItem> shoppingListView;
     @FXML private ListView<FoodItem> boughtListView;
 
-    public void setUser(User user, int index){
-        this.user = user;
-        this.index = index;
-        showShoppingList(this.getShopeeList().getShopList());
-        showBoughtList(this.getShopeeList().getBoughtList());
+    private User user;
+    private UserAccess dataAccess;
+    private ShopeeList shopeeList;
 
+    /**
+     * Method for inserting the date read from file to this user if there is any data
+     *
+     * @throws FileNotFoundException  if file is not found
+     */
+    public void initData(User user, String Listname, UserAccess access) {
+        this.user = user;
+        this.dataAccess = access;
+        this.shopeeList = user.getShopeeList(Listname);
+        this.showShoppingList(shopeeList.getShopList());
+        this.showBoughtList(shopeeList.getBoughtList());
     }
     
-
-    public ShopeeList getShopeeList(){
-        return this.user.getShopeeLists().get(this.index);
-    }
-
     /**
      * Collect the user input from food- and amount-textfield, and adds the food object to the shopping list.
      * 
      * @param event
      */
     @FXML
-    public void handleAddFoodButtonClick(ActionEvent event) {
+    public void handleAddFoodButtonClick(ActionEvent event) throws JsonProcessingException{
 
         String food = newFood.getText();
         int amount = Integer.parseInt(amountNewFood.getText());
 
-        this.getShopeeList().addFoodShopList(food, amount);
+        this.shopeeList.addFoodShopList(food, amount);
 
-        showShoppingList(this.getShopeeList().getShopList());
+        showShoppingList(this.shopeeList.getShopList());
        
         newFood.clear();
         amountNewFood.clear();
-        jsonFile.writeToFile(this.user); 
     }
 
+    /**
+     * Sets the selected food object from the shopping list as bought and moves it to the bought list
+     * 
+     * @param event
+     */
+    @FXML 
+    public void markAsBought(ActionEvent event) throws JsonProcessingException{
+        int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
+        if(selectedIndex >= 0) {
+            FoodItem foodItem = this.shopeeList.getShopList().get(selectedIndex);
+            this.shopeeList.addFoodBoughtList(foodItem);
+        }
+
+        showShoppingList(this.shopeeList.getShopList());
+        showBoughtList(this.shopeeList.getBoughtList());
+    }
+
+    /**
+     * Removes selected food item from the shopping list
+     * 
+     * @param event
+     */
+    @FXML
+    public void removeItem(ActionEvent event) throws JsonProcessingException{
+         int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
+        if(selectedIndex >= 0) {
+            this.shopeeList.removeFood(this.shopeeList.getShopList().get(selectedIndex).getFoodName());
+        }
+        showShoppingList(this.shopeeList.getShopList());
+    }
+
+    /**
+     * This method handles the action when user clicks on "go back" button
+     * go back to home page where user can log in if wanted
+     * @param actionEvent
+     * loads Home.fxml
+     */
 
     /**
      * Updates the shopping list- ListView with the list-parameter in the UI
@@ -97,63 +128,16 @@ public class ShopeeController extends AbstractController{
     }
 
     /**
-     * Sets the selected food object from the shopping list as bought and moves it to the bought list
+     * this method handles the action when user clicks on "go back" button and goes back to home page
      * 
-     * @param event
+     * @param actionevent
+     * @throws JsonProcessingException
      */
-    @FXML 
-    public void markAsBought(ActionEvent event) {
-        int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
-        if(selectedIndex >= 0) {
-            FoodItem foodItem = this.getShopeeList().getShopList().get(selectedIndex);
-            this.getShopeeList().addFoodBoughtList(foodItem);
-            jsonFile.writeToFile(user);
-        }
-        showShoppingList(this.getShopeeList().getShopList());
-        showBoughtList(this.getShopeeList().getBoughtList());
+    public void backToShoppingList(ActionEvent actionevent) throws JsonProcessingException {
+        this.dataAccess.deleteShopeeList(this.user.getUsername(), this.shopeeList.getListName());
+        this.dataAccess.addShopeeList(this.user.getUsername(), this.shopeeList);
+
+        setScene(Controllers.HOMEPAGE, actionevent, dataAccess, user, null); 
     }
 
-    /**
-     * Removes selected food item from the shopping list
-     * 
-     * @param event
-     */
-    @FXML
-    public void removeItem(ActionEvent event) {
-         int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
-        if(selectedIndex >= 0) {
-            this.getShopeeList().removeFood(this.getShopeeList().getShopList().get(selectedIndex).getFoodName());
-        }
-        jsonFile.writeToFile(user);
-        showShoppingList(this.getShopeeList().getShopList());
-    }
-
-    /**
-     * This method handles the action when user clicks on "go back" button
-     * go back to home page where user can log in if wanted
-     * @param actionEvent
-     * loads Home.fxml
-     */
-    
-
-    public void backToShoppingList(ActionEvent actionEvent) {
-    try{ 
-        showShoppingList(new ArrayList<>());
-        showBoughtList(new ArrayList<>());
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-        Scene homeScene = new Scene(loader.load());
-
-        HomePageController homepage = loader.getController();
-        homepage.setUser(this.user);
-
-        Stage stage = (Stage) back.getScene().getWindow();
-        stage.setScene(homeScene);
-        
-        stage.show();
-        
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    }
 }
