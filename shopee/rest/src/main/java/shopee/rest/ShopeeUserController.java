@@ -86,5 +86,16 @@ public class ShopeeUserController {
     return true; 
   }
 
+    /**
+   * Deletes a shopeeList from a user in the database.
+   * @param username
+   * @param listName
+   * @throws IOException
+   */
+  @DeleteMapping("/{username}/{listName}")
+  public void deleteShopeeList(@PathVariable("username")String username,
+    @PathVariable("listName") String listName)throws IOException{
+    userService.deleteShopeeList(username, listName);
+  }
   
 }
