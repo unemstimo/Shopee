@@ -3,6 +3,7 @@ package shopee.rest;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,10 +23,9 @@ import shopee.core.FoodItem;
  * (GET,POST,PUT,DELETE,PATCH)
  */
 @RestController
-@RequestMapping()
+@RequestMapping("/users")
 
 public class ShopeeUserController {
-
   @Autowired
   private ShopeeUserService userService;
 
@@ -33,48 +33,10 @@ public class ShopeeUserController {
       this.userService = new ShopeeUserService();
   }
 
-
-
-  @GetMapping
-  public User getUser(){
-    return userService.getUser();
+  @Bean
+  public ShopeeUserService listContainerBean()  {
+    return new ShopeeUserService();
   }
-
-
-  @PostMapping(path = "/{name}") 
-  public boolean addShoppeeList(@PathVariable("name") String name, @RequestBody ShopeeList shopeeList){
-    userService.addShoppeList(shopeeList);
-    return true;
-  }
-
-  @DeleteMapping(path = "/{name}") 
-  public boolean deleteShopeeList(@PathVariable("name") String name, @RequestBody ShopeeList shopeeList ){
-    userService.removeShopeeList(shopeeList);
-    return true;
-
-  }
-
-  @PostMapping(path = "/{name}") 
-  public boolean addFoodItem(@PathVariable("name") String listName, @RequestBody FoodItem foodItem){
-    userService.addFoodItem(listName, foodItem);
-    return true;
-  }
-
-  @DeleteMapping(path = "/{name}") 
-  public boolean removeFoodItem(@PathVariable("name") String listName, @RequestBody FoodItem foodItem){
-    userService.removeFoodItem(listName, foodItem);
-    return true;
-  }
-
-  @PatchMapping(path = "/{name}/mark-as-bought")
-  public boolean markAsBought(@PathVariable("name") String listName, @RequestBody FoodItem foodItem){
-    userService.markAsBought(listName, foodItem);
-    return true;
-  }
-  
-
-
-
 
     
     
