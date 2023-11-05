@@ -52,7 +52,7 @@ public class ShopeeUserController {
     return userService.getAllUsers();
   }
 
-    /**
+  /**
    * Gets a specific user from the database.
    * @param username
    * @return
@@ -62,4 +62,29 @@ public class ShopeeUserController {
     return userService.getUser(username);
   }
 
+  /**
+   * Adds a user to the database.
+   * @param user
+   * @return
+   */
+  @PostMapping("/add")
+  public boolean addUser(@RequestBody String user){
+    userService.addUser(user);
+    return true; 
+  }
+
+   /**
+   * Adds a shopeeList to a user in the database.
+   * @param username
+   * @param newList
+   * @return
+   */
+  @PostMapping("/{username}/")
+  public boolean addShopeeList(String username, ShopeeList newList){
+    userService.addShopeeList(username, newList);
+
+    return true; 
+  }
+
+  
 }
