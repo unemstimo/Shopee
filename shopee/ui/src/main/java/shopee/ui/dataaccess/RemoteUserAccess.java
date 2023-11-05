@@ -4,167 +4,184 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.util.NoSuchElementException;
+import java.util.List;
 import java.net.http.HttpResponse;
+import java.net.http.HttpRequest.BodyPublishers;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import shopee.core.FoodItem;
+
 import shopee.core.ShopeeList;
 import shopee.core.User;
-import shopee.json.FileHandeler;
 
 public class RemoteUserAccess implements UserAccess{
-
-    private final URI uri;
-    private final ObjectMapper objectMapper;
-    private User user;
-    private ShopeeList shopeeList;
-
-    public RemoteUserAccess(URI uri) {
-        this.uri = uri;
-        this.objectMapper = FileHandeler.createObjectMapper();
-    }
-
-    @Override
-    public User loadUser(String username, String password) {
-        try {
-            user.setUsername(username);
-            user.setPassword(password);
-            return user;
-        } catch (IllegalStateException | NoSuchElementException err) {
-            user.setUsername(username);
-            user.setPassword(password);
-            return user;
-        }
-    }
-
-    @Override
-    public boolean addShopeeList(ShopeeList shopeeList) {
-        try {
-            String jsonShopeeList = objectMapper.writeValueAsString(shopeeList);
-            final HttpRequest request = HttpRequest
-                    .newBuilder(URI.create(uri + "/" + shopeeList.getListName().replaceAll(" ", "-")))
-                    .header("Accept", "application/json").header("Content-Type", "application/json")
-                    .POST(BodyPublishers.ofString(jsonShopeeList)).build();
-            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                    HttpResponse.BodyHandlers.ofString());
-            Boolean success = objectMapper.readValue(response.body(), Boolean.class);
-            if (success != null && success) {
-                user.addShopeeList(shopeeList);
-                return true;
-            }
-            return false;
-        } catch (IOException | InterruptedException err) {
-            throw new RuntimeException(err);
-        }
-    }
-
-    @Override
-    public boolean deleteShopeeList(String listName) {
-        try {
-            final HttpRequest request = HttpRequest.newBuilder(URI.create(uri + "/" + listName.replaceAll(" ", "-")))
-                    .header("Accept", "application/json").DELETE().build();
-            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                    HttpResponse.BodyHandlers.ofString());
-            Boolean success = objectMapper.readValue(response.body(), Boolean.class);
-            if (success != null && success) {
-                user.deleteShopeeList(listName);
-                return true;
-            }
-            return false;
-        } catch (IOException | InterruptedException err) {
-            throw new RuntimeException(err);
-        }
-    }
     
-    @Override
-    public boolean addFoodItem(String listName, FoodItem foodItem) {
-        try{
-            String jsonNewFood = objectMapper.writeValueAsString(foodItem);
-            final HttpRequest request = HttpRequest
-                .newBuilder(URI.create(uri + "/" + listName.replaceAll(" ", "-")))
-                .header("Accept", "application/json").header("Content-Type", "application/json")
-                .POST(BodyPublishers.ofString(jsonNewFood)).build();
-            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                HttpResponse.BodyHandlers.ofString());
-            Boolean success = objectMapper.readValue(response.body(), Boolean.class);
-            if (success != null && success) {
-                shopeeList = user.getShopeeList(listName);
-                shopeeList.addFoodShopList(foodItem.getFoodName(), foodItem.getFoodAmount());
-                return true;
+    private final URI endpointUri;
+
+    public RemoteUserAccess(URI uri, Boolean mock) throws IOException, InterruptedException {
+            if (!mock) {
+              HttpRequest request = HttpRequest.newBuilder(uri)
+                    .header("Accept", "application/json").GET().build();
+              final HttpResponse<String> response = 
+                    HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+              if (!response.body().equals("OK")) {
+                throw new IOException("Server is not running");
+              }
             }
-            return false;
-        } catch (IOException | InterruptedException err) {
-            throw new RuntimeException(err);
-        }
+            this.endpointUri = uri;
+          }
+
+          /**
+    * Method for creating the correct path to the URI.
+    *
+    * @param uri   the uri you want to find the path to.
+    * @return URI  the endpoint URI
+    */
+    private URI shoppingListUri(String uri) {  
+        return endpointUri.resolve(uri);
     }
 
-    @Override
-    public boolean removeFoodItem(String listName, FoodItem foodItem) {
-        try{
-            String jsonFoodItem = objectMapper.writeValueAsString(foodItem);
-            final HttpRequest request = HttpRequest.newBuilder(URI.create(uri + "/" + listName.replaceAll(" ", "-")))
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .method("DELETE", BodyPublishers.ofString(jsonFoodItem)) 
-                .build();
-            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                HttpResponse.BodyHandlers.ofString());
-            Boolean success = objectMapper.readValue(response.body(), Boolean.class);
-            if (success != null && success) {
-                shopeeList = user.getShopeeList(listName);
-                shopeeList.removeFood(foodItem.getFoodName());
-                return true;
-            }
-            return false;
-        } catch (IOException | InterruptedException err) {
-            throw new RuntimeException(err);
-        }
-    }
 
-    @Override
-    public boolean markAsBought(String listName, FoodItem foodItem) {
-        try{
-            String jsonBoughtFood = objectMapper.writeValueAsString(foodItem);
-            final HttpRequest request = HttpRequest.newBuilder(URI.create(uri + "/" + listName.replaceAll(" ", "-") + "/mark-as-bought"))
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .method("PATCH", BodyPublishers.ofString(jsonBoughtFood)) 
-                .build();
-            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                HttpResponse.BodyHandlers.ofString());
-            Boolean success = objectMapper.readValue(response.body(), Boolean.class);
-            if (success != null && success) {
-                shopeeList = user.getShopeeList(listName);
-                shopeeList.addFoodBoughtList(foodItem);
-                return true;
-            }
-            return false;
-        } catch (IOException | InterruptedException err) {
-            throw new RuntimeException(err);
-        }
-    }
 
-    @Override
-    public void setUser(User user) {
-        this.user = user;
-    }
 
-    @Override
-    public User getUser() {
-        if (user == null) {
+    /**
+     * Method for getting all users from the remote database.
+     */
+      @Override
+    public List<User> getAllUsers() { // Brukes i Login?? for å sjekke om bruker finnes????
+        String mapping = "users";
+        HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping))
+            .header("Accept", "application/json")
+            .GET().build();
+        
             try {
-                final HttpRequest request = HttpRequest.newBuilder(uri).header("Accept", "application/json").GET()
-                        .build();
                 final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                        HttpResponse.BodyHandlers.ofString());
-                this.user = objectMapper.readValue(response.body(), User.class);
-            } catch (IOException | InterruptedException err) {
-                throw new RuntimeException(err);
+                HttpResponse.BodyHandlers.ofString());
+                final String responseString = response.body();
+    
+                ObjectMapper objectMapper = new ObjectMapper();
+    
+                List<User> users = objectMapper.readValue(responseString, new TypeReference<List<User>>() {});
+    
+                return users;
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        }
+      }
+
+
+
+    /**
+     * Method for getting a user from the remote database.
+     */
+    @Override
+    public User getUser(String username) {
+        String mapping = "users/";
+        String value = username;
+
+        try {
+        HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping + value))
+            .header("Accept", "application/json").GET().build();
+        final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+            HttpResponse.BodyHandlers.ofString());
+        final String responseString = response.body();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        User user = objectMapper.readValue(responseString, User.class);
+
         return user;
+
+        } catch (IOException | InterruptedException e) {
+        return null;
+        }
     }
     
+
+    /**
+     * Method for adding a user to the remote database.
+     */
+    @Override
+    public void addUser(User user) throws JsonProcessingException {
+        String mapping = "users/add";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String json = objectMapper.writeValueAsString(user);
+
+        try {
+          //String json = gson.toJson(user);
+          HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping))
+              .header("Accept", "application/json")
+              .header("Content-Type", "application/json")
+              .POST(BodyPublishers.ofString(json)).build();
+    
+          HttpResponse<String> response = HttpClient.newBuilder()
+              .build().send(request, HttpResponse.BodyHandlers.ofString());
+          if (response.statusCode() > 399) {
+            throw new IOException("Not legal status code"); 
+          }
+        } catch (IOException | InterruptedException e) {
+          throw new RuntimeException(e);
+        }
+      }
+    
+      /**
+       * Method for updating a user in the remote database.
+       */
+    @Override
+    public void addShopeeList(String username, ShopeeList newShopeeList) throws JsonProcessingException  {
+        String mapping = "users/" + username + "/add";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String json = objectMapper.writeValueAsString(newShopeeList);
+
+        try {
+          //String json = gson.toJson(user);
+          HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping))
+              .header("Accept", "application/json")
+              .header("Content-Type", "application/json")
+              .POST(BodyPublishers.ofString(json)).build();
+    
+          HttpResponse<String> response = HttpClient.newBuilder()
+              .build().send(request, HttpResponse.BodyHandlers.ofString());
+          if (response.statusCode() > 399) {
+            throw new IOException("Not legal status code"); 
+          }
+        } catch (IOException | InterruptedException e) {
+          throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Method for updating a user in the remote database.
+     */
+    @Override
+    public void deleteShopeeList(String usernname, String listName) {
+      String mapping1 = "lists/";
+      String list = usernname;
+      String mapping2 = "/deleteItem?itemName=";
+      String value = listName;
+      try {
+        HttpRequest request = HttpRequest
+            .newBuilder(shoppingListUri(mapping1 + list + mapping2 + value))
+            .DELETE()
+            .build();
+        HttpResponse<String> response = HttpClient.newBuilder().build()
+              .send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() > 399) {
+          throw new IOException("Not legal status code");
+        }
+      } catch (IOException | InterruptedException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+
 }
+    
+
