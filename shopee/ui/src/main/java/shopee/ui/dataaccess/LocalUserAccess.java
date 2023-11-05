@@ -1,9 +1,7 @@
 package shopee.ui.dataaccess;
 
+import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.NoSuchElementException;
-
-import shopee.core.FoodItem;
 import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler;
@@ -14,138 +12,75 @@ import shopee.json.FileHandeler;
 
 public class LocalUserAccess implements UserAccess {
 
-    private final FileHandeler persistence = new FileHandeler();
-    private User user = new User();
-    private ShopeeList shopeeList;
+    private final FileHandeler filehandler = new FileHandeler();
+    private List<User> users; 
+    
+    /**
+     * Gets all users from the database
+     * @return list of users
+     */
+    @Override
+    public List<User> getAllUsers() {
+        try {
+            users = filehandler.jsonToObj();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
 
     /**
-     * Constructor to initialize persistence
+     * Gets the user from the database
      */
-    public LocalUserAccess() {
-        //persistence.setSaveFilePath("Shopee.json");
-        //try {
-        //this.user = persistence.loadUser();
-            List<User> users = persistence.jsonToObj();
-
-            boolean newUser = true;
-            for (User userInFile : users) {
-                if(userInFile.getUsername().equals(user.getUsername()) && userInFile.getPassword().equals(user.getPassword())){
-                    this.user = userInFile;
-                    newUser = false;
-                    break;
-                }
-            }
-
-            if(newUser) {
-                this.user = new User();
-                persistence.writeToFile(user);
-            }
-
-        //} catch (IllegalStateException | IOException e) {
-        //    this.user = new User();
-       // }
+    @Override
+    public User getUser(String username) {
+        this.getAllUsers();
+        return users.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
     }
 
-    /*public LocalUserAccess(String path) {
-        persistence.setSaveFilePath(path);
+    /**
+     * Adds a user to the local file
+     * @param user
+     */
+    @Override
+    public void addUser(User user) {
         try {
-        this.user = persistence.loadUser();
-        } catch (IllegalStateException | IOException e) {
-        this.user = new User();
+            filehandler.writeToFile(user);
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        this.getAllUsers();
+    }
+
+    /**
+     * Adds a shopee list to the local file
+     */
+    @Override
+    public void addShopeeList(String username, ShopeeList newShopeeList) {
+        getAllUsers();
+        User user = getUser(username);
+        user.addShopeeList(newShopeeList);
+        try {
+            filehandler.writeToFile(user);
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Deletes a shopee list from the local file
+     */
+    @Override
+    public void deleteShopeeList(String Username, String listName) {
+        getAllUsers();
+        User user = getUser(Username);
+        user.deleteShopeeList(listName);
+        try {
+            filehandler.writeToFile(user);
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
         } 
-    }*/
-
-    @Override
-    public User loadUser(String username, String password) {
-        try {
-            user.setUsername(username);
-            user.setPassword(password);
-            return user;
-          } 
-          catch (IllegalStateException | NoSuchElementException e) {
-            user.setUsername(username);
-            user.setPassword(password);
-            return user;
-        }
-    }
-
-    /*@Override
-    public boolean editShopeeList(String listName, ShopeeList editedList) {
-        ShopeeList existingList = user.getShopeeList(listName);
-        existingList.setShopList(editedList.getShopList());
-        existingList.setBoughtList(editedList.getBoughtList());
-    }*/
-
-    @Override
-    public boolean addShopeeList(ShopeeList shopeeList) {
-        try{
-            user.addShopeeList(shopeeList);
-            persistence.writeToFile(user);
-            return true;
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean deleteShopeeList(String listName) {
-       try{
-            user.deleteShopeeList(listName);
-            persistence.writeToFile(user);
-            return true;
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean addFoodItem(String listName, FoodItem foodItem) {
-        try{
-            shopeeList = user.getShopeeList(listName);
-            shopeeList.addFoodShopList(foodItem.getFoodName(), foodItem.getFoodAmount());
-            persistence.writeToFile(user);
-            return true;
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean removeFoodItem(String listName, FoodItem foodItem) {
-        try{
-            shopeeList = user.getShopeeList(listName);
-            shopeeList.removeFood(foodItem.getFoodName());
-            persistence.writeToFile(user);
-            return true;
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean markAsBought(String listName, FoodItem foodItem) {
-        try{
-            shopeeList = user.getShopeeList(listName);
-            shopeeList.addFoodBoughtList(foodItem);
-            return true;
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public User getUser() {
-        return this.user;
     }
     
 }
