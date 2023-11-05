@@ -4,20 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import shopee.core.User;
-import shopee.json.FileHandeler;
+import shopee.ui.dataaccess.UserAccess;
 import shopee.core.ShopeeList;
-import java.io.IOException;
 import java.util.List;
 import javafx.scene.control.Label;
-
 import javafx.scene.control.ListView;
-public class HomePageController {
+
+public class HomePageController extends AbstractController{
 
 @FXML private TextField listName;
 @FXML private Button addList, logOut, deleteList, modifyList;
@@ -25,50 +21,61 @@ public class HomePageController {
 @FXML private Label output;
 
 private User user;
-private int index;
-private FileHandeler jsonFile = new FileHandeler();
+private UserAccess dataAccess;
 
-
-
-public void setUser(User user) {
+/**
+ * Method for inserting the date read from file to this user if there is any data
+ *
+ * @throws FileNotFoundException  if file is not found
+ */
+public void initData(User user, UserAccess access) {
     this.user = user;
-    shoppingListView(user.getShopeeLists());
+    this.dataAccess = access;
+    shoppingListView(this.user.getShopeeLists());
 }
 
 public void deleteList() {
     int selectedIndex = shoppingListView.getSelectionModel().getSelectedIndex();
     if(selectedIndex >= 0) {
-        this.user.deleteShopeeList(selectedIndex);
+        String username = this.user.getUsername();
+        String listName = this.user.getShopeeLists().get(selectedIndex).getListName();
+
+        // deletes first from the database
+        this.dataAccess.deleteShopeeList(username, listName);
+
+        // then deletes from the local user
+        this.user.deleteShopeeList(listName);
+
+        // Updates the vieuw
         shoppingListView(user.getShopeeLists());
-        jsonFile.writeToFile(user);
+
     }
     else {
-        output.setText("Funke itj");
-    }
-    
+        output.setText("Failed to delete list");
+    } 
 }
 
-public void modifyList() {
-    this.index = shoppingListView.getSelectionModel().getSelectedIndex();
+public void modifyList(ActionEvent actionEvent) {
+    int index = shoppingListView.getSelectionModel().getSelectedIndex();
     if(index >= 0){
-        loadShopeePage(new ActionEvent());
+        String listname = this.user.getShopeeLists().get(index).getListName();
+        setScene(Controllers.EDITSHOPEELIST, actionEvent, this.dataAccess, this.user, listname);
     } else{
         output.setText("Wrong index");
     }
-
 }
 
-
-
-public void addNewList() {
+public void addNewList(ActionEvent actionEvent) {
     try {
         String newList = listName.getText();
         this.user.addShopeeList(new ShopeeList(newList));
         shoppingListView(this.user.getShopeeLists());
-        this.index = this.user.getShopeeLists().size() - 1;
+
+        // Litt usikker på om vi her egt kan bare bruke update user
+        this.dataAccess.addShopeeList(this.user.getUsername(), new ShopeeList(newList)); // Adds shopeelist to the user, and updates to file
         listName.clear();
-        loadShopeePage(new ActionEvent());
-        jsonFile.writeToFile(user);
+
+        setScene(Controllers.EDITSHOPEELIST, actionEvent , this.dataAccess, this.user, newList);
     
     } catch (Exception e) {
         e.printStackTrace();
@@ -82,46 +89,8 @@ public void shoppingListView(List<ShopeeList> listOfLists) {
     shoppingListView.setItems(foodList);
 }
 
-public void logOut() {
-    loadLogIn(new ActionEvent());
+public void logOut(ActionEvent actionEvent) {
+    setScene(Controllers.LOGIN, actionEvent, this.dataAccess, null, null);
 }
 
-
-
-private void loadShopeePage(ActionEvent actionEvent) {
-    try{  
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Shopee.fxml"));
-        Scene shopeeScene = new Scene(loader.load());
-
-        ShopeeController shopeeController = loader.getController();
-        shopeeController.setUser(this.user, this.index);
-
-        Stage stage = (Stage) modifyList.getScene().getWindow();
-        stage.setScene(shopeeScene);
-
-        stage.show();
-        
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    }
-    
-
-private void loadLogIn(ActionEvent actionEvent) {
-    try{  
-        this.user.setActiveState(false);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
-        Scene LoginScene = new Scene(loader.load());
-
-        Stage stage = (Stage) modifyList.getScene().getWindow();
-        stage.setScene(LoginScene);
-
-        stage.show();
-        
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    }
-    
 }

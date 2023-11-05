@@ -10,10 +10,6 @@ String username;
 String password;
 List<ShopeeList> shopeeLists;
 
-//Fields used in the transformation of information from pages in controllers.
-Boolean active;
-int indexOfList;
-
 // Helper list which contains all legal domenes for the email
 final static String[] cc = {"ad", "ae", "af", "ag", "ai", "al", "am", "ao", "aq", "ar", "as", "at", "au", "aw", "ax", "az", "ba", "bb", "bd", "be", "bf", "bg", "bh", "bi", "bj", "bl", "bm", "bn", "bo", "bq", "br", "bs", "bt", "bv", "bw", "by", "bz", "ca", "cc", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm", "cn", "co", "cr", "cu", "cv", "cw", "cx", "cy", "cz", "de", "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg", "eh", "er", "es", "et", "fi", "fj", "fk", "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gs", "gt", "gu", "gw", "gy", "hk", "hm", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in", "io", "iq", "ir", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh", "ki", "km", "kn", "kp", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li", "lk", "lr", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me", "mf", "mg", "mh", "mk", "ml", "mm", "mn", "mo", "mp", "mq", "mr", "ms", "mt", "mu", "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "nf", "ng", "ni", "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph", "pk", "pl", "pm", "pn", "pr", "ps", "pt", "pw", "py", "qa", "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "sd", "se", "sg", "sh", "si", "sj", "sk", "sl", "sm", "sn", "so", "sr", "ss", "st", "sv", "sx", "sy", "sz", "tc", "td", "tf", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr", "tt", "tv", "tw", "tz", "ua", "ug", "um", "us", "uy", "uz", "va", "vc", "ve", "vg", "vi", "vn", "vu", "wf", "ws", "ye", "yt", "za", "zm", "zw", "com"};
 protected List<String> newList = Arrays.asList(cc);
@@ -156,7 +152,7 @@ public List<ShopeeList> getShopeeLists(){
 public void addShopeeList(ShopeeList list){
     for (ShopeeList shopeeList : this.shopeeLists) {
         if(shopeeList.getListName().equals(list.getListName())){
-            throw new IllegalArgumentException("Cant use same list name twice");
+            this.deleteShopeeList(list.getListName());
         }
     }    
     
@@ -198,45 +194,39 @@ public void deleteShopeeList(String listName) {
    this.shopeeLists.remove(this.getShopeeList(listName));
     
  }
+ 
+/**
+ * this method is a helper method for ReplaceList(User, listname, shopeeList)
+ * to replace an old list with a new one
+ * @param index finds where to replace the old to maintain the same structure 
+ * @param newList the list you replace the old list with
+ * @return
+ */
+public void addShopeeList(int index, ShopeeList newList){
+    for (ShopeeList shopeeList : this.shopeeLists) {
+        if(shopeeList.getListName().equals(newList.getListName())){
+            throw new IllegalArgumentException("Cant use same list name twice");
+        }
+    }  
+    this.shopeeLists.add(index, newList);
+}
 
  /**
-  * A setter for the boolean active state
-  *
-  * @param state
+  * This method replaces an old list with the new, used in rest
+  * @param user refers to the user where the list is supposed to be replaced
+    @param listname name of the list which is supposed to be removed 
+    @param newList the new shopeeList which replaces the old one
   */
- public void setActiveState(boolean state) {
-    this.active = state;
- }
-
- /**
-  *A getter for if the user is active
-  *
-  * @return boolean
-  */
- public boolean isActive() {
-    return this.active;
- }
-
- /**
-  *sets the index of the list that we will handle 
-  *
-  * @param index
-  */
- public void setListIndex(int index) {
-    this.indexOfList = index;
- }
-
-
- /**
-  *a getter for the index of the list we want to handle 
-  *
-  * @return index
-  */
- public int getListIndex() {
-    return this.indexOfList;
- }
-
-
+public void replaceShopeeList(String listname, ShopeeList newList){
+    int index = 0;
+    for (ShopeeList list : this.shopeeLists) {
+        if(list.getListName().equals(listname)){
+            this.deleteShopeeList(listname);
+            index ++; 
+        }
+    this.addShopeeList(index, newList);
+    }
+}
 
 }
 

@@ -1,19 +1,18 @@
 package shopee.ui;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
-
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import shopee.core.User;
-import shopee.json.FileHandeler;
+import shopee.ui.dataaccess.LocalUserAccess;
+import shopee.ui.dataaccess.RemoteUserAccess;
+import shopee.ui.dataaccess.UserAccess;
 
 public class LogInController extends AbstractController{
 
@@ -23,13 +22,34 @@ public class LogInController extends AbstractController{
 
 private String username;
 private String password;
-private User user ;
+private List<User> users;
+private User user;
 
-private FileHandeler jsonFile = new FileHandeler();
+private UserAccess dataAccess;
+
+public void initData(UserAccess dataAccess) {
+    this.dataAccess = dataAccess; //sets dataAccess to either local or remote!
+    this.users = dataAccess.getAllUsers(); //gets all users from database either local or remote!
+
+}   
 
 private void readTextFields(){
     this.username = usernameInput.getText();
     this.password = passwordInput.getText();
+}
+
+/**
+ * Method for seting up the server. Tries to connect to the server first.
+ * If the server is not running, it connects directly to a local file
+ */
+public void setUpAccess() {
+    try {
+      this.dataAccess = new RemoteUserAccess(new URI("http://localhost:8080"), false);
+    } catch (Exception e) {
+      this.dataAccess = new LocalUserAccess();
+    }
+
+    this.initData(this.dataAccess);
 }
 
 /**
@@ -43,9 +63,8 @@ private void readTextFields(){
 public void handleSignUpButtonClick (ActionEvent event){
     readTextFields();
     try {
-        List<User> users = jsonFile.jsonToObj();
         boolean usernameTaken = false;
-        for (User userInFile : users) {
+        for (User userInFile : this.users) {
             if(userInFile.getUsername().equals(username)){
                 usernameTaken = true;
                 break;
@@ -55,8 +74,10 @@ public void handleSignUpButtonClick (ActionEvent event){
             output.setText("Brukernavnet finnes allerede.");
         } else{
             try{
-                this.user = new User(username, password);
-                jsonFile.writeToFile(this.user); //adds user to file
+                User user = new User(username, password);
+                dataAccess.addUser(user); //adds user to file either local or remote!
+                this.user = user;
+                this.users = dataAccess.getAllUsers(); //gets all users from database either local or remote updated
             } catch(Exception e) {
                 output.setText("Brukernavnet eller passordet oppfyller ikke gitte krav. Brukernavn må være på formatet navn@epost.domene , passordet må være minst 8 tegn langt, og innholde både bokstaver, tall og spesialtegn.");
             }
@@ -84,20 +105,17 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
     readTextFields();
 
     try {
-        List<User> users = jsonFile.jsonToObj();
 
         boolean userExist = false;
-        for (User userInFile : users) {
+        for (User userInFile : this.users) { // checks the newes list made from the dataAccess
             if(userInFile.getUsername().equals(this.username) && userInFile.getPassword().equals(this.password)){
                 userExist = true;
                 break;
             }
         }
-        if(userExist){
-            this.user = users.get(this.indexUser(userExist));
-            this.user.setActiveState(true); //Sets that the active state is true when user is logged in
-            loadNewPage(new ActionEvent());
-            
+        if(userExist){ // if user exists, the user is sent to the next page
+            this.user = dataAccess.getUser(this.username); //gets user from database either local or remote!
+            setScene(Controllers.HOMEPAGE, event, this.dataAccess, this.user, null); //sets the scene to the homepage with the user
         }
         else{
             output.setText("Feil brukernavn eller passord. Vennligst prøv igjen.");
@@ -106,57 +124,8 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
         e.printStackTrace();
         output.setText("En feil har oppstått. Prøv igjen senere.");
     }
-
 }
 
-/**
- * Used to find the index of user object in the jsonfile. 
- * @param exist
- * @return int where the user object is located
- */
-public int indexUser(boolean exist) {
-    List<User> users = jsonFile.jsonToObj();
-    if(exist) {
-        
-        int i = 0;
-        for(User user : users) {
-            if(user.getUsername().equals(this.username)) {
-                return i;
-            }
-            i++;
-        }
-    }
-    return users.size() - 1;
-    
-}
-
-/**
- * Method to take the user to the mainpage after successful log-in
- * 
- * @param actionEvent
- * loads Shopee.fxml
- */
-private void loadNewPage(ActionEvent actionEvent) {
-    try{  
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-        Scene homeScene = new Scene(loader.load());
-
-        HomePageController homepage = loader.getController();
-        homepage.setUser(this.user);
-
-        Stage stage = (Stage) signIn.getScene().getWindow();
-        stage.setScene(homeScene);
-
-        usernameInput.clear();
-        passwordInput.clear();
-
-        stage.show();
-        
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    }
-    
 }
 
 
