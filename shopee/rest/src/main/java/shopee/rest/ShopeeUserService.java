@@ -102,5 +102,29 @@ public class ShopeeUserService {
        
     }
 
+        /**
+     * Deletes a shopeeList from a user.
+     * @param username
+     * @param listName
+     * @return
+     * @throws IOException
+     */
+    public boolean deleteShopeeList(String username, String listName) throws IOException{
+        try {
+            if(username.equals("")||listName.equals("")){
+                throw new IOException("name or listname is null");
+            }
+            User user = shopeePersistence.jsonToObj().stream().filter(u->u.getUsername()
+            .equals(username)).findFirst().orElse(null);
+            user.deleteShopeeList(listName);
+            shopeePersistence.writeToFile(user);
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false; 
+        }
+        
+    }
+
 
 }
