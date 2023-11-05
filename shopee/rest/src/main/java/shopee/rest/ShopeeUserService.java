@@ -75,5 +75,32 @@ public class ShopeeUserService {
        
     }
 
+      /**
+     * Adds a shopeeList to a user.
+     * @param username
+     * @param newList
+     * @return
+     * @throws IOException
+     */
+    public boolean addShopeeList(String username, ShopeeList newList){
+        try {
+            List<User> users = shopeePersistence.jsonToObj();
+             User user = users.stream().filter(u->u.getUsername()
+            .equals(username)).findFirst().orElse(null);
+            for(ShopeeList list : user.getShopeeLists()){
+                if(list.getListName().equals(newList.getListName())){
+                    user.replaceShopeeList(username, newList);
+                }
+            }
+            shopeePersistence.writeToFile(user);
+            return true;
+                
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false; 
+        }
+       
+    }
+
 
 }
