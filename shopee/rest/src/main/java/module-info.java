@@ -2,7 +2,7 @@ module shopee.rest {
 
     requires com.fasterxml.jackson.databind;
 
-    requires transitive shopee.core;
+    requires transitive core;
 
     requires spring.web;
     requires spring.boot;
@@ -13,5 +13,5 @@ module shopee.rest {
     requires java.net.http;
 
     opens shopee.rest to spring.web, spring.beans, spring.context, spring.core;
-    exports shopee.rest.properties to spring.beans, spring.boot;
+
 }

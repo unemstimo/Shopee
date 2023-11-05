@@ -5,85 +5,126 @@ import shopee.core.ShopeeList;
 import shopee.core.FoodItem;
 import shopee.json.FileHandeler;
 
-import java.util.IOException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
+
 import org.springframework.stereotype.Service;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileNotFoundException;
 
 
 @Service
 public class ShopeeUserService {
-    
-    private User shopeeUser;
-    private ShopeeList list;
+    private List<User> allUsers; 
+    // private User shopeeUser;
     private FileHandeler shopeePersistence;
    
-
-    public ShopeeUserService() throws IllegalStateException, IOException {
-        this.shopeePersistence = new FileHandeler();
-        this.shopeeUser = shopeePersistence.jsonToObj().stream().filter(u -> u.isActive());
-    }
-
-    public User getUser(){
-        return this.shopeeUser;
-    }
-
-    public void setUser(User user){
-        this.shopeeUser = user;
-    }
-
-    public static User createInitialUsers(){
-        FileHandeler testPersistance = new FileHandeler();
-        try (Reader rsreader = new FileReader(new File(System.getProperty("user.home") + File.separator
-        + ("/src/main/resources/shopee/rest/initial-shopee.json")))) {
-            ObjectMapper mapper = testPersistance.createObjectMapper();
-            return mapper.readValue(reader, User.class);
-            
-        } catch (IOException e) {
-            System.out.println("Could not read the initial cookbook... tries to make it manually (" + err + ")");
+  /**
+     * Constructor for ShopeeUserService.
+     */
+    public ShopeeUserService() {
+        try {
+            this.shopeePersistence = new FileHandeler();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        this.allUsers = getAllUsers();
+        
     }
 
 
-    public boolean addShopeeList(ShopeeList shopeeList){
-        shopeeUser.addShopeeList(shopeeList);
-        writeToFile(shopeeUser);
-        return true;
+    /**
+     * Gets all users from the database.
+     * @return
+     */
+    public List<User> getAllUsers() {
+        try {
+        return shopeePersistence.jsonToObj();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public boolean deleteShopeeList(string listName){
-        shopeeUser.deleteShopeeList(listName);
-        writeToFile(shopeeUser);
-        return true;
+    /**
+     * Gets a user from the database.
+     * @param username
+     * @return
+     */
+    public User getUser(String username){
+        return allUsers.stream().filter(u->u.getUsername().equals(username)).findFirst().orElse(null);
     }
 
-    public boolean addFoodItem(String listName, FoodItem foodItem){
-        list = shopeeUser.getShopeeList(listName);
-        list.addFoodItem(foodItem.getFoodName(), foodItem.getFoodAmount());
-        shopeePersistance.writeToFile(shopeeUser);
-        return true;
+
+    /**
+     * Adds a user to the database.
+     * @param userString
+     */
+    public void addUser(String userString){
+        try {
+            User user = shopeePersistence.jsonToUser(userString);
+            if(user == null||user.getUsername().equals("")){
+                throw new IllegalArgumentException("User was not created properly when adding user");
+            }
+            shopeePersistence.writeToFile(user);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+       
     }
 
-    public boolean removeFoodItem(String listName, FoodItem foodItem){
-        list = shopeeUser.getShopeeList(listName);
-        list.removeFoodItem(foodItem.getFoodName());
-        shopeePersistance.writeToFile(shopeeUser);
-        return true;
+      /**
+     * Adds a shopeeList to a user.
+     * @param username
+     * @param newList
+     * @return
+     * @throws IOException
+     */
+    public boolean addShopeeList(String username, ShopeeList newList){
+        try {
+            List<User> users = shopeePersistence.jsonToObj();
+             User user = users.stream().filter(u->u.getUsername()
+            .equals(username)).findFirst().orElse(null);
+            for(ShopeeList list : user.getShopeeLists()){
+                if(list.getListName().equals(newList.getListName())){
+                    user.replaceShopeeList(username, newList);
+                }
+            }
+            shopeePersistence.writeToFile(user);
+            return true;
+                
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false; 
+        }
+       
     }
 
-    public boolean markAsBought(String listName, FoodItem foodItem){
-        list = shopeeUser.getShopeeList(listName);
-        list.addFoodBoughtList(foodItem);
-        shopeePersistance.writeToFile(shopeeUser);
-        return true;
+        /**
+     * Deletes a shopeeList from a user.
+     * @param username
+     * @param listName
+     * @return
+     * @throws IOException
+     */
+    public boolean deleteShopeeList(String username, String listName) throws IOException{
+        try {
+            if(username.equals("")||listName.equals("")){
+                throw new IOException("name or listname is null");
+            }
+            User user = shopeePersistence.jsonToObj().stream().filter(u->u.getUsername()
+            .equals(username)).findFirst().orElse(null);
+            user.deleteShopeeList(listName);
+            shopeePersistence.writeToFile(user);
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false; 
+        }
+        
     }
-
-   
-
 
 
 }
