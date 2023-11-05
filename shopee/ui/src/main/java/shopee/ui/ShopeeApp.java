@@ -15,7 +15,11 @@ public class ShopeeApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("LogIn.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        LogInController controller = new LogInController();
+        controller.setUpAccess(); //sets up the access to either local or remote depending if the server is running or not
+        fxmlLoader.setController(controller);
+        fxmlLoader.setLocation(this.getClass().getResource("LogIn.fxml"));
         Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
         stage.show();
