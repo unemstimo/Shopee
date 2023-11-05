@@ -1,5 +1,6 @@
 package shopee.rest;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import shopee.core.User;
+import shopee.json.FileHandeler;
 import shopee.core.ShopeeList;
 
 /**
@@ -24,5 +26,37 @@ import shopee.core.ShopeeList;
 @RequestMapping("/users")
 
 public class ShopeeUserController {
-  
+    private List<User> allUsers; 
+    // private User shopeeUser;
+    private FileHandeler shopeePersistence;
+   
+
+
+    /**
+     * Constructor for ShopeeUserService.
+     */
+    public ShopeeUserService() {
+        try {
+            this.shopeePersistence = new FileHandeler();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.allUsers = getAllUsers();
+        
+    }
+
+    /**
+     * Gets all users from the database.
+     * @return
+     */
+    public List<User> getAllUsers() {
+        try {
+        return shopeePersistence.jsonToObj();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    
 }
