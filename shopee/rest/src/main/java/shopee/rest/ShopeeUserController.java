@@ -26,37 +26,40 @@ import shopee.core.ShopeeList;
 @RequestMapping("/users")
 
 public class ShopeeUserController {
-    private List<User> allUsers; 
-    // private User shopeeUser;
-    private FileHandeler shopeePersistence;
-   
 
+  @Autowired
+  private ShopeeUserService userService;
+
+
+
+  /**
+   * Constructor for ShopeeUserController.
+   * @param userService
+   * @throws IllegalStateException
+   * @throws IOException
+   */
+  public ShopeeUserController(final ShopeeUserService userService) throws IllegalStateException, IOException {
+      this.userService = new ShopeeUserService();
+  }
+
+
+  /**
+   * Gets all users from the database.
+   * @return
+   */
+  @GetMapping()
+  public List<User> getAllUsers(){
+    return userService.getAllUsers();
+  }
 
     /**
-     * Constructor for ShopeeUserService.
-     */
-    public ShopeeUserService() {
-        try {
-            this.shopeePersistence = new FileHandeler();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.allUsers = getAllUsers();
-        
-    }
+   * Gets a specific user from the database.
+   * @param username
+   * @return
+   */
+  @GetMapping("/{username}")
+  public User getUser(String username){
+    return userService.getUser(username);
+  }
 
-    /**
-     * Gets all users from the database.
-     * @return
-     */
-    public List<User> getAllUsers() {
-        try {
-        return shopeePersistence.jsonToObj();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    
 }
