@@ -20,7 +20,9 @@ public class ShopeeUserService {
     // private User shopeeUser;
     private FileHandeler shopeePersistence;
    
-
+  /**
+     * Constructor for ShopeeUserService.
+     */
     public ShopeeUserService() {
         try {
             this.shopeePersistence = new FileHandeler();
@@ -31,6 +33,11 @@ public class ShopeeUserService {
         
     }
 
+
+    /**
+     * Gets all users from the database.
+     * @return
+     */
     public List<User> getAllUsers() {
         try {
         return shopeePersistence.jsonToObj();
@@ -39,5 +46,34 @@ public class ShopeeUserService {
         }
         return null;
     }
+
+    /**
+     * Gets a user from the database.
+     * @param username
+     * @return
+     */
+    public User getUser(String username){
+        return allUsers.stream().filter(u->u.getUsername().equals(username)).findFirst().orElse(null);
+    }
+
+
+    /**
+     * Adds a user to the database.
+     * @param userString
+     */
+    public void addUser(String userString){
+        try {
+            User user = shopeePersistence.jsonToUser(userString);
+            if(user == null||user.getUsername().equals("")){
+                throw new IllegalArgumentException("User was not created properly when adding user");
+            }
+            shopeePersistence.writeToFile(user);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+       
+    }
+
 
 }
