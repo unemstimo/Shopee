@@ -3,8 +3,6 @@ package shopee.ui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import shopee.core.FoodItem;
 import shopee.core.ShopeeList;
@@ -12,15 +10,14 @@ import shopee.core.User;
 import shopee.json.FileHandeler;
 import shopee.ui.dataaccess.LocalUserAccess;
 import shopee.ui.dataaccess.UserAccess;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * TestFX App test
@@ -43,10 +40,11 @@ public class ShopeeTest extends ApplicationTest {
     // }
   
     @BeforeEach
-    public void setUp() throws FileNotFoundException {
+    public void setUp() throws FileNotFoundException, JsonProcessingException {
       this.dataAccess = new LocalUserAccess();
       fileHandeler.clearFileContent();
       this.testUser.addShopeeList(new ShopeeList("testlist"));
+      this.dataAccess.addUser(testUser);
       controller.initData(this.testUser, "testlist", this.dataAccess);  
   
     }
@@ -58,7 +56,7 @@ public class ShopeeTest extends ApplicationTest {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setController(controller);
-        fxmlLoader.setLocation(this.getClass().getResource("Home.fxml"));
+        fxmlLoader.setLocation(this.getClass().getResource("Shopee.fxml"));
         final Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
         stage.show();
@@ -77,16 +75,21 @@ public class ShopeeTest extends ApplicationTest {
         clickOn("#amountNewFood").write("4");
         clickOn("#addFood");
 
-        assertEquals("", lookup("#newFood").queryTextInputControl().getText());
-        assertEquals("", lookup("#amountNewFood").queryTextInputControl().getText());
+        assertEquals("Pineapple", controller.getShoppingListView().getItems().get(0));
 
-        ShopeeList shopelist = this.dataAccess.getAllUsers().get(0).getShopeeList("testlist");
-        FoodItem item = shopelist.getFood("Pineapple");
-        int amount = item.getFoodAmount();
+        clickOn("#newFood").write("Pineapple");
+        clickOn("#amountNewFood").write("8");
+        clickOn("#addFood");
+
+        assertEquals(8, controller.getUser().getShopeeList("testlist").getFood("Pineapple").getFoodAmount());
+
+        clickOn("#newFood").write("Æ@@@@@#");
+        clickOn("#amountNewFood").write("8");
+        clickOn("#addFood");
+
+        assertEquals("Food is not valid", controller.getErrorOutput());
         
-        assertEquals(4, amount);
-        assertEquals("Pineapple", item.getFoodName());
-
+        //Teste negativt tall?
     }
 
     /**
