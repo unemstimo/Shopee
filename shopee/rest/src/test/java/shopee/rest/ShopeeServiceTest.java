@@ -1,6 +1,7 @@
 package shopee.rest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.FileNotFoundException;
@@ -85,6 +86,16 @@ public class ShopeeServiceTest {
         assertFalse(shopeeService.getUser(this.exampleUser.getUsername()).getShopeeLists().contains(this.exampleList)
         , "The shopeeList was not delete from the example user");
     }
- 
+
+    @Test
+    public void createIntitalUser(){
+        getuserInfo();
+        assertTrue(this.allUsers.size() ==2, "something went wrong when initializing users in tests");
+        assertEquals(this.exampleUser.getUsername(), "Terje@gmail.com", "The first user didnt match");
+        assertTrue(this.exampleUser.getShopeeLists().size() ==2, "The amount of shopeeLists didnt match what it shoudl be");
+        assertEquals(this.exampleUser.getShopeeLists().get(0).getFood(0).getFoodName(),"Bread"
+        , "the food name didnt match what was created in createIntialUser ");
+    }
+
   
 }
