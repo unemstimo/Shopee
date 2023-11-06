@@ -3,9 +3,14 @@ package shopee.rest;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import shopee.core.ShopeeList;
 import shopee.core.User;
@@ -36,14 +41,40 @@ public class ShopeeServiceTest {
      
     }
 
+    
+
     @Test 
     public void addUser(){
         User testUser = new User("Richard@gmail.com", "Password123!");
         User testUser2 = new User("Daniel@outlook.no", "HarryP123@");
-        shopeeService.addUser(fileHandler.fromUserToString(testUser));
+
+        assertTrue(shopeeService.addUser(fileHandler.fromUserToString(testUser)), "addUser method didn't work");
         assertTrue(shopeeService.getAllUsers().contains(testUser), "The user was not added correctly");
         assertFalse(shopeeService.getAllUsers().contains(testUser2), "User was added even though it should't");
     }
     
-    
+    /**
+     * Helper method such that the test are easier to understand.
+     */
+
+    public void getuserInfo(){
+        this.allUsers = shopeeService.getAllUsers();
+        this.exampleUser = shopeeService.getAllUsers().get(0);
+        this.exampleList = shopeeService.getAllUsers().get(0).getShopeeList("Target shoppinglist");
+    }
+
+    @Test
+    public void addShopeeList(){
+        getuserInfo();
+        ShopeeList newList = new ShopeeList("testList");
+        assertFalse(shopeeService.getUser(this.exampleUser.getUsername()).getShopeeLists().contains(newList)
+        ,"The list is already added, should have been false");
+        assertTrue(shopeeService.addShopeeList(this.exampleUser.getUsername(), newList)
+        ,"addShopeeList method didn't work");
+        assertTrue(shopeeService.getAllUsers().get(0).getShopeeLists().contains(newList)
+        ,"The shopeeList was not added to the user");
+    }
+
+
+   
 }
