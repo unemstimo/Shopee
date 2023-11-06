@@ -36,6 +36,8 @@ public class ShopeeServiceTest {
             shopeeService = new ShopeeUserService();
             shopeeService.setAllUsers(ShopeeUserService.createInitialUser());
             fileHandler = new FileHandeler();
+            this.allUsers = shopeeService.getAllUsers();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,32 +61,32 @@ public class ShopeeServiceTest {
      */
 
     public void getuserInfo(){
-        this.allUsers = shopeeService.getAllUsers();
         this.exampleUser = shopeeService.getAllUsers().get(0);
-        this.exampleList = shopeeService.getAllUsers().get(0).getShopeeLists().get(0);
+        this.exampleList = this.allUsers.get(0).getShopeeLists().get(0);
     }
 
     @Test
     public void addShopeeList(){
-        getuserInfo();
+        User userExample = shopeeService.getAllUsers().get(0);
         ShopeeList newList = new ShopeeList("testList");
-        assertFalse(shopeeService.getUser(this.exampleUser.getUsername()).getShopeeLists().contains(newList)
+        assertFalse(userExample.getShopeeLists().contains(newList)
         ,"The list is already added, should have been false");
-        assertTrue(shopeeService.addShopeeList(this.exampleUser.getUsername(), newList)
+        assertTrue(shopeeService.addShopeeList(userExample.getUsername(), newList)
         ,"addShopeeList method didn't work");
-        assertTrue(shopeeService.getAllUsers().get(0).getShopeeLists().contains(newList)
+        assertTrue(userExample.getShopeeLists().contains(newList)
         ,"The shopeeList was not added to the user");
     }
 
     @Test
     public void deleteShopeeList() throws IOException{
-        getuserInfo();
-        assertTrue(shopeeService.getUser(this.exampleUser.getUsername()).getShopeeLists().contains(this.exampleList)
+        User userExample = shopeeService.getAllUsers().get(0);
+        ShopeeList listExample = shopeeService.getAllUsers().get(0).getShopeeLists().get(0);
+        assertTrue(shopeeService.getUser(userExample.getUsername()).getShopeeLists().contains(listExample)
         , "The shopeeList was never in example user and cant be removed");
-        assertTrue(shopeeService.deleteShopeeList(this.exampleUser.getUsername(), this.exampleList.getListName())
+        assertTrue(shopeeService.deleteShopeeList(userExample.getUsername(), listExample.getListName())
         , "The delete shopeeList method didnt work");
-        assertFalse(shopeeService.getUser(this.exampleUser.getUsername()).getShopeeLists().contains(this.exampleList)
-        , "The shopeeList was not delete from the example user");
+        assertFalse(shopeeService.getUser(userExample.getUsername()).getShopeeLists().contains(listExample)
+        , "The shopeeList was not deleted from the example user");
     }
 
     @Test

@@ -26,11 +26,10 @@ public class ShopeeUserService {
     public ShopeeUserService() {
         try {
             this.shopeePersistence = new FileHandeler();
+            this.allUsers = shopeePersistence.jsonToObj();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.allUsers = getAllUsers();
-        
     }
 
 
@@ -39,12 +38,7 @@ public class ShopeeUserService {
      * @return
      */
     public List<User> getAllUsers() {
-        try {
-        return shopeePersistence.jsonToObj();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return this.allUsers;
     }
 
     /**
@@ -138,33 +132,33 @@ public class ShopeeUserService {
     * Creates an initial list of users. User for testing etc. 
     */
     public static List<User> createInitialUser() throws FileNotFoundException{
-        FileHandeler fileHandler = new FileHandeler();
-        List<User> users = fileHandler.jsonToObj();
+        FileHandeler testHandler = new FileHandeler();
+        List<User> users = testHandler.jsonToObj();
         if(!users.isEmpty()){
             return users; 
         }
-
+        List<User> exampleUsers = new ArrayList<>();
         User exampleUser = new User("Terje@gmail.com", "Passord123@");
-        User exampleUser2 = new User("Laylae@gmail.com", "Hunder123@");
+        
         ShopeeList list1 = new ShopeeList("Target shoppinglist");
         list1.addFoodShopList("Bread", 2);
         list1.addFoodShopList("Milk", 1);
         list1.addFoodShopList("Soda", 6);
         list1.addFoodShopList("Carrots", 6);
-        list1.addFoodBoughtList(new FoodItem("Chocolate", 1));
-        list1.addFoodBoughtList(new FoodItem("Gum", 1));
+        
 
         ShopeeList list2 = new ShopeeList("Rema 1000");
         list2.addFoodShopList("Meat", 1);
         list2.addFoodShopList("Coffee", 6);
         list2.addFoodShopList("Cake", 1);
-        list2.addFoodBoughtList(new FoodItem("Eggs", 12));
-    
         exampleUser.addShopeeList(list1);
         exampleUser.addShopeeList(list2);
+
+        User exampleUser2 = new User("Laylae@gmail.com", "Hunder123@");
         exampleUser2.addShopeeList(new ShopeeList("Gifts"));
         
-        List<User> exampleUsers = new ArrayList<>();
+        testHandler.writeToFile(exampleUser);
+        testHandler.writeToFile(exampleUser2);
         exampleUsers.add(exampleUser);
         exampleUsers.add(exampleUser2);
         
