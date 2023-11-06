@@ -32,7 +32,7 @@ public class HomePageTest extends ApplicationTest{
         root = fxmlLoader.load();
         this.testUser = exampleUser();
         HomePageController controller = fxmlLoader.getController();
-        controller.setUser(testUser);
+        //controller.setUser(testUser);
         stage.setScene(new Scene(root));
         stage.show();
     }
