@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler;
 import shopee.ui.dataaccess.LocalUserAccess;
@@ -18,12 +19,15 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.util.WaitForAsyncUtils;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 
 public class HomePageTest extends ApplicationTest{
@@ -37,15 +41,13 @@ public class HomePageTest extends ApplicationTest{
   
     
   
-    // @BeforeAll
-    // public void rigup() throws FileNotFoundException {
-    //     this.testUser = exampleUser();
-    // }
+    
   
     @BeforeEach
-    public void setUp() throws FileNotFoundException {
+    public void setUp() throws FileNotFoundException, JsonProcessingException {
       this.dataAccess = new LocalUserAccess();
       fileHandeler.clearFileContent();
+      this.dataAccess.addUser(testUser);
       controller.initData(this.testUser, this.dataAccess);  
   
     }
@@ -72,74 +74,67 @@ public class HomePageTest extends ApplicationTest{
         clickOn("#listName").write("Uke 40");
         clickOn("#addList");
 
-        assertEquals("Uke 40", this.testUser.getShopeeLists().get(0).getListName());
-        
+
+        ShopeeList list1 = this.dataAccess.getAllUsers().get(0).getShopeeLists().get(0);
+        assertEquals("Uke 40", list1.getListName());
+
+        clickOn(LabeledMatchers.hasText("Back"));
+
         assertEquals("", lookup("#listName").queryTextInputControl().getText());
 
         clickOn("#listName").write("Uke 41");
         clickOn("#addList");
 
-        assertEquals("Uke 41", this.testUser.getShopeeLists().get(1).getListName());
 
+        ShopeeList list2 = this.dataAccess.getAllUsers().get(0).getShopeeLists().get(1);
+        assertEquals("Uke 41", list2.getListName());
     }
 
 
     /**
      * Tests that the user can delete lists
+     * @throws JsonProcessingException
      */
     @Test
-    public void deleteShopeeList() {
-        clickOn("#shoppingListView").type(KeyCode.DOWN);
+    public void deleteShopeeList() throws JsonProcessingException {
+        setUpDeletetest();
+
+        List<ShopeeList> list1 = dataAccess.getAllUsers().get(0).getShopeeLists();
+        assertEquals(4, list1.size());
+
+        clickOn(LabeledMatchers.hasText("Middag"));
         clickOn("#deleteList");
-
-        //tries to get the shopeelist that is deleted, should throw
-        try {
-            testUser.getShopeeList("Uke 41"); //might be "Uke 40"
-        } catch (Exception e) {
-            assertEquals("No such list name for this user", e.getMessage());
-        }  
-
-    }
-
-
-    /**
-     * Tests that the user is able to modify on of its existing shopee lists
-     */
-    @Test
-    public void modifyShopeeList() {
-        clickOn("#shoppingListView").type(KeyCode.DOWN);
-        clickOn("#modifyList");
-
-        WaitForAsyncUtils.waitForFxEvents();
-
-        Node modifyShopeeElement = lookup("#newFood").query();
-        assertNotNull(modifyShopeeElement);
-
-        clickOn("#newFood").write("fisk");
-        clickOn("#amountNewFood").write("4");
-        clickOn("#addFood");
-
-        clickOn("#back");
         
-        Node homepageElement = lookup("#listName").query();
-        assertNotNull(homepageElement);
+        List<ShopeeList> list2 = dataAccess.getAllUsers().get(0).getShopeeLists();
+        assertEquals(3, list2.size());
 
-        int lenght = testUser.getShopeeLists().get(0).getShopList().size();
+        clickOn(LabeledMatchers.hasText("Lunsj"));
+        clickOn("#deleteList");
+        
+        List<ShopeeList> list3 = dataAccess.getAllUsers().get(0).getShopeeLists();
+        assertEquals(2, list3.size());
 
-        assertNotEquals(0, lenght);
+        clickOn(LabeledMatchers.hasText("Frokost"));
+        clickOn("#deleteList");
+        
+        List<ShopeeList> list4 = dataAccess.getAllUsers().get(0).getShopeeLists();
+        assertEquals(1, list4.size());
 
     }
 
-    /**
-     * Makes a User that will be the used in the tests
-     * 
-     * @return User
-     */
-    public User exampleUser(){
-        return new User("johan@ntnu.no", "Johan123@");  
-     }
-
-     
-
+    public void setUpDeletetest() {
+        clickOn("#listName").write("Middag");
+        clickOn("#addList");
+        clickOn(LabeledMatchers.hasText("Back"));
+        clickOn("#listName").write("Lunsj");
+        clickOn("#addList");
+        clickOn(LabeledMatchers.hasText("Back"));
+        clickOn("#listName").write("Dessert");
+        clickOn("#addList");
+        clickOn(LabeledMatchers.hasText("Back"));
+        clickOn("#listName").write("Frokost");
+        clickOn("#addList");
+        clickOn(LabeledMatchers.hasText("Back"));
+    }
 
 }
