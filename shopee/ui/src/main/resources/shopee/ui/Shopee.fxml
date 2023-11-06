@@ -48,6 +48,9 @@
          </image>
       </ImageView>
       <Button fx:id="back" layoutX="517.0" layoutY="362.0" mnemonicParsing="false" onAction="#backToShoppingList" text="Back" />
-      <Label fx:id="outPut" wrapText="true" layoutX="402.0" layoutY="8.0" prefHeight="44.0" prefWidth="180.0" />     
+      <Label fx:id="outPut" layoutX="406.0" layoutY="27.0" prefHeight="44.0" prefWidth="180.0" textAlignment="CENTER" textFill="RED" wrapText="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>     
    </children>
 </AnchorPane>

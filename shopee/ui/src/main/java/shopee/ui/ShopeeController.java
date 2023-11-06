@@ -57,18 +57,28 @@ public class ShopeeController extends AbstractController{
      */
     @FXML
     public void handleAddFoodButtonClick(ActionEvent event) throws JsonProcessingException{
-
-        String food = newFood.getText();
-        int amount = Integer.parseInt(amountNewFood.getText());
+        
         try {
-            this.shopeeList.addFoodShopList(food, amount);
-            showShoppingList(this.shopeeList.getShopList());
-            newFood.clear();
-            amountNewFood.clear();
+            String food = newFood.getText();
+            int amount = Integer.parseInt(amountNewFood.getText());
+
+            try {
+                this.shopeeList.addFoodShopList(food, amount);
+                showShoppingList(this.shopeeList.getShopList());
+                newFood.clear();
+                amountNewFood.clear();
+                outPut.setText("");
+            } catch (Exception e) {
+                outPut.setText(e.getMessage());
+            }
+
         } catch (Exception e) {
-            outPut.setText(e.getMessage());
+            outPut.setText("Please fill in both input-fields");
         }
+
+        
        
+
     }
 
     /**
@@ -158,6 +168,11 @@ public class ShopeeController extends AbstractController{
 
     public User getUser() {
         return this.user;
+    }
+
+    public void clearInputFields() {
+        newFood.clear();
+        amountNewFood.clear();
     }
 
 }
