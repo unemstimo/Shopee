@@ -60,7 +60,7 @@ public class ShopeeServiceTest {
     public void getuserInfo(){
         this.allUsers = shopeeService.getAllUsers();
         this.exampleUser = shopeeService.getAllUsers().get(0);
-        this.exampleList = shopeeService.getAllUsers().get(0).getShopeeList("Target shoppinglist");
+        this.exampleList = shopeeService.getAllUsers().get(0).getShopeeLists().get(0);
     }
 
     @Test
@@ -75,6 +75,16 @@ public class ShopeeServiceTest {
         ,"The shopeeList was not added to the user");
     }
 
-
-   
+    @Test
+    public void deleteShopeeList() throws IOException{
+        getuserInfo();
+        assertTrue(shopeeService.getUser(this.exampleUser.getUsername()).getShopeeLists().contains(this.exampleList)
+        , "The shopeeList was never in example user and cant be removed");
+        assertTrue(shopeeService.deleteShopeeList(this.exampleUser.getUsername(), this.exampleList.getListName())
+        , "The delete shopeeList method didnt work");
+        assertFalse(shopeeService.getUser(this.exampleUser.getUsername()).getShopeeLists().contains(this.exampleList)
+        , "The shopeeList was not delete from the example user");
+    }
+ 
+  
 }
