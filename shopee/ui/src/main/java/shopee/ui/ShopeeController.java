@@ -66,7 +66,7 @@ public class ShopeeController extends AbstractController{
             newFood.clear();
             amountNewFood.clear();
         } catch (Exception e) {
-            outPut.setText("Food is not valid");
+            outPut.setText(e.getMessage());
         }
        
     }

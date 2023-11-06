@@ -79,13 +79,13 @@ public void handleSignUpButtonClick (ActionEvent event){
                 this.user = user;
                 this.users = dataAccess.getAllUsers(); //gets all users from database either local or remote updated
                 output.setText("Brukeren er blitt opprettet. Du kan nå logge inn");
+                usernameInput.clear();
+            passwordInput.clear();
             } catch(Exception e) {
-                output.setText("Brukernavnet eller passordet oppfyller ikke krav");
+                output.setText(e.getMessage());
             }
             
-            
-            usernameInput.clear();
-            passwordInput.clear();
+        
         }
     }  catch(Exception e){
         e.printStackTrace();
