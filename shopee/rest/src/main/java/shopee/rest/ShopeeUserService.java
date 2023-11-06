@@ -48,6 +48,14 @@ public class ShopeeUserService {
     }
 
     /**
+    * sets users, used for testing.
+    * @param allUsers
+    */
+    public void setAllUsers(List<User> allUsers){
+        this.allUsers = allUsers;
+    }
+
+    /**
      * Gets a user from the database.
      * @param username
      * @return
