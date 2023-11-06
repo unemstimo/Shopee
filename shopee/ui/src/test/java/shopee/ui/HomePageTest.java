@@ -9,13 +9,18 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import shopee.core.User;
 import shopee.json.FileHandeler;
+import shopee.ui.dataaccess.LocalUserAccess;
+import shopee.ui.dataaccess.UserAccess;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
@@ -23,17 +28,37 @@ import org.testfx.util.WaitForAsyncUtils;
 
 public class HomePageTest extends ApplicationTest{
 
-    private Parent root;
-    private User testUser;
+    private User testUser = new User("Oskar@ntnu.no", "Eksempelpassors123@");
+    private FileHandeler fileHandeler = new FileHandeler("direct.json");
+
+
+    private HomePageController controller = new HomePageController();
+    private UserAccess dataAccess;
+  
+    
+  
+    // @BeforeAll
+    // public void rigup() throws FileNotFoundException {
+    //     this.testUser = exampleUser();
+    // }
+  
+    @BeforeEach
+    public void setUp() throws FileNotFoundException {
+      this.dataAccess = new LocalUserAccess();
+      fileHandeler.clearFileContent();
+      controller.initData(this.testUser, this.dataAccess);  
+  
+    }
+
+
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Home.fxml"));
-        root = fxmlLoader.load();
-        this.testUser = exampleUser();
-        HomePageController controller = fxmlLoader.getController();
-        
-        stage.setScene(new Scene(root));
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setController(controller);
+        fxmlLoader.setLocation(this.getClass().getResource("Home.fxml"));
+        final Parent parent = fxmlLoader.load();
+        stage.setScene(new Scene(parent));
         stage.show();
     }
 
@@ -111,11 +136,10 @@ public class HomePageTest extends ApplicationTest{
      * @return User
      */
     public User exampleUser(){
-        FileHandeler handler = new FileHandeler();
-        handler.clearFileContent();
-        this.testUser = new User("johan@ntnu.no", "Johan123@");
-        return testUser; 
+        return new User("johan@ntnu.no", "Johan123@");  
      }
+
+     
 
 
 }

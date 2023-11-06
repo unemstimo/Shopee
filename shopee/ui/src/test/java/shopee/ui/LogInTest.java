@@ -5,24 +5,52 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.io.FileNotFoundException;
+
+import org.junit.jupiter.api.BeforeEach;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import shopee.core.User;
+import shopee.json.FileHandeler;
+import shopee.ui.dataaccess.LocalUserAccess;
+import shopee.ui.dataaccess.UserAccess;
 
 
 public class LogInTest extends ApplicationTest {
     
     
-    private Parent root;
-    private LogInController controller;
+    private FileHandeler fileHandeler = new FileHandeler("direct.json");
+
+
+    private LogInController controller = new LogInController();
+    private UserAccess dataAccess;
+  
+    
+  
+    // @BeforeAll
+    // public void rigup() throws FileNotFoundException {
+    //     this.testUser = exampleUser();
+    // }
+  
+    @BeforeEach
+    public void setUp() throws FileNotFoundException {
+      this.dataAccess = new LocalUserAccess();
+      fileHandeler.clearFileContent();
+      controller.initData(this.dataAccess);  
+  
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("LogIn.fxml"));
-        root = fxmlLoader.load();
-        this.controller = fxmlLoader.getController();
-        stage.setScene(new Scene(root));
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setController(controller);
+        fxmlLoader.setLocation(this.getClass().getResource("Login.fxml"));
+        final Parent parent = fxmlLoader.load();
+        stage.setScene(new Scene(parent));
         stage.show();
     }
     
