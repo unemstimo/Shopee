@@ -14,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import shopee.core.User;
 import shopee.json.FileHandeler;
 import shopee.ui.dataaccess.LocalUserAccess;
 import shopee.ui.dataaccess.UserAccess;
@@ -73,25 +72,30 @@ public class LogInTest extends ApplicationTest {
 
         clickOn("#signUp");
 
-        
+        assertEquals("Brukernavnet eller passordet oppfyller ikke krav", this.controller.getErrorLabel());  
 
     }
     /**
      * This method tests invalid password 
      */
     @Test
-    public void testSignUpWithInvalidPaasword() {
+    public void testSignUpWithInvalidPassword() {
         
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("invalidpassword");
 
         clickOn("#signUp");
 
+        assertEquals("Brukernavnet eller passordet oppfyller ikke krav", this.controller.getErrorLabel());
+
+    
+
     }
 
 
     /*
      * This method tests if fields get clear when clicking on sign up button 
+     * and that the output text is given correctly
      * 
      */
     @Test
@@ -103,6 +107,8 @@ public class LogInTest extends ApplicationTest {
 
         assertEquals("", lookup("#usernameInput").queryTextInputControl().getText());
         assertEquals("", lookup("#passwordInput").queryTextInputControl().getText());
+
+        assertEquals("Brukeren er blitt opprettet. Du kan nå logge inn", this.controller.getErrorLabel());
 
     }
 
@@ -116,8 +122,18 @@ public class LogInTest extends ApplicationTest {
         
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("validpwd123/");
-        clickOn("#signIn");
-        
+        clickOn("#signIn");  
+    }
+
+
+    @Test
+    public void testUnvalidSignIn() {
+            
+            clickOn("#usernameInput").write("invalid@example");
+            clickOn("#passwordInput").write("validpwd123/");
+            clickOn("#signIn");  
+    
+            assertEquals("Feil brukernavn eller passord. Vennligst prøv igjen.", this.controller.getErrorLabel());
     }
 
 }
