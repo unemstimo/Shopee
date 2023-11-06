@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import shopee.core.FoodItem;
 import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler;
@@ -16,6 +15,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.matcher.control.LabeledMatchers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -75,21 +75,21 @@ public class ShopeeTest extends ApplicationTest {
         clickOn("#amountNewFood").write("4");
         clickOn("#addFood");
 
-        assertEquals("Pineapple", controller.getShoppingListView().getItems().get(0));
-
-        clickOn("#newFood").write("Pineapple");
-        clickOn("#amountNewFood").write("8");
-        clickOn("#addFood");
-
-        assertEquals(8, controller.getUser().getShopeeList("testlist").getFood("Pineapple").getFoodAmount());
+        assertEquals("Pineapple", controller.getShoppingListView().getItems().get(0).getFoodName());
 
         clickOn("#newFood").write("Æ@@@@@#");
         clickOn("#amountNewFood").write("8");
         clickOn("#addFood");
 
-        assertEquals("Food is not valid", controller.getErrorOutput());
+        assertEquals("The food name can only contain letters.", controller.getErrorOutput());
+        this.controller.clearInputFields();
         
-        //Teste negativt tall?
+        clickOn("#newFood").write("Egg");
+        clickOn("#amountNewFood").write("-5");
+        clickOn("#addFood");
+
+        assertEquals("The amount of food needs to be 1 or higher", controller.getErrorOutput());
+       
     }
 
     /**
@@ -100,83 +100,81 @@ public class ShopeeTest extends ApplicationTest {
     @Test
     public void testNewAmountWhenAddingSameFood() {
         clickOn("#newFood").write("Water");
-        clickOn("#amountNewFood").write("2");
+        clickOn("#amountNewFood").write("4");
         clickOn("#addFood");
 
-        ShopeeList list1 = this.dataAccess.getAllUsers().get(0).getShopeeList("testlist");
-        assertEquals(2, list1.getFood("Water").getFoodAmount());
+        assertEquals(4, controller.getShoppingListView().getItems().get(0).getFoodAmount());
 
-        
         clickOn("#newFood").write("Water");
-        clickOn("#amountNewFood").write("19");
+        clickOn("#amountNewFood").write("8");
         clickOn("#addFood");
 
-        ShopeeList list2 = this.dataAccess.getAllUsers().get(0).getShopeeList("testlist");
-        assertEquals(19, list2.getFood("Water").getFoodAmount());
+        assertEquals(8, controller.getUser().getShopeeList("testlist").getFood("Water").getFoodAmount());
+
     }
 
-    /**
-     * Test method tests if a food item is removed from shopping list and placed
-     * in the bought shopping list if a food item is marked as bought
-     */
+    @Test
+    public void testMarkAsBought() {
+        setUpTest();
 
-    // @Test
-    // public void testMarkAsBoughtButtonClick() {
-    //     ShopeeList s = testUser.getShopeeList();
+        clickOn(LabeledMatchers.hasText("Water : 4  STK"));
+        clickOn("#foodBought");
 
-    //     clickOn("#newFood").write("Chocolate");
-    //     clickOn("#amountNewFood").write("3");
-    //     clickOn("#addFood");
+        assertEquals("Water", controller.getBoughtListView().getItems().get(0).getFoodName());
+        assertEquals(2, controller.getShoppingListView().getItems().size());
 
-    //     // Simulate user interactions to mark the item as bought
-    //     clickOn("#shoppingListView").type(KeyCode.DOWN); // Select the added item
-    //     clickOn("#foodBought");
-    //     assertEquals(1, s.getBoughtList().size());
-    //     assertEquals(1, s.getShopList().size());
-    //     assertEquals("Chocolate", s.getBoughtList().get(0).getFoodName());
-    // }
+        clickOn(LabeledMatchers.hasText("Bread : 8  STK"));
+        clickOn("#foodBought");
 
-    // /**
-    //  * Test method tests if a food item is removed from the list 
-    //  */
+        assertEquals("Bread", controller.getBoughtListView().getItems().get(1).getFoodName());
+        assertEquals(1, controller.getShoppingListView().getItems().size());
+
+        clickOn(LabeledMatchers.hasText("Egg : 12  STK"));
+        clickOn("#foodBought");
+
+        assertEquals("Egg", controller.getBoughtListView().getItems().get(2).getFoodName());
+        assertEquals(0, controller.getShoppingListView().getItems().size());
+
+
+    }
+
+    @Test
+    public void testDeleteItems() {
+        setUpTest();
+
+        clickOn(LabeledMatchers.hasText("Water : 4  STK"));
+        clickOn("#removeFood");
+
+        assertEquals(2, controller.getShoppingListView().getItems().size());
+
+        clickOn(LabeledMatchers.hasText("Bread : 8  STK"));
+        clickOn("#removeFood");
+
+        assertEquals(1, controller.getShoppingListView().getItems().size());
+
+    }
+
+
+    public void setUpTest() {
+        clickOn("#newFood").write("Water");
+        clickOn("#amountNewFood").write("4");
+        clickOn("#addFood");
+
+        clickOn("#newFood").write("Bread");
+        clickOn("#amountNewFood").write("8");
+        clickOn("#addFood");
+
+        clickOn("#newFood").write("Egg");
+        clickOn("#amountNewFood").write("12");
+        clickOn("#addFood");
+
+    }
+
+
     
-    // @Test
-    // public void testRemoveItem() {
-    //     ShopeeList s = testUser.getShopeeList();
-    //     // Simulate user interactions to add an item
-    //     clickOn("#newFood").write("Cheese");
-    //     clickOn("#amountNewFood").write("2");
-    //     clickOn("#addFood");
 
-    //     //Test to see if it gets added to the list
-    //     assertEquals(2, s.getShopList().size());
-    //     assertEquals("Cheese", s.getShopList().get(1).getFoodName());
-
-    //     // Simulate user interactions to remove the item
-    //     clickOn("#shoppingListView").type(KeyCode.DOWN); // Select the added item
-    //     clickOn("#removeFood");
-
-    //     assertEquals(1, s.getShopList().size());
-    // }
-
-    
-
-    /**
-     * Method to create a user which is used in all tests
-     */
-    // public User exampleUser(){
-    //     FileHandeler handler = new FileHandeler();
-    //     handler.clearFileContent();
-    //     this.testUser = new User("johan@ntnu.no", "Johan123@");
-    //     ShopeeList sList = new ShopeeList("Test");
-    //     sList.addFoodShopList("Apple", 4);
-    //     // sList.addFoodShopList("Cheese", 2);
-    //     // sList.addFoodShopList("Bread", 1);
-    //     testUser.setShopeeList(sList);
-    //     return testUser; 
-
-    //  }
 
 
 
+    
 }
