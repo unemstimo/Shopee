@@ -2,10 +2,10 @@ package shopee.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.io.FileNotFoundException;
 import java.util.List;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import shopee.core.User;
 import shopee.core.ShopeeList; 
@@ -14,7 +14,17 @@ import shopee.core.ShopeeList;
 public class FileHandlerTest {
 
     private FileHandeler fileHandler = new FileHandeler();
-    //private final String testFilePath = "testDataStorage.json"; // Use a temporary test file
+
+    
+    @BeforeEach
+    public void setUp() throws FileNotFoundException {
+        fileHandler = new FileHandeler("testFile.json");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        fileHandler.clearFileContent();
+    }
 
     /**
      * Test the writeToFile(User) method and jsonToObj()
@@ -25,7 +35,6 @@ public class FileHandlerTest {
     @Test
     public void testWriteAndReadUserToFile() throws FileNotFoundException {
         // Create a User object for testing
-        fileHandler.clearFileContent();
         User testUser = new User("Johan@gmail.no", "johan123@");
         // Add a shopeelist to User 
         ShopeeList newList = new ShopeeList("Onsdag");
@@ -111,4 +120,29 @@ public class FileHandlerTest {
         assertNotNull(userList);
         assertEquals(0, userList.size());
     }
+
+
+   
+
+    public User setUpTestuser() {
+        User testUser = new User("test@test.no", "test1234@");
+        
+        ShopeeList newList = new ShopeeList("Middag");
+        newList.addFoodShopList("Chips",7);
+        newList.addFoodShopList("Apple", 4);
+        newList.addFoodShopList("Bread", 1);
+
+        ShopeeList newlist2 = new ShopeeList("Lunsj");
+        newlist2.addFoodShopList("Tomat",7);
+        newlist2.addFoodShopList("Fisk", 4);
+        newlist2.addFoodShopList("Mat", 1);
+
+        testUser.addShopeeList(newList);
+        testUser.addShopeeList(newlist2);
+
+        return testUser;
+
+    }
+
+
 }

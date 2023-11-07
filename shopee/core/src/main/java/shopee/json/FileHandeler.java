@@ -19,12 +19,8 @@ public class FileHandeler {
 
     private Path filePath;
 
-    public FileHandeler(String filepath) {
-          try {
+    public FileHandeler(String filepath) throws FileNotFoundException {
           setFilePath(filepath);
-          } catch (FileNotFoundException e) {
-              e.printStackTrace();
-          }
       }
 
 
@@ -44,10 +40,6 @@ public class FileHandeler {
     // new method which writes to the DataStorage.json file
     public void writeToFile(User object) throws FileNotFoundException {
         try {
-
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-              }
 
             ObjectMapper mapper = new ObjectMapper();
 
@@ -95,10 +87,6 @@ public class FileHandeler {
     public List<User> jsonToObj() throws FileNotFoundException  {
         try {
 
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-              }
-
             ObjectMapper mapper = new ObjectMapper();
             File file = filePath.toFile();
 
@@ -115,21 +103,7 @@ public class FileHandeler {
         return new ArrayList<>();
     }
 
-    public User jsonToUser(String jsonUser) throws FileNotFoundException {
-        try {
-
-
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            User user = mapper.readValue(jsonUser, User.class);
-            
-            return user;
-
-        } catch (IOException e) {
-            throw new FileNotFoundException("Failed to read file" +e);
-        }
-    }
+   
 
     // Helper method that removes all content in the file
     public void clearFileContent() {
