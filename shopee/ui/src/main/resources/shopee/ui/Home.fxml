@@ -17,7 +17,7 @@
       <Button fx:id="logOut" layoutX="504.0" layoutY="187.0" mnemonicParsing="false" onAction="#logOut" text="Log Out " />
       <Button fx:id="deleteList" layoutX="280.0" layoutY="363.0" mnemonicParsing="false" onAction="#deleteList" text="Delete List" />
       <Button fx:id="modifyList" layoutX="408.0" layoutY="363.0" mnemonicParsing="false" onAction="#modifyList" text="Modify List" />
-      <Text layoutX="51.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new shopping list" underline="true" wrappingWidth="145.21630859375">
+      <Text layoutX="51.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new shopee list" underline="true" wrappingWidth="145.21630859375">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Text>
