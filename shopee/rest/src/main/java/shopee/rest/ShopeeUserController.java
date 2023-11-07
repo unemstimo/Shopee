@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import shopee.core.User;
 import shopee.json.FileHandeler;
@@ -66,9 +68,11 @@ public class ShopeeUserController {
    * Adds a user to the database.
    * @param user
    * @return
+   * @throws JsonProcessingException
+   * @throws JsonMappingException
    */
   @PostMapping("/add")
-  public boolean addUser(@RequestBody String user){
+  public boolean addUser(@RequestBody String user) throws JsonMappingException, JsonProcessingException{
     userService.addUser(user);
     return true; 
   }

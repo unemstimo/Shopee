@@ -12,8 +12,12 @@ import shopee.json.FileHandeler;
 
 public class LocalUserAccess implements UserAccess {
 
-    private final FileHandeler filehandler = new FileHandeler("direct.json");
+    private final FileHandeler filehandler = new FileHandeler();
     private List<User> users; 
+
+    public LocalUserAccess() throws FileNotFoundException {
+        filehandler.setFilePath("direct.json");
+    }
     
     /**
      * Gets all users from the database
