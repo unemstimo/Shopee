@@ -64,7 +64,6 @@ public void modifyList(ActionEvent actionEvent) {
         output.setText("Wrong index");
     }
 }
-
 public void addNewList(ActionEvent actionEvent) {
     try {
         String newList = listName.getText();
@@ -78,8 +77,7 @@ public void addNewList(ActionEvent actionEvent) {
         setScene(Controllers.EDITSHOPEELIST, actionEvent , this.dataAccess, this.user, newList);
     
     } catch (Exception e) {
-        e.printStackTrace();
-        output.setText("Something went wrong");
+        output.setText(e.getMessage());
     }
 }
 
@@ -92,5 +90,9 @@ public void shoppingListView(List<ShopeeList> listOfLists) {
 public void logOut(ActionEvent actionEvent) {
     setScene(Controllers.LOGIN, actionEvent, this.dataAccess, null, null);
 }
+
+// public String getErroroutput() {
+//     return output.getText();
+// }
 
 }
