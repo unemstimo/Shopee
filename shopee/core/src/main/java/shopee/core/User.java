@@ -6,227 +6,221 @@ import java.util.ArrayList;
 
 public class User {
 
-String username;
-String password;
-List<ShopeeList> shopeeLists;
+    String username;
+    String password;
+    List<ShopeeList> shopeeLists;
 
-// Helper list which contains all legal domenes for the email
-final static String[] cc = {"ad", "ae", "af", "ag", "ai", "al", "am", "ao", "aq", "ar", "as", "at", "au", "aw", "ax", "az", "ba", "bb", "bd", "be", "bf", "bg", "bh", "bi", "bj", "bl", "bm", "bn", "bo", "bq", "br", "bs", "bt", "bv", "bw", "by", "bz", "ca", "cc", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm", "cn", "co", "cr", "cu", "cv", "cw", "cx", "cy", "cz", "de", "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg", "eh", "er", "es", "et", "fi", "fj", "fk", "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gs", "gt", "gu", "gw", "gy", "hk", "hm", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in", "io", "iq", "ir", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh", "ki", "km", "kn", "kp", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li", "lk", "lr", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me", "mf", "mg", "mh", "mk", "ml", "mm", "mn", "mo", "mp", "mq", "mr", "ms", "mt", "mu", "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "nf", "ng", "ni", "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph", "pk", "pl", "pm", "pn", "pr", "ps", "pt", "pw", "py", "qa", "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "sd", "se", "sg", "sh", "si", "sj", "sk", "sl", "sm", "sn", "so", "sr", "ss", "st", "sv", "sx", "sy", "sz", "tc", "td", "tf", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr", "tt", "tv", "tw", "tz", "ua", "ug", "um", "us", "uy", "uz", "va", "vc", "ve", "vg", "vi", "vn", "vu", "wf", "ws", "ye", "yt", "za", "zm", "zw", "com"};
-protected List<String> newList = Arrays.asList(cc);
+    // Helper list which contains all legal domenes for the email
+    final static String[] cc = {"ad", "ae", "af", "ag", "ai", "al", "am", "ao", "aq", "ar", "as", "at", "au", "aw", "ax", "az", "ba", "bb", "bd", "be", "bf", "bg", "bh", "bi", "bj", "bl", "bm", "bn", "bo", "bq", "br", "bs", "bt", "bv", "bw", "by", "bz", "ca", "cc", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm", "cn", "co", "cr", "cu", "cv", "cw", "cx", "cy", "cz", "de", "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg", "eh", "er", "es", "et", "fi", "fj", "fk", "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gs", "gt", "gu", "gw", "gy", "hk", "hm", "hn", "hr", "ht", "hu", "id", "ie", "il", "im", "in", "io", "iq", "ir", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh", "ki", "km", "kn", "kp", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li", "lk", "lr", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me", "mf", "mg", "mh", "mk", "ml", "mm", "mn", "mo", "mp", "mq", "mr", "ms", "mt", "mu", "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "nf", "ng", "ni", "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph", "pk", "pl", "pm", "pn", "pr", "ps", "pt", "pw", "py", "qa", "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "sd", "se", "sg", "sh", "si", "sj", "sk", "sl", "sm", "sn", "so", "sr", "ss", "st", "sv", "sx", "sy", "sz", "tc", "td", "tf", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr", "tt", "tv", "tw", "tz", "ua", "ug", "um", "us", "uy", "uz", "va", "vc", "ve", "vg", "vi", "vn", "vu", "wf", "ws", "ye", "yt", "za", "zm", "zw", "com"};
+    protected List<String> newList = Arrays.asList(cc);
 
-/**
- * Constructor for a user that sets the username and password 
- * 
- * @param username
- * @param password
- */
-public User(String username, String password) {
-    setUsername(username);
-    setPassword(password);
-    //shopeeList = new ShopeeList("List");
-    shopeeLists = new ArrayList<ShopeeList>();
-}
-
-// Used for testing
-public User(){
-}
-
-/**
- * Checks if the username is valid, i.e. it needs to meet the following criteria:
- *  - The email must contain a @-symbol
- *  - The string before the @-symbol must begin with a letter and be at least two characters long.
- *  - The email domian must exist in the helper list called newList
- * 
- * @param username
- * @return True if username meets criteria, False otherwise
- */
-private boolean validUsername(String username){
-    boolean usernameValid = false;
-    
-    if (username.indexOf('@') == -1) {
-        throw new IllegalArgumentException("Missing @");
+    /**
+     * Constructor for a user that sets the username and password 
+     * 
+     * @param username
+     * @param password
+     */
+    public User(String username, String password) {
+        setUsername(username);
+        setPassword(password);
+        //shopeeList = new ShopeeList("List");
+        shopeeLists = new ArrayList<ShopeeList>();
     }
 
-    String [] usernameSplit = username.split("@");
-    String nameSplit = usernameSplit[0];
-    String domeneSplit = usernameSplit[1].split("\\.")[1];
-    char firstLetter = nameSplit.charAt(0); 
-    if (!(Character.isLetter(firstLetter) &&  nameSplit.length() >= 2)) {
-        throw new IllegalArgumentException("The username must begin with a letter, and have a length of minimum two letters before @");
-    }
-    if (!newList.contains(domeneSplit)) {
-        throw new IllegalArgumentException("This domain doesnt exist.");
-    }
-    
-    usernameValid = true;
-    return usernameValid;
-}
-
-/**
- * Checks if the password is valid, i.e. it needs to meet the following criteria:
- *  - The password needs to be at least 8 characters long
- *  - The password must contain letters, digits and special characters
- * 
- * @param password
- * @return True if password meets criteria, False otherwise
- */
-private boolean validPassword(String password){
-    boolean passwordValid = false;
-
-    if (password.length() < 8) {
-        throw new IllegalArgumentException("The password needs to be at least 8 characters long");
+    // Used for testing
+    public User(){
     }
 
-    String regex = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!/]).*$";
-    if (!password.matches(regex)) {
-        throw new IllegalArgumentException("The password must contain letters, digits and special characters");
+    /**
+     * Checks if the username is valid, i.e. it needs to meet the following criteria:
+     *  - The email must contain a @-symbol
+     *  - The string before the @-symbol must begin with a letter and be at least two characters long.
+     *  - The email domian must exist in the helper list called newList
+     * 
+     * @param username
+     * @return True if username meets criteria, False otherwise
+     */
+    private boolean validUsername(String username){
+        boolean usernameValid = false;
+        
+        if (username.indexOf('@') == -1) {
+            throw new IllegalArgumentException("Missing @");
+        }
+
+        String [] usernameSplit = username.split("@");
+        String nameSplit = usernameSplit[0];
+        String domeneSplit = usernameSplit[1].split("\\.")[1];
+        char firstLetter = nameSplit.charAt(0); 
+        if (!(Character.isLetter(firstLetter) &&  nameSplit.length() >= 2)) {
+            throw new IllegalArgumentException("The username must begin with a letter, and have a length of minimum two letters before @");
+        }
+        if (!newList.contains(domeneSplit)) {
+            throw new IllegalArgumentException("This domain doesnt exist.");
+        }
+        
+        usernameValid = true;
+        return usernameValid;
     }
 
-    passwordValid = true;
-    return passwordValid;
-}
+    /**
+     * Checks if the password is valid, i.e. it needs to meet the following criteria:
+     *  - The password needs to be at least 8 characters long
+     *  - The password must contain letters, digits and special characters
+     * 
+     * @param password
+     * @return True if password meets criteria, False otherwise
+     */
+    private boolean validPassword(String password){
+        boolean passwordValid = false;
 
-/**
- * Returns the username
- * 
- * @return username 
- */
-public String getUsername(){
-    return username;
-}
+        if (password.length() < 8) {
+            throw new IllegalArgumentException("The password needs to be at least 8 characters long");
+        }
 
-/**
- * Returns the password
- * 
- * @return password
- */
-public String getPassword(){
-    return password;
-}
+        String regex = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!/]).*$";
+        if (!password.matches(regex)) {
+            throw new IllegalArgumentException("The password must contain letters, digits and special characters");
+        }
 
-/**
- * Sets the username if the username is valid
- * 
- * @param username
- */
-public void setUsername(String username){
-    if(validUsername(username)) {
+        passwordValid = true;
+        return passwordValid;
+    }
+
+    /**
+     * Returns the username
+     * 
+     * @return username 
+     */
+    public String getUsername(){
+        return username;
+    }
+
+    /**
+     * Returns the password
+     * 
+     * @return password
+     */
+    public String getPassword(){
+        return password;
+    }
+
+    /**
+     * Sets the username if the username is valid
+     * 
+     * @param username
+     */
+    public void setUsername(String username){
+        validUsername(username);
         this.username = username;
     }
-}
 
-/**
- * Sets the password if the password is valid
- * 
- * @param password
- */
-public void setPassword(String password){
-    if(validPassword(password)) {
+    /**
+     * Sets the password if the password is valid
+     * 
+     * @param password
+     */
+    public void setPassword(String password){
+        validPassword(password);
         this.password = password;
     }
-}
 
-/**
- * Sets the users shopeeList
- * 
- * @param list
- */
-public void setShopeeLists(List<ShopeeList> list){
-    this.shopeeLists = list;
-}
+    /**
+     * Sets the users shopeeList
+     * 
+     * @param list
+     */
+    public void setShopeeLists(List<ShopeeList> list){
+        this.shopeeLists = list;
+    }
 
-/**
- * Returns the users shopeeList
- * 
- * @return shopeeList
- */
-public List<ShopeeList> getShopeeLists(){
-    return this.shopeeLists;
-}
+    /**
+     * Returns the users shopeeList
+     * 
+     * @return shopeeList
+     */
+    public List<ShopeeList> getShopeeLists(){
+        return this.shopeeLists;
+    }
 
+    /**
+     * This adds a shopee list object to the users list
+     * @param list
+     */
+    public void addShopeeList(ShopeeList list){
+        for (ShopeeList shopeeList : this.shopeeLists) {
+            if(shopeeList.getListName().equals(list.getListName())){
+                throw new IllegalArgumentException("Cant use same list name twice.");
+            }
+        }    
+        this.shopeeLists.add(list);
+    }
 
-/**
- * This ads a shopee list object to the users list
- * @param list
- */
-public void addShopeeList(ShopeeList list){
-    for (ShopeeList shopeeList : this.shopeeLists) {
-        if(shopeeList.getListName().equals(list.getListName())){
-            this.deleteShopeeList(list.getListName());
+    /**
+    * Returns a shopeelist with a given name
+    * 
+    * @param name
+    * @return the shopee list object with the given name if the list exists
+    */
+    public ShopeeList getShopeeList(String name){
+        for (ShopeeList list : this.shopeeLists) {
+            if(list.getListName().equals(name)){
+                return list;
+            }
         }
-    }    
+        throw new IllegalArgumentException("No such list name for this user.");
+    }
+
+    /**
+     * This method removes a shopee list at a certain index
+     * @param index
+     */
+    public void deleteShopeeList(int index) {
+        if(index >= 0 && index < this.shopeeLists.size()){
+            this.shopeeLists.remove(index);
+        }
+        else{
+            throw new IndexOutOfBoundsException("Index is out of bounds.");
+        }
+    }
+
+    /**
+     * This method removes a shopee list with a certain list name
+     * @param listName
+     */
+    public void deleteShopeeList(String listName) {
+        this.shopeeLists.remove(this.getShopeeList(listName)); 
+    }
     
-    this.shopeeLists.add(list);
+    /**
+     * this method is a helper method for ReplaceList(User, listname, shopeeList)
+     * to replace an old list with a new one
+     * @param index finds where to replace the old to maintain the same structure 
+     * @param newList the list you replace the old list with
+     * @return
+     */
+    public void addShopeeList(int index, ShopeeList newList){
+        this.shopeeLists.add(index, newList);
     }
 
-
-/**
- *Returns a shopeelist with a given name
- * 
- * @param name
- * @return
- */
-public ShopeeList getShopeeList(String name){
-    for (ShopeeList list : this.shopeeLists) {
-        if(list.getListName().equals(name)){
-            return list;
+    /**
+    * This method replaces an old list with the new, used in rest
+    *
+    * @param listname name of the list which is supposed to be removed 
+    * @param newList the new shopeeList which replaces the old one
+    */
+    public void replaceShopeeList(String listname, ShopeeList newList){
+        int index = 0;
+        for (ShopeeList list : this.shopeeLists) {
+            if(list.getListName().equals(listname)){
+                this.deleteShopeeList(listname);
+                index ++; 
+            }
+            else{
+                throw new IllegalArgumentException("No such list name for this user.");
+            }
+        this.addShopeeList(index, newList);
         }
     }
-    throw new IllegalArgumentException("No such list name for this user");
-}
-
-/**
- * This method removes a shopee list at a certain index
- * @param index
- */
-public void deleteShopeeList(int index) {
-   if(index >= 0 || index < this.shopeeLists.size()){
-        this.shopeeLists.remove(index);
-   }
-   
-}
-
-/**
- * This method removes a shopee list with a certain list name
- * @param listName
- */
-public void deleteShopeeList(String listName) {
-   this.shopeeLists.remove(this.getShopeeList(listName));
-    
- }
- 
-/**
- * this method is a helper method for ReplaceList(User, listname, shopeeList)
- * to replace an old list with a new one
- * @param index finds where to replace the old to maintain the same structure 
- * @param newList the list you replace the old list with
- * @return
- */
-public void addShopeeList(int index, ShopeeList newList){
-    for (ShopeeList shopeeList : this.shopeeLists) {
-        if(shopeeList.getListName().equals(newList.getListName())){
-            throw new IllegalArgumentException("Cant use same list name twice");
-        }
-    }  
-    this.shopeeLists.add(index, newList);
-}
-
- /**
-  * This method replaces an old list with the new, used in rest
-  * @param user refers to the user where the list is supposed to be replaced
-    @param listname name of the list which is supposed to be removed 
-    @param newList the new shopeeList which replaces the old one
-  */
-public void replaceShopeeList(String listname, ShopeeList newList){
-    int index = 0;
-    for (ShopeeList list : this.shopeeLists) {
-        if(list.getListName().equals(listname)){
-            this.deleteShopeeList(listname);
-            index ++; 
-        }
-    this.addShopeeList(index, newList);
-    }
-}
 
 }
 
