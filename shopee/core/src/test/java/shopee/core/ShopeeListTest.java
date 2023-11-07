@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 public class ShopeeListTest {
 
+    private ShopeeList list; // Shopee list to use in testing
+
     @Test
     public void testShopeeList(){
     }
@@ -27,30 +29,41 @@ public class ShopeeListTest {
      */
     @Test
     public void testSetListName() {
-        ShopeeList list2 = new ShopeeList("Une");
-        //Checking if exception is beeing thrown if the listname includes special characters
+        list = new ShopeeList("Une");
+
+        // Checking if exception is beeing thrown if the listname includes special characters
         try{
-            list2.setListName("Une@");
+            list.setListName("Une@");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch(Exception e) {
             assertEquals("Shoplist name is not valid", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
-        //checking if listname is updated if it is valid
-        list2.setListName("Une2");
-        assertEquals("Une2", list2.getListName());
+
+        // Checking if listname is updated if it is valid
+        list.setListName("Une2");
+        assertEquals("Une2", list.getListName());
     }
 
     /**
      * Tests if the addFoodShopList(String foodName, int amount) method works.
+     * If the food item already exists we only change the amount to the new amount.
+     * If the food item does not exist we will add a new FoodItem. 
      */
     @Test
-    public void testAddShopListFood(){
-        ShopeeList list1 = new ShopeeList("Hanna");
-        // tests if the correct food is added
-        list1.addFoodShopList("apple", 4);
-        assertEquals("apple", list1.getFood(0).getFoodName());
-        assertEquals(4, list1.getFood(0).getFoodAmount());
+    public void testAddFoodShopList(){
+        list = new ShopeeList("Hanna");
+        
+        // When the food item does not exist in the shop list beforehand:
+        assertEquals("[]", list.getShopList());
+        list.addFoodShopList("Apple", 4);
+        assertEquals("Apple", list.getFood(0).getFoodName());
+        assertEquals(4, list.getFood(0).getFoodAmount());
+
+        // When the food item already exists in the shop list:
+        list.addFoodShopList("Banana", 2);
+        list.addFoodShopList("Apple", 5);
+        assertEquals(5, list.getFood("Apple").getFoodAmount());
     }
 
     /**
@@ -59,15 +72,15 @@ public class ShopeeListTest {
      */
     @Test
     public void testSetShopList() {
-        ShopeeList list3 = new ShopeeList("Johan");
-        assertTrue(list3.getShopList().isEmpty());
+        list = new ShopeeList("Johan");
+        assertTrue(list.getShopList().isEmpty());
         
         List<FoodItem> shopList = new ArrayList<>();
-        FoodItem food = new FoodItem("pear", 3);
+        FoodItem food = new FoodItem("Pear", 3);
         shopList.add(food);
-        list3.setShopList(shopList);
-        assertEquals(1, list3.getShopList().size());
-        assertEquals("pear", list3.getFood(0).getFoodName());
+        list.setShopList(shopList);
+        assertEquals(1, list.getShopList().size());
+        assertEquals("Pear", list.getFood(0).getFoodName());
     }
 
     /**
@@ -76,41 +89,33 @@ public class ShopeeListTest {
      */
     @Test
     public void testSetBoughtList() {
-        ShopeeList list3 = new ShopeeList("Johan");
-        assertTrue(list3.getBoughtList().isEmpty());
+        list = new ShopeeList("Johan");
+        assertTrue(list.getBoughtList().isEmpty());
         
         List<FoodItem> boughtList = new ArrayList<>();
-        FoodItem food = new FoodItem("banana", 2);
+        FoodItem food = new FoodItem("Banana", 2);
         boughtList.add(food);
-        list3.setBoughtList(boughtList);
-        assertEquals(1, list3.getBoughtList().size());
-        assertEquals("banana", list3.getBoughtItem(0).getFoodName());
+        list.setBoughtList(boughtList);
+        assertEquals(1, list.getBoughtList().size());
+        assertEquals("Banana", list.getBoughtItem(0).getFoodName());
     }
 
     /**
      * Tests if the addFoodBoughtList(FoodItem foodItem) method works.
+     * This test also implicitly tests the removeFood(String foodName) method.
+     * This method adds the food item selected from the shop list to the bought list,
+     * and then removes the food item from the shop list.
      */
     @Test
     public void testAddFoodBoughtList() {
-        ShopeeList list4 = new ShopeeList("Oskar");
-        list4.addFoodShopList("kiwi", 5);
-        assertTrue(list4.getBoughtList().isEmpty());
+        list = new ShopeeList("Oskar");
+        list.addFoodShopList("Kiwi", 5);
+        assertTrue(list.getBoughtList().isEmpty());
 
-        list4.addFoodBoughtList(list4.getFood(0));
-        assertEquals("kiwi", list4.getBoughtItem(0).getFoodName());
-        assertEquals(5, list4.getBoughtItem(0).getFoodAmount());
-        assertTrue(list4.getShopList().isEmpty());
-    }
-
-    /**
-     * Tests if the removeFood(String foodName) method is working. 
-     */
-    @Test
-    public void testRemoveFood() {
-        ShopeeList list5 = new ShopeeList("Oskar");
-        list5.addFoodShopList("bread", 2);
-        list5.removeFood("bread");
-        assertTrue(list5.getShopList().isEmpty());
+        list.addFoodBoughtList(list.getFood(0));
+        assertEquals("Kiwi", list.getBoughtItem(0).getFoodName());
+        assertEquals(5, list.getBoughtItem(0).getFoodAmount());
+        assertTrue(list.getShopList().isEmpty());
     }
 
     /**
@@ -119,15 +124,36 @@ public class ShopeeListTest {
      */
     @Test
     public void testHasFood() {
-        ShopeeList list6 = new ShopeeList("Hanna");
-        list6.addFoodShopList("milk", 2);
+        list = new ShopeeList("Hanna");
+        list.addFoodShopList("Milk", 2);
 
         try{
-            list6.hasFood("bread");
+            list.hasFood("Bread");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch(Exception e) {
             assertEquals("There is no such food in the list", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
     }
+
+    /**
+     * Tests if the getFoodAmount(String foodName) method in the ShopeeList.java class works.
+     */
+    @Test
+    public void testGetFoodAmount() {
+        list = new ShopeeList("Une");
+        list.addFoodShopList("Avocado", 4);
+        assertEquals(4, list.getFoodAmount("Avocado"));
+    }
+
+    /**
+     * Tests the toString() method.
+     * Checks if the string returned is the same as the expected string.
+     */
+    @Test
+    public void testToString() {
+        list = new ShopeeList("Oskar");
+        assertEquals("Oskar", list.toString());
+    }
+
 }

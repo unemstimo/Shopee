@@ -27,7 +27,7 @@ public class ShopeeList {
     /** 
       * Sets the name of the Shopee List
       *
-      * @param ListName
+      * @param listName
     */
     public void setListName(String listName){
         ValidName(listName);
@@ -58,16 +58,16 @@ public class ShopeeList {
      * Adds a food that the user wants in the shop list.
      * If the food is already in the shop list, only the amount will be updated to the new desired amount.
      * 
-     * @param foodname
+     * @param foodName
      * @param amount
      */
-    public void addFoodShopList(String foodname, int amount) { 
-        if(shopList.stream().map(a -> a.getFoodName()).collect(Collectors.toList()).contains(foodname)) {
-            FoodItem food = shopList.stream().filter(a -> a.getFoodName().equals(foodname)).findFirst().orElse(null);
+    public void addFoodShopList(String foodName, int amount) { 
+        if(shopList.stream().map(a -> a.getFoodName()).collect(Collectors.toList()).contains(foodName)) {
+            FoodItem food = shopList.stream().filter(a -> a.getFoodName().equals(foodName)).findFirst().orElse(null);
             food.setFoodAmount(amount);
         }
         else {
-            FoodItem foodItem = new FoodItem(foodname, amount);
+            FoodItem foodItem = new FoodItem(foodName, amount);
             this.shopList.add(foodItem);
         }
     }
@@ -106,22 +106,22 @@ public class ShopeeList {
      * Removes a food that the user wants from the shop list.
      * The food must exist in the shop list.
      * 
-     * @param foodname
+     * @param foodName
     */
-    public void removeFood(String foodname) {
-        hasFood(foodname);
-        this.shopList.remove(this.getFood(foodname));
+    public void removeFood(String foodName) {
+        hasFood(foodName);
+        this.shopList.remove(this.getFood(foodName));
     }
 
     /**
      * Returns a food from the list, null if the food is not in the list
      * 
-     * @param foodname
+     * @param foodName
      * @return Fooditem object or null
      */
-    public FoodItem getFood(String foodname) {
-        hasFood(foodname);
-        return shopList.stream().filter(a -> a.getFoodName().equals(foodname)).findFirst().orElse(null);
+    public FoodItem getFood(String foodName) {
+        hasFood(foodName);
+        return shopList.stream().filter(a -> a.getFoodName().equals(foodName)).findFirst().orElse(null);
     }
 
     /**
@@ -140,11 +140,10 @@ public class ShopeeList {
      * @param food
      * @return the amount of the food
     */
-    public int getFoodAmount(String food) {
-        hasFood(food);
-        return shopList.stream().filter(a -> a.getFoodName().equals(food)).findFirst().orElse(null).getFoodAmount();
+    public int getFoodAmount(String foodName) {
+        hasFood(foodName);
+        return shopList.stream().filter(a -> a.getFoodName().equals(foodName)).findFirst().orElse(null).getFoodAmount();
     }
-
 
     /**
      * Helper method to check if the food is in the shopee list.
