@@ -25,7 +25,7 @@ public class ShopeeUserService {
      */
     public ShopeeUserService() {
         try {
-            this.shopeePersistence = new FileHandeler();
+            this.shopeePersistence = new FileHandeler("direct.json");
         } catch (Exception e) {
             e.printStackTrace();
         }

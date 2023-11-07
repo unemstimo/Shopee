@@ -5,24 +5,51 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.io.FileNotFoundException;
+
+import org.junit.jupiter.api.BeforeEach;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import shopee.json.FileHandeler;
+import shopee.ui.dataaccess.LocalUserAccess;
+import shopee.ui.dataaccess.UserAccess;
 
 
 public class LogInTest extends ApplicationTest {
     
     
-    private Parent root;
-    private LogInController controller;
+    private FileHandeler fileHandeler = new FileHandeler("direct.json");
+
+
+    private LogInController controller = new LogInController();
+    private UserAccess dataAccess;
+  
+    
+  
+    // @BeforeAll
+    // public void rigup() throws FileNotFoundException {
+    //     this.testUser = exampleUser();
+    // }
+  
+    @BeforeEach
+    public void setUp() throws FileNotFoundException {
+      this.dataAccess = new LocalUserAccess();
+      fileHandeler.clearFileContent();
+      controller.initData(this.dataAccess);  
+  
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("LogIn.fxml"));
-        root = fxmlLoader.load();
-        this.controller = fxmlLoader.getController();
-        stage.setScene(new Scene(root));
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setController(controller);
+        fxmlLoader.setLocation(this.getClass().getResource("Login.fxml"));
+        final Parent parent = fxmlLoader.load();
+        stage.setScene(new Scene(parent));
         stage.show();
     }
     
@@ -45,25 +72,30 @@ public class LogInTest extends ApplicationTest {
 
         clickOn("#signUp");
 
-        
+        assertEquals("Brukernavnet eller passordet oppfyller ikke krav", this.controller.getErrorLabel());  
 
     }
     /**
      * This method tests invalid password 
      */
     @Test
-    public void testSignUpWithInvalidPaasword() {
+    public void testSignUpWithInvalidPassword() {
         
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("invalidpassword");
 
         clickOn("#signUp");
 
+        assertEquals("Brukernavnet eller passordet oppfyller ikke krav", this.controller.getErrorLabel());
+
+    
+
     }
 
 
     /*
      * This method tests if fields get clear when clicking on sign up button 
+     * and that the output text is given correctly
      * 
      */
     @Test
@@ -75,6 +107,8 @@ public class LogInTest extends ApplicationTest {
 
         assertEquals("", lookup("#usernameInput").queryTextInputControl().getText());
         assertEquals("", lookup("#passwordInput").queryTextInputControl().getText());
+
+        assertEquals("Brukeren er blitt opprettet. Du kan nå logge inn", this.controller.getErrorLabel());
 
     }
 
@@ -88,8 +122,18 @@ public class LogInTest extends ApplicationTest {
         
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("validpwd123/");
-        clickOn("#signIn");
-        
+        clickOn("#signIn");  
+    }
+
+
+    @Test
+    public void testUnvalidSignIn() {
+            
+            clickOn("#usernameInput").write("invalid@example");
+            clickOn("#passwordInput").write("validpwd123/");
+            clickOn("#signIn");  
+    
+            assertEquals("Feil brukernavn eller passord. Vennligst prøv igjen.", this.controller.getErrorLabel());
     }
 
 }

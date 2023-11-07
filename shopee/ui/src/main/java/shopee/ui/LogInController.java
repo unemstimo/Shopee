@@ -78,13 +78,14 @@ public void handleSignUpButtonClick (ActionEvent event){
                 dataAccess.addUser(user); //adds user to file either local or remote!
                 this.user = user;
                 this.users = dataAccess.getAllUsers(); //gets all users from database either local or remote updated
+                output.setText("Brukeren er blitt opprettet. Du kan nå logge inn");
+                usernameInput.clear();
+            passwordInput.clear();
             } catch(Exception e) {
-                output.setText("Brukernavnet eller passordet oppfyller ikke gitte krav. Brukernavn må være på formatet navn@epost.domene , passordet må være minst 8 tegn langt, og innholde både bokstaver, tall og spesialtegn.");
+                output.setText(e.getMessage());
             }
             
-            output.setText("Brukeren er blitt opprettet. Du kan nå logge inn");
-            usernameInput.clear();
-            passwordInput.clear();
+        
         }
     }  catch(Exception e){
         e.printStackTrace();
@@ -124,6 +125,10 @@ public void handleSignInButtonClick(ActionEvent event)throws IOException{
         e.printStackTrace();
         output.setText("En feil har oppstått. Prøv igjen senere.");
     }
+}
+
+public String getErrorLabel() {
+    return output.getText();
 }
 
 }
