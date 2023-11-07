@@ -15,7 +15,7 @@ public class FoodItemTest {
 
     /**
      * Tests the setFoodAmount(int foodAmount) method.
-     * This method also implicitly tests the validFoodAmount(String foodName) and the getFoodAmount() methods.
+     * This test also implicitly tests the validFoodAmount(String foodName) and the getFoodAmount() methods.
      * Checks if the method can change the foodAmount variable in the FoodItem object.
      * Checks if exception is being thrown if the user writes a number <= 0
      */
@@ -37,7 +37,7 @@ public class FoodItemTest {
 
     /**
      * Tests the setFoodName(String foodName) method. 
-     * This method also implicitly tests the validFoodName(String foodName) and the getFoodName() methods.
+     * This test also implicitly tests the validFoodName(String foodName) and the getFoodName() methods.
      * A valid food name consists of letters only.
      * An unvalid name should throw an exception. 
      */
