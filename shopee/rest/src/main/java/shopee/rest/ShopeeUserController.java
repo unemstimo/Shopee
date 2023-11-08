@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import shopee.core.User;
 import shopee.json.FileHandeler;
@@ -47,7 +49,7 @@ public class ShopeeUserController {
    * Gets all users from the database.
    * @return
    */
-  @GetMapping()
+  @GetMapping("")
   public List<User> getAllUsers(){
     return userService.getAllUsers();
   }
@@ -58,7 +60,7 @@ public class ShopeeUserController {
    * @return
    */
   @GetMapping("/{username}")
-  public User getUser(String username){
+  public User getUser(@PathVariable("username")String username){
     return userService.getUser(username);
   }
 
@@ -66,9 +68,11 @@ public class ShopeeUserController {
    * Adds a user to the database.
    * @param user
    * @return
+   * @throws JsonProcessingException
+   * @throws JsonMappingException
    */
   @PostMapping("/add")
-  public boolean addUser(@RequestBody String user){
+  public boolean addUser(@RequestBody String user) throws JsonMappingException, JsonProcessingException{
     userService.addUser(user);
     return true; 
   }
@@ -78,9 +82,12 @@ public class ShopeeUserController {
    * @param username
    * @param newList
    * @return
+   * @throws JsonProcessingException
+   * @throws JsonMappingException
    */
-  @PostMapping("/{username}/")
-  public boolean addShopeeList(String username, ShopeeList newList){
+  @PostMapping("/{username}/addList")
+  public boolean addShopeeList(@PathVariable("username")String username, @RequestBody String newList) 
+  throws JsonMappingException, JsonProcessingException{
     userService.addShopeeList(username, newList);
 
     return true; 
@@ -93,9 +100,10 @@ public class ShopeeUserController {
    * @throws IOException
    */
   @DeleteMapping("/{username}/{listName}")
-  public void deleteShopeeList(@PathVariable("username")String username,
+  public boolean deleteShopeeList(@PathVariable("username")String username,
     @PathVariable("listName") String listName)throws IOException{
     userService.deleteShopeeList(username, listName);
+    return true;
   }
   
 }
