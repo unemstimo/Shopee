@@ -11,6 +11,11 @@ import java.util.List;
 
 
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.FileNotFoundException;
 
 
@@ -19,6 +24,7 @@ public class ShopeeUserService {
     private List<User> allUsers; 
     // private User shopeeUser;
     private FileHandeler shopeePersistence;
+    private ObjectMapper mapper;
    
   /**
      * Constructor for ShopeeUserService.
@@ -27,6 +33,7 @@ public class ShopeeUserService {
         try {
             this.shopeePersistence = new FileHandeler();
             this.allUsers = shopeePersistence.jsonToObj();
+            this.mapper = new ObjectMapper();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,7 +42,7 @@ public class ShopeeUserService {
 
     /**
      * Gets all users from the database.
-     * @return
+     * @return 
      */
     public List<User> getAllUsers() {
         return this.allUsers;
@@ -62,18 +69,22 @@ public class ShopeeUserService {
     /**
      * Adds a user to the database.
      * @param userString
+     * @return boolean, if the user was added, else false
+     * @throws JsonProcessingException
+     * @throws JsonMappingException
      */
-    public void addUser(String userString){
+    public boolean addUser(String userString) throws JsonMappingException, JsonProcessingException{
         try {
-            User user = shopeePersistence.jsonToUser(userString);
+            User user = mapper.readValue(userString, User.class);
             if(user == null||user.getUsername().equals("")){
                 throw new IllegalArgumentException("User was not created properly when adding user");
             }
             shopeePersistence.writeToFile(user);
+            return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        
+        return false;
        
     }
 
@@ -81,19 +92,23 @@ public class ShopeeUserService {
      * Adds a shopeeList to a user.
      * @param username
      * @param newList
-     * @return
+     * @return boolean, true if the user was added/replaced else false
+     * @throws JsonProcessingException
+     * @throws JsonMappingException
      * @throws IOException
      */
-    public boolean addShopeeList(String username, ShopeeList newList){
+    public boolean addShopeeList(String username, String shopeeList) throws JsonMappingException, JsonProcessingException{
         try {
             List<User> users = shopeePersistence.jsonToObj();
              User user = users.stream().filter(u->u.getUsername()
             .equals(username)).findFirst().orElse(null);
+            ShopeeList newList = mapper.readValue(shopeeList, ShopeeList.class);
             for(ShopeeList list : user.getShopeeLists()){
                 if(list.getListName().equals(newList.getListName())){
-                    user.replaceShopeeList(username, newList);
+                    user.replaceShopeeList(newList.getListName(), newList);
                 }
             }
+            user.addShopeeList(newList);
             shopeePersistence.writeToFile(user);
             return true;
                 
@@ -108,7 +123,7 @@ public class ShopeeUserService {
      * Deletes a shopeeList from a user.
      * @param username
      * @param listName
-     * @return
+     * @return true if the shopeeList was deleted, else false
      * @throws IOException
      */
     public boolean deleteShopeeList(String username, String listName) throws IOException{
@@ -147,7 +162,7 @@ public class ShopeeUserService {
         list1.addFoodShopList("Carrots", 6);
         
 
-        ShopeeList list2 = new ShopeeList("Rema 1000");
+        ShopeeList list2 = new ShopeeList("initialList");
         list2.addFoodShopList("Meat", 1);
         list2.addFoodShopList("Coffee", 6);
         list2.addFoodShopList("Cake", 1);

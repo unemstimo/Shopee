@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler; 
@@ -24,6 +27,7 @@ public class ShopeeServiceTest {
     private List<User> allUsers; 
     private User exampleUser; 
     private ShopeeList exampleList; 
+    private ObjectMapper mapper;
 
 
     /* 
@@ -35,7 +39,8 @@ public class ShopeeServiceTest {
         try {
             shopeeService = new ShopeeUserService();
             shopeeService.setAllUsers(ShopeeUserService.createInitialUser());
-            fileHandler = new FileHandeler();
+            // fileHandler = new FileHandeler();
+            mapper = new ObjectMapper();
             this.allUsers = shopeeService.getAllUsers();
             
         } catch (Exception e) {
@@ -47,11 +52,11 @@ public class ShopeeServiceTest {
     
 
     @Test 
-    public void addUser(){
+    public void addUser() throws JsonProcessingException{
         User testUser = new User("Richard@gmail.com", "Password123!");
         User testUser2 = new User("Daniel@outlook.no", "HarryP123@");
 
-        assertTrue(shopeeService.addUser(fileHandler.fromUserToString(testUser)), "addUser method didn't work");
+        assertTrue(shopeeService.addUser(mapper.writeValueAsString(testUser)), "addUser method didn't work");
         assertTrue(shopeeService.getAllUsers().contains(testUser), "The user was not added correctly");
         assertFalse(shopeeService.getAllUsers().contains(testUser2), "User was added even though it should't");
     }
