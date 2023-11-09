@@ -41,7 +41,7 @@ public class ShopeeControllerTest {
         testUser = mockUsers.get(0);
     }
 
-        @Test
+    @Test
     public void testGetAllUsers() throws Exception {
         when(userService.getAllUsers()).thenReturn(mockUsers);
         List<User> allUsers = userService.getAllUsers();
@@ -53,5 +53,20 @@ public class ShopeeControllerTest {
                .getContentAsString();
 
         assertEquals(expectedString, result, "Did not match from local server compared to json file");
+    }
+
+    @Test
+    public void testGetUser() throws Exception {
+        
+        when(userService.getAllUsers().get(0)).thenReturn(testUser);
+        String expectedUser = objectMapper.writeValueAsString(testUser);
+        String resultUser = mockMvc.perform(MockMvcRequestBuilders.get("/users/" +testUser.getUsername()))
+               .andExpect(status().isOk())
+               .andReturn()
+               .getResponse()
+               .getContentAsString();
+          
+        assertEquals(expectedUser,resultUser, "Did not match from local server compared to json file");
+
     }
 }
