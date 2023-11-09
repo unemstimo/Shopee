@@ -4,6 +4,7 @@ package shopee.rest;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -103,6 +104,26 @@ public class ShopeeControllerTest {
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk());
 
+    }
+
+    @Test
+    public void testDeleteShopeeList() throws Exception {
+        String listName = testUser.getShopeeLists().get(0).getListName();
+        String listForDeletion = objectMapper.writeValueAsString(testUser.getShopeeLists().get(0));
+        when(userService.deleteShopeeList(testUser.getUsername(), listForDeletion)).thenReturn(true);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/Terje@gmail.com/initialList"))
+               .andExpect(status().isOk())
+               .andExpect(MockMvcResultMatchers.content().string("true"));
+        
+
+        String updatedUser = mockMvc.perform(MockMvcRequestBuilders.get("/users/" +testUser.getUsername()))
+               .andExpect(status().isOk())
+               .andReturn()
+               .getResponse()
+               .getContentAsString();
+        User newUser = objectMapper.readValue(updatedUser, User.class);
+        assertNull(newUser.getShopeeList(listName));
     }
             
 }
