@@ -112,7 +112,7 @@ public class ShopeeControllerTest {
         String listForDeletion = objectMapper.writeValueAsString(testUser.getShopeeLists().get(0));
         when(userService.deleteShopeeList(testUser.getUsername(), listForDeletion)).thenReturn(true);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/Terje@gmail.com/initialList"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/" +testUser.getUsername()+"/" +listName))
                .andExpect(status().isOk())
                .andExpect(MockMvcResultMatchers.content().string("true"));
         

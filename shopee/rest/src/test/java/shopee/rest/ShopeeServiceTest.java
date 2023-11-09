@@ -53,16 +53,6 @@ public class ShopeeServiceTest {
         assertNotNull(shopeeService.getAllUsers());
         assertEquals(expectedSize, shopeeService.getAllUsers().size());
     }
-
-    @Test 
-    public void addUser() throws JsonProcessingException{
-        User testUser = new User("Richard@gmail.com", "Password123!");
-        User testUser2 = new User("Daniel@outlook.no", "HarryP123@");
-
-        assertTrue(shopeeService.addUser(mapper.writeValueAsString(testUser)), "addUser method didn't work");
-        assertTrue(shopeeService.getAllUsers().contains(testUser), "The user was not added correctly");
-        assertFalse(shopeeService.getAllUsers().contains(testUser2), "User was added even though it should't");
-    }
     
   @Test
     public void testAddAndGetUser() throws JsonProcessingException {
