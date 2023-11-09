@@ -24,6 +24,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.delete;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Assertions;
 import java.io.FileNotFoundException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -120,12 +121,11 @@ public class RemoteUserAccessTest {
         
         List<User> mockUsers = remoteAccess.getAllUsers();
         assertEquals(1, mockUsers.size());*/
-         
+        fileHandler.setFilePath("remote.json");
         List<User> expectedUsers = List.of(new User("user1@example.com", "password@1"), new User("user2@example.com", "password@2"));
-        WireMock.stubFor(get("/users")
-                .willReturn(aResponse()
-                        .withHeader("Content-Type", "application/json")
-                        .withBody(new ObjectMapper().writeValueAsString(expectedUsers))
+        WireMock.stubFor(get("/users/")
+                .willReturn(new ResponseDefinitionBuilder()
+                    .withBody(mapper.writeValueAsString(expectedUsers))
                 ));
 
         List<User> actualUsers = remoteAccess.getAllUsers();
@@ -137,14 +137,13 @@ public class RemoteUserAccessTest {
     
     @Test
     public void testGetUser(){
-        String testUser = "une@.no";
-        String url = "/users/" + testUser;
-        stubFor(get(urlEqualTo(url)).withHeader("Accept", equalTo("application/json"))
-            .willReturn(aResponse()
-            .withStatus(200)
-            .withHeader("Content-Type", "application/json").withBody(SHOPEE_RESPONSE)));
-        User user = remoteAccess.getUser(testUser);
-        assertEquals("une@.no", user);
+        User user = new User("example@ex.no", "example1@" );
+        WireMock.stubFor(get("users/" + user.getUsername())
+                .willReturn(new ResponseDefinitionBuilder()
+                    .withBody(mapper.writeValueAsString(user))
+                ));
+        User actualUser = remoteAccess.getUser(user.getUsername());
+        assertEquals(user.getUsername(), actualUser.getUsername());
     }
 
     @Test
