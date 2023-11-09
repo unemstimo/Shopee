@@ -22,7 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 /**
  * TestFX App test
  */
-// public class ShopeeTest extends ApplicationTest {
+public class ShopeeTest extends ApplicationTest {
 
     
     private User testUser = new User("Oskar@ntnu.no", "Eksempelpassors123@");
@@ -70,11 +70,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
      * is in the shopping list
      */
 
-//     @Test
-//     public void testAddFoodButtonClick(){
-//         clickOn("#newFood").write("Pineapple");
-//         clickOn("#amountNewFood").write("4");
-//         clickOn("#addFood");
+    @Test
+     public void testAddFoodButtonClick(){
+         clickOn("#newFood").write("Pineapple");
+         clickOn("#amountNewFood").write("4");
+         clickOn("#addFood");
 
         assertEquals("Pineapple", controller.getShoppingListView().getItems().get(0).getFoodName());
 

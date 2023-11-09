@@ -25,7 +25,7 @@ public class ShopeeApplicationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
+     
      @Test
     public void contextLoads() {
         // Make a request to the root URL of the application.
