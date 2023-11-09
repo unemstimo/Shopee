@@ -22,7 +22,17 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.delete;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.io.FileNotFoundException;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
+import static com.github.tomakehurst.wiremock.client.WireMock.put;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
+import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 
+import shopee.core.FoodItem;
 import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler;
@@ -31,14 +41,21 @@ import shopee.ui.dataaccess.RemoteUserAccess;
 /**
  * Test class for RemoteUserAccess class
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RemoteUserAccessTest {
     
     private WireMockServer mockServer;
     private RemoteUserAccess remoteAccess;
-    private WireMockConfiguration config;
-    private FileHandeler fileHandler;
-    ObjectMapper objectMapper = new ObjectMapper();
+    private FileHandeler fileHandler = new FileHandeler();
+    private List<User> allUsers; 
+    private User user = new User();
+    private ObjectMapper mapper = new ObjectMapper();
 
+    private static final int port = 8080;
+    private static final String host = "localhost";
+
+
+    /** 
     private static String SHOPEE_RESPONSE = """
             {
                 [ {
@@ -62,24 +79,61 @@ public class RemoteUserAccessTest {
                     "shopeeLists" : [ ]
                   } ]
             }
-            """;
+            """;*/
+
+    
+    @BeforeAll
+    public void rigUp() throws FileNotFoundException {
+        fileHandler.setFilePath("remote.json");
+        allUsers = fileHandler.jsonToObj();
+        User testUser = new User("test@test.no", "testing@123");
+        ShopeeList testList = new ShopeeList("testShoppingListe");
+        FoodItem testFoodItem = new FoodItem("Apple", 7);
+        testList.addFoodShopList(testFoodItem.getFoodName(), testFoodItem.getFoodAmount());
+        testUser.addShopeeList(testList);
+        fileHandler.writeToFile(testUser);
+    }
+
 
     @BeforeEach
-    public void startWireMockAndSetup() throws URISyntaxException, IOException, InterruptedException {
-        config = WireMockConfiguration.wireMockConfig().port(3000);
-        mockServer = new WireMockServer(config.portNumber());
+    public void setUp() {
+		mockServer = new WireMockServer(options().port(8080));
         mockServer.start();
-        WireMock.configureFor("localhost", config.portNumber());
-        remoteAccess = new RemoteUserAccess(new URI("http://localhost:" + mockServer.port() + "/users"), true );
+        WireMock.configureFor(host, port);
+        try {
+            remoteAccess = new RemoteUserAccess(
+            new URI("http://localhost:" + mockServer.port() + "/"), true);
+        } catch (Exception e) {
+        e.printStackTrace();
     }
+  }
+
+
 
     @Test
-    public void testGetAllUsers(){
-        stubFor(get(urlEqualTo("/users")).withHeader("Accept", equalTo("application/json")).willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(SHOPEE_RESPONSE)));
+    public void testGetAllUsers() throws JsonProcessingException, FileNotFoundException{
+        /** 
+        User user = new User("example@ex.no", "example@1");
+        fileHandler.setFilePath("remote.json");
+        fileHandler.jsonToObj();
+        WireMock.stubFor(get("/users").willReturn(new ResponseDefinitionBuilder().withBody(mapper.writeValueAsString(allUsers))));
+        
         List<User> mockUsers = remoteAccess.getAllUsers();
-        assertEquals(1, mockUsers.size());
+        assertEquals(1, mockUsers.size());*/
+         
+        List<User> expectedUsers = List.of(new User("user1@example.com", "password@1"), new User("user2@example.com", "password@2"));
+        WireMock.stubFor(get("/users")
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(new ObjectMapper().writeValueAsString(expectedUsers))
+                ));
 
+        List<User> actualUsers = remoteAccess.getAllUsers();
+
+        assertEquals(expectedUsers.size(), actualUsers.size());
+        
     }
+    
     
     @Test
     public void testGetUser(){
