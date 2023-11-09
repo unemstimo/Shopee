@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -19,12 +18,8 @@ public class FileHandeler {
 
     private Path filePath;
 
-    public FileHandeler(String filepath) {
-          try {
-          setFilePath(filepath);
-          } catch (FileNotFoundException e) {
-              e.printStackTrace();
-          }
+    public FileHandeler(String filepath) throws FileNotFoundException {
+        setFilePath(filepath);
       }
 
 
@@ -37,17 +32,18 @@ public class FileHandeler {
    * @param filename  the name of the file to use
    */
       public void setFilePath(String filename) throws FileNotFoundException{
-        String filePath = filename;
-        this.filePath = Paths.get(System.getProperty("user.home"), filePath);
+        try {
+            String filePath = filename;
+            this.filePath = Paths.get(System.getProperty("user.home"), filePath);
+        } catch (Exception e) {
+            throw new FileNotFoundException("File not found");
+        }
+       
     }
 
     // new method which writes to the DataStorage.json file
     public void writeToFile(User object) throws FileNotFoundException {
         try {
-
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-              }
 
             ObjectMapper mapper = new ObjectMapper();
 
@@ -95,10 +91,6 @@ public class FileHandeler {
     public List<User> jsonToObj() throws FileNotFoundException  {
         try {
 
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-              }
-
             ObjectMapper mapper = new ObjectMapper();
             File file = filePath.toFile();
 
@@ -115,21 +107,7 @@ public class FileHandeler {
         return new ArrayList<>();
     }
 
-    public User jsonToUser(String jsonUser) throws FileNotFoundException {
-        try {
-
-
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            User user = mapper.readValue(jsonUser, User.class);
-            
-            return user;
-
-        } catch (IOException e) {
-            throw new FileNotFoundException("Failed to read file" +e);
-        }
-    }
+   
 
     // Helper method that removes all content in the file
     public void clearFileContent() {

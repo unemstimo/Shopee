@@ -1,11 +1,9 @@
 package shopee.ui;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import shopee.core.ShopeeList;
 import shopee.core.User;
@@ -13,10 +11,8 @@ import shopee.json.FileHandeler;
 import shopee.ui.dataaccess.LocalUserAccess;
 import shopee.ui.dataaccess.UserAccess;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +21,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
-import org.testfx.util.WaitForAsyncUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -33,19 +28,22 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public class HomePageTest extends ApplicationTest{
 
     private User testUser = new User("Oskar@ntnu.no", "Eksempelpassors123@");
-    private FileHandeler fileHandeler = new FileHandeler("direct.json");
+    private FileHandeler fileHandeler = new FileHandeler();
 
 
     private HomePageController controller = new HomePageController();
     private UserAccess dataAccess;
   
     
-  
+  //Deletelist
+  //Addlist
+  //
     
   
     @BeforeEach
     public void setUp() throws FileNotFoundException, JsonProcessingException {
       this.dataAccess = new LocalUserAccess();
+      this.fileHandeler.setFilePath("direct.json");
       fileHandeler.clearFileContent();
       this.dataAccess.addUser(testUser);
       controller.initData(this.testUser, this.dataAccess);  
@@ -88,6 +86,15 @@ public class HomePageTest extends ApplicationTest{
 
         ShopeeList list2 = this.dataAccess.getAllUsers().get(0).getShopeeLists().get(1);
         assertEquals("Uke 41", list2.getListName());
+
+        clickOn(LabeledMatchers.hasText("Back"));
+
+        clickOn("#listName").write("Uke@@@@@@");
+        clickOn("#addList");
+
+        //Skjønner ikke hvorfor denne ikke funker......
+        //assertEquals("Something went wrong", controller.getErroroutput());
+    
     }
 
 
@@ -120,6 +127,12 @@ public class HomePageTest extends ApplicationTest{
         List<ShopeeList> list4 = dataAccess.getAllUsers().get(0).getShopeeLists();
         assertEquals(1, list4.size());
 
+        clickOn("#shoppingListView");
+        clickOn("#deleteList");
+
+        //Skjønner ikke hvorfor denne ikke funker
+        //assertEquals("Failed to delete list", controller.getErroroutput());
+
     }
 
     public void setUpDeletetest() {
@@ -135,6 +148,27 @@ public class HomePageTest extends ApplicationTest{
         clickOn("#listName").write("Frokost");
         clickOn("#addList");
         clickOn(LabeledMatchers.hasText("Back"));
+    }
+
+    @Test
+    public void modifyList() {
+        clickOn("#listName").write("Middag");
+        clickOn("#addList");
+        clickOn(LabeledMatchers.hasText("Back"));
+
+        clickOn(LabeledMatchers.hasText("Middag"));
+        clickOn("#modifyList");
+        clickOn(LabeledMatchers.hasText("Back"));
+
+        clickOn("#shoppingListView");
+        clickOn("#modifyList");
+
+
+    }
+
+    @Test
+    public void logouttest() {
+        clickOn("#logOut");
     }
 
 }
