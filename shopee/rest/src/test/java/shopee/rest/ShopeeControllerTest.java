@@ -4,6 +4,8 @@ package shopee.rest;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -16,12 +18,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shopee.json.FileHandeler;
+import shopee.core.ShopeeList;
 import shopee.core.User;
 
 public class ShopeeControllerTest {
@@ -84,4 +88,21 @@ public class ShopeeControllerTest {
                .andExpect(status().isOk())
                .andExpect(MockMvcResultMatchers.content().string("true"));
     }
+
+    @Test
+    public void testAddShopeeList() throws Exception {
+        ShopeeList newList = new ShopeeList("TestList");
+        String newListString = objectMapper.writeValueAsString(newList);
+        // Mock the behavior of the service
+        when(userService.addShopeeList(eq(testUser.getUsername()), any())).thenReturn(true);
+
+        // Perform the POST request to add a ShopeeList and verify the response
+            mockMvc.perform(MockMvcRequestBuilders.post("/users/"+testUser.getUsername() +"/addList")
+            .content(newListString)
+            .contentType("application/json"))
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
+            
 }
