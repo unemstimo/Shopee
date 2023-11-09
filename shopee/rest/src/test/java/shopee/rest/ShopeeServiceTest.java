@@ -22,34 +22,27 @@ import shopee.json.FileHandeler;
 
 
 public class ShopeeServiceTest {
+   
     private ShopeeUserService shopeeService;
-    private FileHandeler fileHandler; 
-    private List<User> allUsers; 
-    private User exampleUser; 
-    private ShopeeList exampleList; 
-    private ObjectMapper mapper;
+    private ObjectMapper mapper; 
+    private FileHandeler handler;
+
 
 
     /* 
      * Sets up a service and uses createIntialUser to reset the 
      * user info between each test
-     */
+     */ 
     @BeforeEach
-    public void setUp() {
-        try {
-            shopeeService = new ShopeeUserService();
-            shopeeService.setAllUsers(ShopeeUserService.createInitialUser());
-            // fileHandler = new FileHandeler();
-            mapper = new ObjectMapper();
-            this.allUsers = shopeeService.getAllUsers();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-     
+    public void setUp() throws FileNotFoundException{
+        this.shopeeService = new ShopeeUserService();
+        this.mapper = new ObjectMapper();
+        this.handler = new FileHandeler();
+        handler.clearFileContent();
+        shopeeService.setAllUsers(ShopeeUserService.createInitialUser());
+        
     }
 
-    
 
     @Test 
     public void addUser() throws JsonProcessingException{
@@ -61,15 +54,6 @@ public class ShopeeServiceTest {
         assertFalse(shopeeService.getAllUsers().contains(testUser2), "User was added even though it should't");
     }
     
-    /**
-     * Helper method such that the test are easier to understand.
-     */
-
-    public void getuserInfo(){
-        this.exampleUser = shopeeService.getAllUsers().get(0);
-        this.exampleList = this.allUsers.get(0).getShopeeLists().get(0);
-    }
-
     @Test
     public void addShopeeList(){
         User userExample = shopeeService.getAllUsers().get(0);
