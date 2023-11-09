@@ -113,14 +113,23 @@ public class ShopeeServiceTest {
         , "The shopeeList was not deleted from the example user");
     }
 
+      //All info compared here is just to check if the initial user is initialized properly
+    //such that it can be used for testing. And the usernames are the two given test users in the method
     @Test
-    public void createIntitalUser(){
-        getuserInfo();
-        assertTrue(this.allUsers.size() ==2, "something went wrong when initializing users in tests");
-        assertEquals(this.exampleUser.getUsername(), "Terje@gmail.com", "The first user didnt match");
-        assertTrue(this.exampleUser.getShopeeLists().size() ==2, "The amount of shopeeLists didnt match what it shoudl be");
-        assertEquals(this.exampleUser.getShopeeLists().get(0).getFood(0).getFoodName(),"Bread"
-        , "the food name didnt match what was created in createIntialUser ");
+    public void testCreateInitialUser() {
+        try {
+            List<User> initialUsers = ShopeeUserService.createInitialUser();
+            assertNotNull(initialUsers);
+            assertEquals(2, initialUsers.size()); // Check if two initial users are added
+            User user1 = shopeeService.getUser("Terje@gmail.com");
+            User user2 = shopeeService.getUser("Laylae@gmail.com");
+            assertNotNull(user1);
+            assertNotNull(user2);
+            assertEquals("Terje@gmail.com", user1.getUsername());
+            assertEquals("Laylae@gmail.com", user2.getUsername());
+        } catch (Exception e) {
+            fail("Exception thrown while creating initial users: " + e.getMessage());
+        }
     }
 
   
