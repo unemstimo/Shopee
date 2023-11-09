@@ -80,6 +80,7 @@ public class ShopeeUserService {
                 throw new IllegalArgumentException("User was not created properly when adding user");
             }
             shopeePersistence.writeToFile(user);
+            save();
             return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -103,13 +104,18 @@ public class ShopeeUserService {
              User user = users.stream().filter(u->u.getUsername()
             .equals(username)).findFirst().orElse(null);
             ShopeeList newList = mapper.readValue(shopeeList, ShopeeList.class);
+            boolean added = false;
             for(ShopeeList list : user.getShopeeLists()){
                 if(list.getListName().equals(newList.getListName())){
                     user.replaceShopeeList(newList.getListName(), newList);
+                    added = true;
                 }
             }
-            user.addShopeeList(newList);
+            if(!added){
+                user.addShopeeList(newList);
+            }
             shopeePersistence.writeToFile(user);
+            save();
             return true;
                 
         } catch (FileNotFoundException e) {
@@ -129,18 +135,30 @@ public class ShopeeUserService {
     public boolean deleteShopeeList(String username, String listName) throws IOException{
         try {
             if(username.equals("")||listName.equals("")){
-                throw new IOException("name or listname is null");
+                throw new IOException("name or listname is not given");
             }
             User user = shopeePersistence.jsonToObj().stream().filter(u->u.getUsername()
             .equals(username)).findFirst().orElse(null);
             user.deleteShopeeList(listName);
             shopeePersistence.writeToFile(user);
+            save();
             return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false; 
         }
         
+    }
+
+    /*
+    * To update the list when changes are done
+    */
+    public void save(){
+        try {
+            this.allUsers = shopeePersistence.jsonToObj();
+          } catch (FileNotFoundException e) {
+            e.printStackTrace();
+          }
     }
 
     /**
@@ -155,7 +173,7 @@ public class ShopeeUserService {
         List<User> exampleUsers = new ArrayList<>();
         User exampleUser = new User("Terje@gmail.com", "Passord123@");
         
-        ShopeeList list1 = new ShopeeList("Target shoppinglist");
+        ShopeeList list1 = new ShopeeList("PreLoadedList1");
         list1.addFoodShopList("Bread", 2);
         list1.addFoodShopList("Milk", 1);
         list1.addFoodShopList("Soda", 6);
