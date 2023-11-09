@@ -3,6 +3,7 @@ package shopee.rest;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,6 +44,12 @@ public class ShopeeServiceTest {
         
     }
 
+    @Test
+    public void testGetAllUsers() throws FileNotFoundException {
+        int expectedSize = ShopeeUserService.createInitialUser().size();
+        assertNotNull(shopeeService.getAllUsers());
+        assertEquals(expectedSize, shopeeService.getAllUsers().size());
+    }
 
     @Test 
     public void addUser() throws JsonProcessingException{
