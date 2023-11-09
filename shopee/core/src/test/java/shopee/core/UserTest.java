@@ -257,8 +257,9 @@ public class UserTest {
         user.addShopeeList(list2);
         user.addShopeeList(list3);
         assertEquals(3, user.getShopeeLists().size());
+        System.out.println(user.getShopeeLists().toString());
 
-        ShopeeList list4 = new ShopeeList("Week 44");
+        ShopeeList list4 = new ShopeeList("Week 44 new");
         user.replaceShopeeList("Week 44", list4);
         assertTrue(user.getShopeeLists().contains(list4));
         assertFalse(user.getShopeeLists().contains(list3));

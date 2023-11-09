@@ -209,16 +209,23 @@ public class User {
     * @param newList the new shopeeList which replaces the old one
     */
     public void replaceShopeeList(String listname, ShopeeList newList){
-        int index = 0;
+        int index = -1;
+        boolean found = false;
+
         for (ShopeeList list : this.shopeeLists) {
+            index ++; 
             if(list.getListName().equals(listname)){
                 this.deleteShopeeList(listname);
-                index ++; 
+                found = true;
+                break;
             }
-            else{
-                throw new IllegalArgumentException("No such list name for this user.");
-            }
-        this.addShopeeList(index, newList);
+        }  
+
+        if(found){
+            this.addShopeeList(index, newList);
+        }
+        else{
+            throw new IllegalArgumentException("No such list name for this user.");
         }
     }
 
