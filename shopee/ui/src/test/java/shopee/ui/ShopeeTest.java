@@ -26,7 +26,7 @@ public class ShopeeTest extends ApplicationTest {
 
     
     private User testUser = new User("Oskar@ntnu.no", "Eksempelpassors123@");
-    private FileHandeler fileHandeler = new FileHandeler("direct.json");
+    private FileHandeler fileHandeler = new FileHandeler();
 
 
     private ShopeeController controller = new ShopeeController();
@@ -42,6 +42,7 @@ public class ShopeeTest extends ApplicationTest {
     @BeforeEach
     public void setUp() throws FileNotFoundException, JsonProcessingException {
       this.dataAccess = new LocalUserAccess();
+      this.fileHandeler.setFilePath("direct.json");
       fileHandeler.clearFileContent();
       this.testUser.addShopeeList(new ShopeeList("testlist"));
       this.dataAccess.addUser(testUser);

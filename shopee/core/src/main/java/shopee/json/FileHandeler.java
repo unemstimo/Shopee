@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class FileHandeler {
     private Path filePath;
 
     public FileHandeler(String filepath) throws FileNotFoundException {
-          setFilePath(filepath);
+        setFilePath(filepath);
       }
 
 
@@ -33,8 +32,13 @@ public class FileHandeler {
    * @param filename  the name of the file to use
    */
       public void setFilePath(String filename) throws FileNotFoundException{
-        String filePath = filename;
-        this.filePath = Paths.get(System.getProperty("user.home"), filePath);
+        try {
+            String filePath = filename;
+            this.filePath = Paths.get(System.getProperty("user.home"), filePath);
+        } catch (Exception e) {
+            throw new FileNotFoundException("File not found");
+        }
+       
     }
 
     // new method which writes to the DataStorage.json file
