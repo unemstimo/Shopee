@@ -4,7 +4,7 @@ package shopee.rest;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -65,7 +65,7 @@ public class ShopeeControllerTest {
     @Test
     public void testGetUser() throws Exception {
         
-        when(userService.getAllUsers().get(0)).thenReturn(testUser);
+        when(userService.getUser("Terje@gmail.com")).thenReturn(testUser);
         String expectedUser = objectMapper.writeValueAsString(testUser);
         String resultUser = mockMvc.perform(MockMvcRequestBuilders.get("/users/" +testUser.getUsername()))
                .andExpect(status().isOk())
@@ -123,7 +123,7 @@ public class ShopeeControllerTest {
                .getResponse()
                .getContentAsString();
         User newUser = objectMapper.readValue(updatedUser, User.class);
-        assertNull(newUser.getShopeeList(listName));
+        assertThrows(IllegalArgumentException.class, ()-> newUser.getShopeeList(listName));
     }
             
 }
