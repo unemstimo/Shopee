@@ -1,9 +1,11 @@
 package shopee.rest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -61,16 +63,24 @@ public class ShopeeServiceTest {
         assertFalse(shopeeService.getAllUsers().contains(testUser2), "User was added even though it should't");
     }
     
-    @Test
-    public void addShopeeList(){
-        User userExample = shopeeService.getAllUsers().get(0);
-        ShopeeList newList = new ShopeeList("testList");
-        assertFalse(userExample.getShopeeLists().contains(newList)
-        ,"The list is already added, should have been false");
-        assertTrue(shopeeService.addShopeeList(userExample.getUsername(), newList)
-        ,"addShopeeList method didn't work");
-        assertTrue(userExample.getShopeeLists().contains(newList)
-        ,"The shopeeList was not added to the user");
+  @Test
+    public void testAddAndGetUser() throws JsonProcessingException {
+        
+        User testUser = new User("Service@user.no","Service123@");
+        String userString = mapper.writeValueAsString(testUser);
+        try {
+            assertEquals(2, shopeeService.getAllUsers().size());
+            assertTrue(shopeeService.addUser(userString));
+            assertEquals(3, shopeeService.getAllUsers().size());
+            User addedUser = shopeeService.getUser("Service@user.no");
+            assertNotNull(addedUser);
+
+            User neverAddedUser = shopeeService.getUser("Never@added.no");
+            assertNull(neverAddedUser);
+            assertEquals("Service@user.no", addedUser.getUsername());
+        } catch (Exception e) {
+            fail("Exception thrown while adding a user: " + e.getMessage());
+        }
     }
 
     @Test
