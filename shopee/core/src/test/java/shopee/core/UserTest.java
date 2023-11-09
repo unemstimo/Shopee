@@ -126,7 +126,7 @@ public class UserTest {
     */
     @Test
     public void testSetShopeeList() {
-        assertEquals("[]", user.getShopeeLists());
+        assertEquals(new ArrayList<>(), user.getShopeeLists());
 
         List<ShopeeList> shopeeLists = new ArrayList<>();
         ShopeeList list1 = new ShopeeList("Ola");
@@ -150,7 +150,7 @@ public class UserTest {
         ShopeeList list1 = new ShopeeList("Week 40");
         ShopeeList list2 = new ShopeeList("Week 41");
  
-        assertEquals("[]", user.getShopeeLists());
+        assertEquals(new ArrayList<>(), user.getShopeeLists());
         user.addShopeeList(list1);
         List<ShopeeList> shopeeLists = user.getShopeeLists();
         assertTrue(shopeeLists.contains(list1));
@@ -258,7 +258,7 @@ public class UserTest {
         user.addShopeeList(list3);
         assertEquals(3, user.getShopeeLists().size());
 
-        ShopeeList list4 = new ShopeeList("Week 44 vol 2");
+        ShopeeList list4 = new ShopeeList("Week 44");
         user.replaceShopeeList("Week 44", list4);
         assertTrue(user.getShopeeLists().contains(list4));
         assertFalse(user.getShopeeLists().contains(list3));
