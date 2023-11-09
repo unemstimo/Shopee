@@ -10,11 +10,13 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.http.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,6 +69,19 @@ public class ShopeeControllerTest {
                .getContentAsString();
           
         assertEquals(expectedUser,resultUser, "Did not match from local server compared to json file");
+    }
 
+
+    @Test
+    public void testAddUser() throws Exception {
+        User newUser = new User("Petter@ntnu.no", "Petter123@");
+        String userJson = objectMapper.writeValueAsString(newUser);
+        when(userService.addUser(userJson)).thenReturn(true);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/add")
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(userJson))
+               .andExpect(status().isOk())
+               .andExpect(MockMvcResultMatchers.content().string("true"));
     }
 }
