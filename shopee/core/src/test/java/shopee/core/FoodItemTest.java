@@ -64,7 +64,7 @@ public class FoodItemTest {
     @Test
     public void testToString() {
         food = new FoodItem("Apple", 3);
-        assertEquals("Apple : 3 STK", food.toString());
+        assertEquals("Apple : 3  STK", food.toString());
     }
 
 }

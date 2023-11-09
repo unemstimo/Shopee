@@ -55,7 +55,7 @@ public class ShopeeListTest {
         list = new ShopeeList("Hanna");
         
         // When the food item does not exist in the shop list beforehand:
-        assertEquals("[]", list.getShopList());
+        assertEquals(new ArrayList<>(), list.getShopList());
         list.addFoodShopList("Apple", 4);
         assertEquals("Apple", list.getFood(0).getFoodName());
         assertEquals(4, list.getFood(0).getFoodAmount());
