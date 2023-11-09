@@ -44,9 +44,6 @@ public class RemoteUserAccess implements UserAccess{
         return endpointUri.resolve(uri);
     }
 
-
-
-
     /**
      * Method for getting all users from the remote database.
      */

@@ -12,7 +12,7 @@ import shopee.json.FileHandeler;
 
 public class LocalUserAccess implements UserAccess {
 
-    private final FileHandeler filehandler = new FileHandeler();
+    private final FileHandeler filehandler = new FileHandeler("direct.json");
     private List<User> users; 
     
     /**

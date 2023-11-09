@@ -13,25 +13,25 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="231.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VELKOMMEN TIL SHOPEE!" />
-      <Label id="shoppinglist_label" layoutX="265.0" layoutY="40.0" text="Din handleliste" />
-      <Label layoutX="24.0" layoutY="93.0" text="Legg til matvare:" />
+      <Text layoutX="231.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME TO SHOPEE!" />
+      <Label id="shoppinglist_label" layoutX="265.0" layoutY="40.0" text="Your shopee list:" />
+      <Label layoutX="24.0" layoutY="93.0" text="Add food item:" />
       <TextField fx:id="newFood" layoutX="122.0" layoutY="87.0" prefHeight="26.0" prefWidth="118.0" />
-      <Label layoutX="261.0" layoutY="91.0" text="Antall:" />
+      <Label layoutX="261.0" layoutY="91.0" text="Amount:" />
       <TextField fx:id="amountNewFood" layoutX="300.0" layoutY="87.0" prefHeight="26.0" prefWidth="126.0" />
-      <Button fx:id="addFood" layoutX="447.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleAddFoodButtonClick" text="LEGG TIL" />
-      <Label layoutX="121.0" layoutY="133.0" text="Din handleliste:" />
+      <Button fx:id="addFood" layoutX="447.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleAddFoodButtonClick" text="ADD" />
+      <Label layoutX="121.0" layoutY="133.0" text="Your shopping list:" />
       <VBox layoutX="120.0" layoutY="150.0">
          <children>
             <ListView fx:id="shoppingListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="203.0" prefWidth="180.0" />
          </children></VBox>
       <!-- Buttons for actions -->
-      <Button fx:id="foodBought" layoutX="219.0" layoutY="358.0" mnemonicParsing="false" onAction="#markAsBought" prefHeight="32.0" prefWidth="88.0" text="Marker som kjøpt" textAlignment="CENTER">
+      <Button fx:id="foodBought" layoutX="219.0" layoutY="358.0" mnemonicParsing="false" onAction="#markAsBought" prefHeight="32.0" prefWidth="88.0" text="Marked as bought" textAlignment="CENTER">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="removeFood" layoutX="112.0" layoutY="358.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="32.0" prefWidth="102.0" text="Fjern fra handleliste" textAlignment="CENTER">
+      <Button fx:id="removeFood" layoutX="112.0" layoutY="358.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="32.0" prefWidth="102.0" text="Remove from shopping list" textAlignment="CENTER">
          <font>
             <Font size="10.0" />
          </font>
@@ -41,12 +41,16 @@
             <ListView fx:id="boughtListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="203.0" prefWidth="180.0" />
          </children>
       </VBox>
-      <Label layoutX="380.0" layoutY="133.0" text="Kjøpte varer:" />
+      <Label layoutX="380.0" layoutY="133.0" text="Bought food items:" />
       <ImageView fitHeight="59.0" fitWidth="180.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@shopee.png" />
          </image>
       </ImageView>
-      <Button fx:id="back" layoutX="517.0" layoutY="362.0" mnemonicParsing="false" onAction="#backToShoppingList" text="Back" />     
+      <Button fx:id="back" layoutX="517.0" layoutY="362.0" mnemonicParsing="false" onAction="#backToShoppingList" text="Back" />
+      <Label fx:id="outPut" layoutX="406.0" layoutY="27.0" prefHeight="44.0" prefWidth="180.0" textAlignment="CENTER" textFill="RED" wrapText="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>     
    </children>
 </AnchorPane>

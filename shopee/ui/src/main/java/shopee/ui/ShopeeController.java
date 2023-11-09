@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -30,6 +31,7 @@ public class ShopeeController extends AbstractController{
     @FXML private VBox shoppingListContainer;
     @FXML private ListView<FoodItem> shoppingListView;
     @FXML private ListView<FoodItem> boughtListView;
+    @FXML private Label outPut;
 
     private User user;
     private UserAccess dataAccess;
@@ -55,16 +57,28 @@ public class ShopeeController extends AbstractController{
      */
     @FXML
     public void handleAddFoodButtonClick(ActionEvent event) throws JsonProcessingException{
+        
+        try {
+            String food = newFood.getText();
+            int amount = Integer.parseInt(amountNewFood.getText());
 
-        String food = newFood.getText();
-        int amount = Integer.parseInt(amountNewFood.getText());
+            try {
+                this.shopeeList.addFoodShopList(food, amount);
+                showShoppingList(this.shopeeList.getShopList());
+                newFood.clear();
+                amountNewFood.clear();
+                outPut.setText("");
+            } catch (Exception e) {
+                outPut.setText(e.getMessage());
+            }
 
-        this.shopeeList.addFoodShopList(food, amount);
+        } catch (Exception e) {
+            outPut.setText("Please fill in both input-fields");
+        }
 
-        showShoppingList(this.shopeeList.getShopList());
+        
        
-        newFood.clear();
-        amountNewFood.clear();
+
     }
 
     /**
@@ -138,6 +152,27 @@ public class ShopeeController extends AbstractController{
         this.dataAccess.addShopeeList(this.user.getUsername(), this.shopeeList);
 
         setScene(Controllers.HOMEPAGE, actionevent, dataAccess, user, null); 
+    }
+
+    public ListView<FoodItem> getShoppingListView() {
+        return shoppingListView;
+    }
+
+    public ListView<FoodItem> getBoughtListView() {
+        return boughtListView;
+    }
+    
+    public String getErrorOutput() {
+        return outPut.getText();
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void clearInputFields() {
+        newFood.clear();
+        amountNewFood.clear();
     }
 
 }
