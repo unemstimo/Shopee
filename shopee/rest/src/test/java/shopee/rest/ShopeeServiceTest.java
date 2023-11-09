@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -82,6 +83,23 @@ public class ShopeeServiceTest {
             fail("Exception thrown while adding a user: " + e.getMessage());
         }
     }
+
+    @Test
+    public void testAddShopeeList() {
+        //already created user in createInitialUsers method
+        String username = "Terje@gmail.com";
+        ShopeeList testList = new ShopeeList("serviceList");
+        try {
+            assertThrows(IllegalArgumentException.class, ()-> shopeeService.getUser(username).getShopeeList(username));
+            assertTrue(shopeeService.addShopeeList(username, mapper.writeValueAsString(testList)));
+            User user = shopeeService.getUser(username);
+            assertNotNull(user);
+            assertEquals(user.getShopeeLists().get(user.getShopeeLists().size()-1).getListName(),testList.getListName() ); 
+        } catch (Exception e) {
+            fail("Exception thrown while adding a ShopeeList: " + e.getMessage());
+        }
+    }
+
 
     @Test
     public void deleteShopeeList() throws IOException{
