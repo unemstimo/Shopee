@@ -25,9 +25,8 @@ public class FoodItem {
      * @param foodName
      */
     public void setFoodName(String foodName) {
-        if(validFoodName(foodName)) {
-            this.foodName = foodName;
-        }
+        validFoodName(foodName);
+        this.foodName = foodName;
     }
 
     /**
@@ -37,9 +36,8 @@ public class FoodItem {
      * @param amount
      */
     public void setFoodAmount(int foodAmount) {
-        if(validFoodAmount(foodAmount)) {
-            this.foodAmount = foodAmount;
-        }
+        validFoodAmount(foodAmount);
+        this.foodAmount = foodAmount;
     }
 
     /**
