@@ -31,7 +31,7 @@ public class ShopeeUserService {
      */
     public ShopeeUserService() {
         try {
-            this.shopeePersistence = new FileHandeler();
+            this.shopeePersistence = new FileHandeler("DataStorage.json");
             this.allUsers = shopeePersistence.jsonToObj();
             this.mapper = new ObjectMapper();
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class ShopeeUserService {
     * Creates an initial list of users. User for testing etc. 
     */
     public static List<User> createInitialUser() throws FileNotFoundException{
-        FileHandeler testHandler = new FileHandeler();
+        FileHandeler testHandler = new FileHandeler("DataStorage.json");
         List<User> users = testHandler.jsonToObj();
         if(!users.isEmpty()){
             return users; 

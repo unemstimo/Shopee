@@ -41,7 +41,7 @@ public class ShopeeServiceTest {
     public void setUp() throws FileNotFoundException{
         this.shopeeService = new ShopeeUserService();
         this.mapper = new ObjectMapper();
-        this.handler = new FileHandeler();
+        this.handler = new FileHandeler("DataStorage.json");
         handler.clearFileContent();
         shopeeService.setAllUsers(ShopeeUserService.createInitialUser());
         

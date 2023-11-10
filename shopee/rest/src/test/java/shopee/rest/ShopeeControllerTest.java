@@ -35,12 +35,13 @@ public class ShopeeControllerTest {
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
     private List<User> mockUsers;
-    private FileHandeler handler = new FileHandeler();
+    private FileHandeler handler ;
     private User testUser;
 
 
     @BeforeEach
     public void setUp() throws IllegalStateException, IOException {
+        handler = new FileHandeler("DataStorage.json");
         userService = mock(ShopeeUserService.class);
         mockMvc = MockMvcBuilders.standaloneSetup(new ShopeeUserController(userService)).build();
         objectMapper = new ObjectMapper();
