@@ -3,6 +3,8 @@ package shopee.rest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import shopee.core.User;
 
@@ -25,12 +27,16 @@ public class ShopeeApplicationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+    private ShopeeUserService service = new ShopeeUserService();
+    
      
      @Test
-    public void contextLoads() {
+    public void contextLoads() throws FileNotFoundException {
+        service.setAllUsers(ShopeeUserService.createInitialUser());
+
         // Make a request to the root URL of the application.
-        ResponseEntity<List<User>> responseEntity = restTemplate
-        .getForEntity("/users", new TypeReference<List<User>>(){});
+        ResponseEntity<User> responseEntity = restTemplate
+        .getForEntity("/users/Terje@gmail.com", User.class);
 
         // Verify that the HTTP response status code is 200 (OK).
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK, "Wrong HTTP-status");
