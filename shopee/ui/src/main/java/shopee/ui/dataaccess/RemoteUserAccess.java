@@ -117,7 +117,7 @@ public class RemoteUserAccess implements UserAccess{
      */
     @Override
     public void addUser(User user) throws JsonProcessingException {
-        String mapping = "add";
+        String mapping = "users/add";
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -136,6 +136,7 @@ public class RemoteUserAccess implements UserAccess{
             throw new IOException("Not legal status code"); 
           }
         } catch (IOException | InterruptedException e) {
+          System.out.println("halla");
           throw new RuntimeException(e);
         }
       }
