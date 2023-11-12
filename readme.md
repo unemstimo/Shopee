@@ -1,82 +1,109 @@
-# Group gr2334 repository
+# IT1901 Group gr2334 repository
 
 [<img src="https://eclipse.dev/che/docs/_/img/icon-eclipse-che.svg" width="25" /> open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2334/gr2334)
 
 
 ## Description
-This group project is a developing project through the course IT1901. The purpose of this project is to create an app that can handle data managed as a cloud service. This project is intended to familiarize the group with working collaboratively and using GitLab to become well-versed in agile practices.
+This group project is a developing project through the course IT1901. The purpose of this project is to create an app that can handle data managed as a cloud service. This project is intended to familiarize the group with working collaboratively and using GitLab to become well-versed in agile practices. Read more about the project [here](shopee/readme.md)
 ______________
+
+## Tools used to ensure code quality
+* __Checkstyle__ : tool that makes Java code checking faster and smoother that follows coding standards
+* __Spotbugs__ : analyses bugs in Java code
+* __JaCoCo__ : checks code coverage and generates coverage reports  
 
 ## system requirements
 - Java 17.0.8
 - Maven 4.0.0
 - javaFX
 
-## Project Build
+## Project building and running
 
 This project is built and runs on Maven.
 
 Before running:
+- cd shopee
 - mvn clean install
 - mvn compile
 
-To run the app you can either:
-1. use command "mvn javafx:run" in ui folder
-2. use command "mvn javafx:run -f ui/pom.xml" wherever you would like 
+### Running the application with local access:
 
+1. Navigate to the shopee directory using __"cd shopee/ui"__
+2. __mvn clean install__, (tests can be skipped with __mvn clean install -DskipTests__ )
+3. use command __"mvn javafx:run"__ in ui folder or use command "mvn javafx:run -f ui/pom.xml" wherever you would like
+
+### Running the application with remote access:
+1. Navigate to shopee directory using __"cd shopee"__
+2. __mvn clean install__, (tests can be skipped by using __mvn clean install -DskipTests)
+3. Start server and open new terminal window with __"mvn spring-boot:run"__, open a new terminal window
+4. Run javafx client application with __"mvn javafx:run -pl ui -P remoteapp"__
+
+### Testing:
+
+1. Navigate to the shopee directory using __"cd shopee"__
+2. Test using __"mvn verify"__
+
+The JaCoCo report is created when this command is runned and is located in /target/site/index.html in each module. 
+
+__Note:__ The springboot- and integrationtest-module runs on port 8080, this requires that the server is not running at the same time. Make sure the server is not running in any terminal when running `mvn verify` or `mvn clean install`.  
 _______________________
+
+## How the application work
+
+
+________
 ## Project Structure
 The project is organized with these directories for managing source code, documentation and resources.
-**shopee/core**
-- **/src/main/java/shopee/core** : The core module for the app, contains core Java classes for the app.
-    - __FoodItem.java:__  Java class for food object
-    - __ShopeeList.java:__ Java class for shopping list
-    - **User.java:** Java class for user
-- **/src/main/java/shopee/json** Folder contains persistance for code project.
-    - **FileHandeler.java** Handles the json file methods, read/write to file
-- **/src/main/java/module-info.java** contains module info for the module in core   
-- **/src/test/java/shopee/core** Contains test classes for the java classes that holds the logic.
-    - **FoodItemTest.java**
-    - **ShopeeListTest.java**
-    - **UserTest.java**
-- **/src/test/java/shopee/json** Holds testing for file handler class
-    - **FileHandlerTest.java**
-- **/pom.xml** This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
+
+* [shopee](shopee/core/src/main/java/shopee)
+    * [core](shopee/core/)
+        * [domain-logic](shopee/core/src/main/java/shopee/core) 
+        * [persistance](shopee/core/src/main/java/shopee/json)
+    * [ui](shopee/ui)
+        * [javafx](shopee/ui/src/main/java/shopee/ui)
+        * [FXML](shopee/ui/src/main/resources/)
+    * [rest](shopee/rest)
 
 
-- **docs**:  This folder contains the documentation for app. Releases is placed in this folder.
-    - **release1.md** : Documentation of what has been accomplished for the first sprint in this project.
-    - **release2.md** : Documentation on what has been accomplished since first release, reflection on this sprint and how the group has cooporated.
-
-
-
-**shopee/ui**  
-- **/src/main/java/shopee/ui**  This contains the main java classes for ui.
-    - **LogInController.java**  Controller class for handling log in page.
-    - **Shopee.java**  This is the main application class for the UI. The shopee class launches the JavaFX app, sets up the first page of the app. 
-    - **ShopeeController.java**  The JavaFX controller class for handeling UI. 
-- **/src/main/java/module-info.java**  Module info for ui folder. 
-- **/src/main/resources/ui**  Contains the fxml files used for the app.
-    - **LogIn.fxml** Fxml for the first page the user sees, contains log in ui
-    - **Shopee.fxml**  This is the fxml file defying the user interface layout.
-- **/src/test/java/shopee/ui** Contains test classes for controller and fxml
-    - **LogInTest.java**
-    - **ShopeeTest.java**
-- **/src/main/resources/shopee/DataStorage.json** Json file that is written to file and read from file
-- **pom.xml**  This pom file contains the configuration for maven, javafx, jacoco etc. Contains build setting and other configuration.
-- **readme.md**  Description on ui module.
-
-**shopee/readme.md** Description of the app project, illustration of the app, user story and important functuality to the app.
 
 ## Package diagram explaining folder structure
 [Package diagram](ShopeePackage.png)
 
+______
+## The plan for this project
+The project har three releases, where in each sprint the following plans where intended.
+
+**Sprint 1**
+
+In this sprint the group should have the app running with maven and with simple persitance. The springt contains one user story; be able to create a grocarey list.
+
+US-1: As a user I want to add/remove/mark as bought food items in my grocery list.
+
+Read more about sprint 1 [here](docs/release1.md)
+
+**Sprint 2**
+
+In this sprint the group will continue working on the application and extending the functionality and implement persistance using json. 
+
+The group will extend the application to contain more user stories. 
+
+US-2: I want to log in to my user and view my already existing shopping list.
 
 
-## Configuration of tools for code quality
-* __jaCoCo:__ Gathers and presents information and testcode coverage
-* __checkstyle:__ Checks code quality
-*__spotBugs:__ Finds bugs in code
+Read more about sprint 2 [here](docs/release2.md)
+
+**Sprint 3**
+
+In the last sprint the group will implement more functionality where an user can have multiple lists connected to their logged in user. The group will also focus on REST API and REST SERVER.
+
+US-3: As a user I want to create an account and create multiple grocery lists for each week
+
+US-4: As a user I want to log in and view my grocery lists for selected dishes.
+
+Read more about sprint 3 [here](docs/release3.md)
+
+_Note: this plan is tentative, it may change._
+
 
 
 
