@@ -20,19 +20,34 @@ public class RemoteUserAccess implements UserAccess{
     
     private final URI endpointUri;
 
+  /**
+   * Constructor for the RemoteUserAccess class.
+   * 
+   * @param uri
+   * @param mock
+   * @throws IOException
+   * @throws InterruptedException
+   */
     public RemoteUserAccess(URI uri, Boolean mock) throws IOException, InterruptedException {
-            if (!mock) {
-              HttpRequest request = HttpRequest.newBuilder(uri)
-                    .header("Accept", "application/json").GET().build();
-              final HttpResponse<String> response = 
-                    HttpClient.newBuilder().build().send(request,
-                    HttpResponse.BodyHandlers.ofString());
-              if (!response.body().equals("OK")) {
-                throw new IOException("Server is not running");
+      if (!mock) {
+          HttpRequest request = HttpRequest.newBuilder(uri)
+                  .header("Accept", "application/json").GET().build();
+
+          try {
+              final HttpResponse<Void> response = HttpClient.newBuilder().build().send(request,
+                      HttpResponse.BodyHandlers.discarding());
+
+              int statusCode = response.statusCode();
+
+              if (statusCode != 200) {
+                  throw new IOException("Server is not running. HTTP Status Code: " + statusCode);
               }
-            }
-            this.endpointUri = uri;
+          } catch (IOException e) {
+              throw new IOException("Error checking server status: " + e.getMessage());
           }
+      }
+      this.endpointUri = uri;
+  }
 
           /**
     * Method for creating the correct path to the URI.
