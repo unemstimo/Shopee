@@ -41,7 +41,7 @@ public class ShopeeControllerTest {
 
     @BeforeEach
     public void setUp() throws IllegalStateException, IOException {
-        handler = new FileHandeler("DataStorage.json");
+        handler = new FileHandeler("direct.json");
         userService = mock(ShopeeUserService.class);
         mockMvc = MockMvcBuilders.standaloneSetup(new ShopeeUserController(userService)).build();
         objectMapper = new ObjectMapper();
