@@ -47,8 +47,10 @@ private void readTextFields(){
 public void setUpAccess() throws FileNotFoundException {
     try {
       this.dataAccess = new RemoteUserAccess(new URI("http://localhost:8080/users"), false);
+      System.out.println("Connected to server");
     } catch (Exception e) {
       this.dataAccess = new LocalUserAccess();
+      System.out.println("Local file used"); 
     }
 
     this.initData(this.dataAccess);
