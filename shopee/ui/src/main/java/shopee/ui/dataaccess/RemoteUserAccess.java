@@ -19,7 +19,8 @@ import shopee.core.User;
 public class RemoteUserAccess implements UserAccess{
     
     private final URI endpointUri;
-
+  
+  
   /**
    * Constructor for the RemoteUserAccess class.
    * 
@@ -64,8 +65,7 @@ public class RemoteUserAccess implements UserAccess{
      */
       @Override
     public List<User> getAllUsers() { // Brukes i Login?? for å sjekke om bruker finnes????
-        String mapping = "users";
-        HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping))
+        HttpRequest request = HttpRequest.newBuilder(endpointUri)
             .header("Accept", "application/json")
             .GET().build();
         
@@ -91,11 +91,10 @@ public class RemoteUserAccess implements UserAccess{
      */
     @Override
     public User getUser(String username) {
-        String mapping = "users/";
-        String value = username;
+        String value = "users/" + username;
 
         try {
-        HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping + value))
+        HttpRequest request = HttpRequest.newBuilder(shoppingListUri(value))
             .header("Accept", "application/json").GET().build();
         final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
             HttpResponse.BodyHandlers.ofString());
@@ -118,7 +117,7 @@ public class RemoteUserAccess implements UserAccess{
      */
     @Override
     public void addUser(User user) throws JsonProcessingException {
-        String mapping = "users/add";
+        String mapping = "add";
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -146,7 +145,7 @@ public class RemoteUserAccess implements UserAccess{
        */
     @Override
     public void addShopeeList(String username, ShopeeList newShopeeList) throws JsonProcessingException  {
-        String mapping = "users/" + username + "/add";
+        String mapping = "users/" + username + "/addList";
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -174,13 +173,10 @@ public class RemoteUserAccess implements UserAccess{
      */
     @Override
     public void deleteShopeeList(String usernname, String listName) {
-      String mapping1 = "lists/";
-      String list = usernname;
-      String mapping2 = "/deleteItem?itemName=";
-      String value = listName;
+      String mapping = "users/" + usernname + "/" + listName;
       try {
         HttpRequest request = HttpRequest
-            .newBuilder(shoppingListUri(mapping1 + list + mapping2 + value))
+            .newBuilder(shoppingListUri(mapping))
             .DELETE()
             .build();
         HttpResponse<String> response = HttpClient.newBuilder().build()
@@ -196,4 +192,6 @@ public class RemoteUserAccess implements UserAccess{
 
 }
     
+
+
 
