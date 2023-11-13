@@ -132,6 +132,9 @@ public class LogInTest extends ApplicationTest {
     }
 
 
+    /*
+     * This method tests when trying to login with invalid credentials
+     */
     @Test
     public void testUnvalidSignIn() {
             
@@ -141,6 +144,38 @@ public class LogInTest extends ApplicationTest {
     
             assertEquals("Feil brukernavn eller passord. Vennligst prøv igjen.", this.controller.getErrorLabel());
     }
+
+
+    /*
+     * This method tests if the access is being set up correctly
+     */
+    @Test
+    void testSetUpAccess() {
+        try {
+            controller.setUpAccess();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+    }
+
+
+    /*
+     * This method tests if the access is being handled correctly
+     */
+    @Test
+    public void handleAccess() {
+        LocalUserAccess local;
+        try {
+            local = new LocalUserAccess();
+            controller.setDataAccess(local);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        controller.getDataAccess();
+    }
+
 
   
 }
