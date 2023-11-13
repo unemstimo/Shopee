@@ -7,11 +7,21 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInstance;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
 import shopee.core.ShopeeList;
@@ -19,6 +29,8 @@ import shopee.core.User;
 import shopee.json.FileHandeler;
 import shopee.ui.dataaccess.RemoteUserAccess;
 
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RemoteAccessTest {
     
     private static final int Port = 8080;
@@ -53,6 +65,27 @@ public class RemoteAccessTest {
         } catch (Exception e) {
         e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testGetAllUsers() throws JsonProcessingException, FileNotFoundException {
+    List<User> users = handler.jsonToObj();
+    
+    // Update the stub path to match the actual request path
+    WireMock.stubFor(get("/").willReturn(new ResponseDefinitionBuilder()
+            .withBody(mapper.writeValueAsString(users))));
+
+    List<User> remoteUsers = remoteAccess.getAllUsers();
+    assertNotNull(remoteUsers);
+    assertEquals(users.size(), remoteUsers.size());
+    assertEquals(remoteUsers.get(0).getUsername(), "test@user.com");
+    assertEquals(remoteUsers.size(),2);
+
+    // Stub the WireMock server to return a non-200 status code
+    WireMock.stubFor(get("/").willReturn(aResponse().withStatus(500)));
+
+    // Test that the catch clause throws a RuntimeException
+    assertThrows(RuntimeException.class, () -> remoteAccess.getAllUsers());
     }
 
 
