@@ -12,8 +12,12 @@ import org.junit.jupiter.api.TestInstance;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
@@ -95,7 +99,7 @@ public class RemoteAccessTest {
 
         WireMock.stubFor(get("/users/second@user.no").willReturn(new ResponseDefinitionBuilder()
             .withBody(mapper.writeValueAsString(fileUser))));
-            
+
         User remoteUser = remoteAccess.getUser("second@user.no");
         assertNotNull(remoteUser);
         assertEquals(remoteUser.getPassword(), fileUser.getPassword());
@@ -106,6 +110,38 @@ public class RemoteAccessTest {
 
         // Test that the catch clause returns null
         assertNull(remoteAccess.getUser("second@user.no"));
+    }
+
+      @Test
+    public void testAddUser() throws FileNotFoundException, JsonProcessingException{
+        List<User> users = handler.jsonToObj();
+        WireMock.stubFor(get("/").willReturn(new ResponseDefinitionBuilder()
+                    .withBody(mapper.writeValueAsString(users))));
+
+        List<User> remoteUsersBefore = remoteAccess.getAllUsers();
+        User addUser = new User("added@user.com", "Remote123@");
+        assertFalse(remoteUsersBefore.contains(addUser));
+        // Stubbing the response for the POST request to /users/add
+        stubFor(post("/users/add")
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(mapper.writeValueAsString(addUser))));
+                        
+    
+        remoteAccess.addUser(addUser);
+        
+        WireMock.stubFor(get("/users/added@user.com").willReturn(new ResponseDefinitionBuilder()
+            .withBody(mapper.writeValueAsString(addUser))));
+        User newlyAddedUser = remoteAccess.getUser("added@user.com");
+       
+        assertNotNull(newlyAddedUser);
+        assertEquals("added@user.com", newlyAddedUser.getUsername() );
+
+        //Stub the wiremock to return a non-200 status code, and check if a exception is thrown
+        WireMock.stubFor(post("/users/add").willReturn(aResponse().withStatus(500)));
+        assertThrows(RuntimeException.class, () -> remoteAccess.addUser(newlyAddedUser));
+
     }
 
 
