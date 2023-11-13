@@ -44,7 +44,7 @@ public class RemoteUserAccess implements UserAccess{
                   throw new IOException("Server is not running. HTTP Status Code: " + statusCode);
               }
           } catch (IOException e) {
-              throw new IOException("Error checking server status: " + e.getMessage());
+              throw new IOException(e.getMessage());
           }
       }
       this.endpointUri = uri;

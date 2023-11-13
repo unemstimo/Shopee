@@ -1,6 +1,7 @@
 package shopee.dataaccess;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -70,6 +71,18 @@ public class RemoteAccessTest {
         } catch (Exception e) {
         e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testConstructorWithMockFalseServerError() throws Exception {
+        URI uri = new URI("http://localhost:" + server.port() + "/");
+
+        // Stub the WireMock server to return a non-200 status code
+        stubFor(get("/").willReturn(aResponse().withStatus(500)));
+
+        // Test that the constructor throws IOException with the appropriate message
+        IOException exception = assertThrows(IOException.class, () -> new RemoteUserAccess(uri, false));
+        assertEquals("Server is not running. HTTP Status Code: 500", exception.getMessage());
     }
 
     @Test
