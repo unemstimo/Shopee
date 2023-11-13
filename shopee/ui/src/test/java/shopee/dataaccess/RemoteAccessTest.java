@@ -12,7 +12,7 @@ import org.junit.jupiter.api.TestInstance;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -69,23 +69,43 @@ public class RemoteAccessTest {
 
     @Test
     public void testGetAllUsers() throws JsonProcessingException, FileNotFoundException {
-    List<User> users = handler.jsonToObj();
+        List<User> users = handler.jsonToObj();
+        
+        // Update the stub path to match the actual request path
+        WireMock.stubFor(get("/").willReturn(new ResponseDefinitionBuilder()
+                .withBody(mapper.writeValueAsString(users))));
+
+        List<User> remoteUsers = remoteAccess.getAllUsers();
+        assertNotNull(remoteUsers);
+        assertEquals(users.size(), remoteUsers.size());
+        assertEquals(remoteUsers.get(0).getUsername(), "test@user.com");
+        assertEquals(remoteUsers.size(),2);
+
+        // Stub the WireMock server to return a non-200 status code
+        WireMock.stubFor(get("/").willReturn(aResponse().withStatus(500)));
+
+        // Test that the catch clause throws a RuntimeException
+        assertThrows(RuntimeException.class, () -> remoteAccess.getAllUsers());
+    }
     
-    // Update the stub path to match the actual request path
-    WireMock.stubFor(get("/").willReturn(new ResponseDefinitionBuilder()
-            .withBody(mapper.writeValueAsString(users))));
+    @Test
+    public void testGetUser() throws FileNotFoundException, JsonProcessingException{
+        List<User> users = handler.jsonToObj();
+        User fileUser = users.stream().filter(u->u.getUsername().equals("second@user.no")).findAny().orElseThrow();
 
-    List<User> remoteUsers = remoteAccess.getAllUsers();
-    assertNotNull(remoteUsers);
-    assertEquals(users.size(), remoteUsers.size());
-    assertEquals(remoteUsers.get(0).getUsername(), "test@user.com");
-    assertEquals(remoteUsers.size(),2);
+        WireMock.stubFor(get("/users/second@user.no").willReturn(new ResponseDefinitionBuilder()
+            .withBody(mapper.writeValueAsString(fileUser))));
+            
+        User remoteUser = remoteAccess.getUser("second@user.no");
+        assertNotNull(remoteUser);
+        assertEquals(remoteUser.getPassword(), fileUser.getPassword());
+        assertEquals(remoteUser.getUsername(), fileUser.getUsername());
 
-    // Stub the WireMock server to return a non-200 status code
-    WireMock.stubFor(get("/").willReturn(aResponse().withStatus(500)));
+        // Stub the WireMock server to return a non-200 status code
+        WireMock.stubFor(get("/users/second@user.no").willReturn(aResponse().withStatus(500)));
 
-    // Test that the catch clause throws a RuntimeException
-    assertThrows(RuntimeException.class, () -> remoteAccess.getAllUsers());
+        // Test that the catch clause returns null
+        assertNull(remoteAccess.getUser("second@user.no"));
     }
 
 
