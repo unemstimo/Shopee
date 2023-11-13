@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestInstance;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.delete;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 
@@ -160,9 +161,21 @@ public class RemoteAccessTest {
 
         // Test that the catch clause throws a RuntimeException
         assertThrows(RuntimeException.class, () -> remoteAccess.addShopeeList(username, newList));
-
     }
 
+    @Test 
+    public void testDeleteShopeeList(){
+        String userName = testUser1.getUsername();
+        String listName = "list1";
+        stubFor(delete("/users/test@user.com/"+ listName)
+            .willReturn(aResponse()
+            .withStatus(200)));
+        remoteAccess.deleteShopeeList(userName, listName);
+
+        //Stub the wiremock to return a non-200 status code, and check if a exception is thrown
+        WireMock.stubFor(delete("/users/" +userName + "/" +  listName).willReturn(aResponse().withStatus(500)));
+        assertThrows(RuntimeException.class, ()-> remoteAccess.deleteShopeeList(userName, listName));
+    }
 
 
     @AfterEach
