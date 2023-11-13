@@ -50,7 +50,9 @@ public void setUpAccess() throws FileNotFoundException {
       System.out.println("Connected to server");
     } catch (Exception e) {
       this.dataAccess = new LocalUserAccess();
-      System.out.println("Local file used"); 
+      System.out.println(e.getMessage()); 
+      System.out.println("Local file is used");
+      
     }
 
     this.initData(this.dataAccess);
