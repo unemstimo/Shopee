@@ -1,0 +1,65 @@
+@startuml classDiagramCore
+
+class FoodItem{
+    -String FoodName
+    -int foodAmount
+
+   +void setFoodName(String)
+   +void setFoodAmount(int)
+   +String getFoodName()
+   +int getFoodAmount()
+
+   -boolean validFoodName(String)
+   -boolean validFoodAmount(int)
+}
+
+class ShopeeList{
+    -String listName
+    -List<FoodItem> shopList
+    -List<FoodItem> boughtList
+
+    +void setListName(String)
+    +String getListName()
+    +void addFoodShopList(String, int)
+    +void setShopList(List<FoodItem>)
+    +void setBoughtList(List<FoodItem>)
+    +void addFoodBought(List(FoodItem)
+    +void removeFood(String)
+    +FoodItem getFood(String)
+    +FoodItem getFood(int)
+    +int getFoodAmount(String)
+    +void hasFood(String)
+    +FoodItem getBoughtItem(int)
+    +List<FoodItem> getShopList()
+    +List<FoodItem> getBoughtList()
+
+    -void validName(String)
+}
+
+class User{
+   -String username 
+   -String password
+   -List<ShopeeList> shopeeLists
+   {static} final String[] cc
+   #List<String> newList
+
+   -boolean validUsername(String)
+   -boolean validPassword(String)
+
+   +String getUsername()
+   +String getPassword()
+   +void setUsername(String)
+   +void setPassword(String)
+   +void setShopeeLists(List<ShopeeList>)
+   +List<ShopeeList> getShopeeLists()
+   +void addShopeeList(ShopeeList)
+   +ShopeeList getShopeeList(String)
+   +void deleteShopeeList(int)
+   +void deleteShopeeList(String)
+   +void addShopeeList(int, ShopeeList)
+   +void replaceShopeeList(String, ShopeeList)
+}
+
+ShopeeList "0" --> "*" FoodItem : "Contains"
+User "0" --> "*" ShopeeList : "Contains"
+@enduml
