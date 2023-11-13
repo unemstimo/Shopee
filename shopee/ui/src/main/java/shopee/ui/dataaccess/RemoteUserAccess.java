@@ -19,20 +19,36 @@ import shopee.core.User;
 public class RemoteUserAccess implements UserAccess{
     
     private final URI endpointUri;
-
+  
+  
+  /**
+   * Constructor for the RemoteUserAccess class.
+   * 
+   * @param uri
+   * @param mock
+   * @throws IOException
+   * @throws InterruptedException
+   */
     public RemoteUserAccess(URI uri, Boolean mock) throws IOException, InterruptedException {
-            if (!mock) {
-              HttpRequest request = HttpRequest.newBuilder(uri)
-                    .header("Accept", "application/json").GET().build();
-              final HttpResponse<String> response = 
-                    HttpClient.newBuilder().build().send(request,
-                    HttpResponse.BodyHandlers.ofString());
-              if (!response.body().equals("OK")) {
-                throw new IOException("Server is not running");
+      if (!mock) {
+          HttpRequest request = HttpRequest.newBuilder(uri)
+                  .header("Accept", "application/json").GET().build();
+
+          try {
+              final HttpResponse<Void> response = HttpClient.newBuilder().build().send(request,
+                      HttpResponse.BodyHandlers.discarding());
+
+              int statusCode = response.statusCode();
+
+              if (statusCode != 200) {
+                  throw new IOException("Server is not running. HTTP Status Code: " + statusCode);
               }
-            }
-            this.endpointUri = uri;
+          } catch (IOException e) {
+              throw new IOException("Error checking server status: " + e.getMessage());
           }
+      }
+      this.endpointUri = uri;
+  }
 
           /**
     * Method for creating the correct path to the URI.
@@ -49,8 +65,7 @@ public class RemoteUserAccess implements UserAccess{
      */
       @Override
     public List<User> getAllUsers() { // Brukes i Login?? for å sjekke om bruker finnes????
-        String mapping = "users";
-        HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping))
+        HttpRequest request = HttpRequest.newBuilder(endpointUri)
             .header("Accept", "application/json")
             .GET().build();
         
@@ -76,11 +91,10 @@ public class RemoteUserAccess implements UserAccess{
      */
     @Override
     public User getUser(String username) {
-        String mapping = "users/";
-        String value = username;
+        String value = "users/" + username;
 
         try {
-        HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping + value))
+        HttpRequest request = HttpRequest.newBuilder(shoppingListUri(value))
             .header("Accept", "application/json").GET().build();
         final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
             HttpResponse.BodyHandlers.ofString());
@@ -122,6 +136,7 @@ public class RemoteUserAccess implements UserAccess{
             throw new IOException("Not legal status code"); 
           }
         } catch (IOException | InterruptedException e) {
+          System.out.println("halla");
           throw new RuntimeException(e);
         }
       }
@@ -131,7 +146,7 @@ public class RemoteUserAccess implements UserAccess{
        */
     @Override
     public void addShopeeList(String username, ShopeeList newShopeeList) throws JsonProcessingException  {
-        String mapping = "users/" + username + "/add";
+        String mapping = "users/" + username + "/addList";
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -159,13 +174,10 @@ public class RemoteUserAccess implements UserAccess{
      */
     @Override
     public void deleteShopeeList(String usernname, String listName) {
-      String mapping1 = "lists/";
-      String list = usernname;
-      String mapping2 = "/deleteItem?itemName=";
-      String value = listName;
+      String mapping = "users/" + usernname + "/" + listName;
       try {
         HttpRequest request = HttpRequest
-            .newBuilder(shoppingListUri(mapping1 + list + mapping2 + value))
+            .newBuilder(shoppingListUri(mapping))
             .DELETE()
             .build();
         HttpResponse<String> response = HttpClient.newBuilder().build()
@@ -181,4 +193,6 @@ public class RemoteUserAccess implements UserAccess{
 
 }
     
+
+
 
