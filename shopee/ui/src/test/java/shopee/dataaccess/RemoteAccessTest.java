@@ -112,7 +112,7 @@ public class RemoteAccessTest {
         assertNull(remoteAccess.getUser("second@user.no"));
     }
 
-      @Test
+    @Test
     public void testAddUser() throws FileNotFoundException, JsonProcessingException{
         List<User> users = handler.jsonToObj();
         WireMock.stubFor(get("/").willReturn(new ResponseDefinitionBuilder()
@@ -141,6 +141,25 @@ public class RemoteAccessTest {
         //Stub the wiremock to return a non-200 status code, and check if a exception is thrown
         WireMock.stubFor(post("/users/add").willReturn(aResponse().withStatus(500)));
         assertThrows(RuntimeException.class, () -> remoteAccess.addUser(newlyAddedUser));
+    }
+
+    @Test 
+    public void testAddShopeeList() throws FileNotFoundException, JsonProcessingException {
+        String username = "test@user.com";
+        ShopeeList newList = new ShopeeList("addingList");
+    
+        stubFor(post("/users/"+ username+"/addList")
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(mapper.writeValueAsString(newList))));
+        remoteAccess.addShopeeList(username, newList);
+        
+         // Stub the WireMock server to return a non-200 status code
+        stubFor(post("/users/" + username + "/addList").willReturn(aResponse().withStatus(500)));
+
+        // Test that the catch clause throws a RuntimeException
+        assertThrows(RuntimeException.class, () -> remoteAccess.addShopeeList(username, newList));
 
     }
 
