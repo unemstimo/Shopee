@@ -1,6 +1,6 @@
 package shopee.rest;
 
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -17,8 +17,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import shopee.core.User;
-import shopee.json.FileHandeler;
-import shopee.core.ShopeeList;
 
 /**
  * Class responsible for handling following requests through the REST API:

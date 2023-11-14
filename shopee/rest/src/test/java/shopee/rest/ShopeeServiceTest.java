@@ -13,9 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,8 +42,14 @@ public class ShopeeServiceTest {
         this.handler = new FileHandeler("direct.json");
         handler.clearFileContent();
         shopeeService.setAllUsers(ShopeeUserService.createInitialUser());
-        
+      
     }
+    
+    @Test
+    public void testConstructorExceptionHandling() throws FileNotFoundException {
+
+    }
+    
 
     @Test
     public void testGetAllUsers() throws FileNotFoundException {
@@ -69,6 +73,7 @@ public class ShopeeServiceTest {
             User neverAddedUser = shopeeService.getUser("Never@added.no");
             assertNull(neverAddedUser);
             assertEquals("Service@user.no", addedUser.getUsername());
+
         } catch (Exception e) {
             fail("Exception thrown while adding a user: " + e.getMessage());
         }
@@ -85,6 +90,7 @@ public class ShopeeServiceTest {
             User user = shopeeService.getUser(username);
             assertNotNull(user);
             assertEquals(user.getShopeeLists().get(user.getShopeeLists().size()-1).getListName(),testList.getListName() ); 
+    
         } catch (Exception e) {
             fail("Exception thrown while adding a ShopeeList: " + e.getMessage());
         }

@@ -25,7 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import shopee.json.FileHandeler;
 import shopee.core.ShopeeList;
 import shopee.core.User;
 
@@ -35,13 +34,11 @@ public class ShopeeControllerTest {
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
     private List<User> mockUsers;
-    private FileHandeler handler ;
     private User testUser;
 
 
     @BeforeEach
     public void setUp() throws IllegalStateException, IOException {
-        handler = new FileHandeler("direct.json");
         userService = mock(ShopeeUserService.class);
         mockMvc = MockMvcBuilders.standaloneSetup(new ShopeeUserController(userService)).build();
         objectMapper = new ObjectMapper();
