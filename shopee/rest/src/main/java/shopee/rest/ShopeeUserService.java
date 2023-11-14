@@ -2,7 +2,6 @@ package shopee.rest;
 
 import shopee.core.User;
 import shopee.core.ShopeeList;
-import shopee.core.FoodItem;
 import shopee.json.FileHandeler;
 
 import java.io.IOException;
@@ -28,15 +27,13 @@ public class ShopeeUserService {
    
   /**
      * Constructor for ShopeeUserService.
+ * @throws FileNotFoundException
      */
-    public ShopeeUserService() {
-        try {
-            this.shopeePersistence = new FileHandeler("direct.json");
-            this.allUsers = shopeePersistence.jsonToObj();
-            this.mapper = new ObjectMapper();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public ShopeeUserService() throws FileNotFoundException {
+        this.shopeePersistence = new FileHandeler("direct.json");
+        this.allUsers = shopeePersistence.jsonToObj();
+        this.mapper = new ObjectMapper();
+      
     }
 
 
@@ -76,9 +73,6 @@ public class ShopeeUserService {
     public boolean addUser(String userString) throws JsonMappingException, JsonProcessingException{
         try {
             User user = mapper.readValue(userString, User.class);
-            if(user == null||user.getUsername().equals("")){
-                throw new IllegalArgumentException("User was not created properly when adding user");
-            }
             shopeePersistence.writeToFile(user);
             save();
             return true;
@@ -104,20 +98,11 @@ public class ShopeeUserService {
              User user = users.stream().filter(u->u.getUsername()
             .equals(username)).findFirst().orElse(null);
             ShopeeList newList = mapper.readValue(shopeeList, ShopeeList.class);
-            boolean added = false;
-            for(ShopeeList list : user.getShopeeLists()){
-                if(list.getListName().equals(newList.getListName())){
-                    user.replaceShopeeList(newList.getListName(), newList);
-                    added = true;
-                }
-            }
-            if(!added){
-                user.addShopeeList(newList);
-            }
+        
+            user.addShopeeList(newList);
             shopeePersistence.writeToFile(user);
             save();
             return true;
-                
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false; 
@@ -134,9 +119,6 @@ public class ShopeeUserService {
      */
     public boolean deleteShopeeList(String username, String listName) throws IOException{
         try {
-            if(username.equals("")||listName.equals("")){
-                throw new IOException("name or listname is not given");
-            }
             User user = shopeePersistence.jsonToObj().stream().filter(u->u.getUsername()
             .equals(username)).findFirst().orElse(null);
             user.deleteShopeeList(listName);
