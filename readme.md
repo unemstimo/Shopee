@@ -29,14 +29,23 @@ Before running:
 ### Running the application with local access:
 
 1. Navigate to the shopee directory using __"cd shopee/ui"__
+
 2. __mvn clean install__, (tests can be skipped with __mvn clean install -DskipTests__ )
+
 3. use command __"mvn javafx:run"__ in ui folder or use command "mvn javafx:run -f ui/pom.xml" wherever you would like
 
 ### Running the application with remote access:
 1. Navigate to shopee directory using __"cd shopee"__
-2. __mvn clean install__, (tests can be skipped by using __mvn clean install -DskipTests)
-3. Start server and open new terminal window with __"mvn spring-boot:run"__, open a new terminal window
-4. Run javafx client application with __"mvn javafx:run -pl ui -P remoteapp"__
+
+2. __mvn clean install__, (tests can be skipped by using __mvn clean install -DskipTests)__
+
+3. Navigate to rest direcory using __"cd rest"__ 
+
+4. Open new terminal window and use __"mvn spring-boot:run"__
+
+5. Open another terminal window, navigate to ui folder and use command __"mvn javafx:run"__
+
+
 
 ### Testing:
 
