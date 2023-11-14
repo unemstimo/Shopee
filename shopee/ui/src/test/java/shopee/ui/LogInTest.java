@@ -43,7 +43,7 @@ public class LogInTest extends ApplicationTest {
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setController(controller);
-        fxmlLoader.setLocation(this.getClass().getResource("Login.fxml"));
+        fxmlLoader.setLocation(this.getClass().getResource("LogIn.fxml"));
         final Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
         stage.show();
