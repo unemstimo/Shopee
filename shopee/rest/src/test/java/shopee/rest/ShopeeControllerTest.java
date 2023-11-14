@@ -1,6 +1,5 @@
 package shopee.rest;
 
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +34,6 @@ public class ShopeeControllerTest {
     private ObjectMapper objectMapper;
     private List<User> mockUsers;
     private User testUser;
-
 
     @BeforeEach
     public void setUp() throws IllegalStateException, IOException {
@@ -74,7 +72,6 @@ public class ShopeeControllerTest {
         assertEquals(expectedUser,resultUser, "Did not match from local server compared to json file");
     }
 
-
     @Test
     public void testAddUser() throws Exception {
         User newUser = new User("Petter@ntnu.no", "Petter123@");
@@ -82,10 +79,10 @@ public class ShopeeControllerTest {
         when(userService.addUser(userJson)).thenReturn(true);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/users/add")
-               .contentType(MediaType.APPLICATION_JSON)
-               .content(userJson))
-               .andExpect(status().isOk())
-               .andExpect(MockMvcResultMatchers.content().string("true"));
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(userJson))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("true"));
     }
 
     @Test
@@ -96,11 +93,11 @@ public class ShopeeControllerTest {
         when(userService.addShopeeList(eq(testUser.getUsername()), any())).thenReturn(true);
 
         // Perform the POST request to add a ShopeeList and verify the response
-            mockMvc.perform(MockMvcRequestBuilders.post("/users/"+testUser.getUsername() +"/addList")
-            .content(newListString)
-            .contentType("application/json"))
-            .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/" + testUser.getUsername() + "/addList")
+                .content(newListString)
+                .contentType("application/json"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
 
@@ -110,18 +107,17 @@ public class ShopeeControllerTest {
         String listForDeletion = objectMapper.writeValueAsString(testUser.getShopeeLists().get(0));
         when(userService.deleteShopeeList(testUser.getUsername(), listForDeletion)).thenReturn(true);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/" +testUser.getUsername()+"/" +listName))
-               .andExpect(status().isOk())
-               .andExpect(MockMvcResultMatchers.content().string("true"));
-        
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/" + testUser.getUsername() + "/" + listName))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("true"));
 
-        String updatedUser = mockMvc.perform(MockMvcRequestBuilders.get("/users/" +testUser.getUsername()))
-               .andExpect(status().isOk())
-               .andReturn()
-               .getResponse()
-               .getContentAsString();
+        String updatedUser = mockMvc.perform(MockMvcRequestBuilders.get("/users/" + testUser.getUsername()))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
         User newUser = objectMapper.readValue(updatedUser, User.class);
-        assertThrows(IllegalArgumentException.class, ()-> newUser.getShopeeList(listName));
+        assertThrows(IllegalArgumentException.class, () -> newUser.getShopeeList(listName));
     }
-            
+
 }
