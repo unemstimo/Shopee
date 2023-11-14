@@ -1,6 +1,5 @@
 package shopee.rest;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -17,8 +16,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import shopee.core.User;
-import shopee.json.FileHandeler;
-import shopee.core.ShopeeList;
 
 /**
  * Class responsible for handling following requests through the REST API:
@@ -32,53 +29,56 @@ public class ShopeeUserController {
   @Autowired
   private ShopeeUserService userService;
 
-
-
   /**
    * Constructor for ShopeeUserController.
+   * 
    * @param userService
    * @throws IllegalStateException
    * @throws IOException
    */
-  public ShopeeUserController(final ShopeeUserService userService) throws IllegalStateException, IOException {
-      this.userService = new ShopeeUserService();
+  public ShopeeUserController(final ShopeeUserService userService)
+      throws IllegalStateException, IOException {
+    this.userService = new ShopeeUserService();
   }
-
 
   /**
    * Gets all users from the database.
+   * 
    * @return
    */
   @GetMapping("")
-  public List<User> getAllUsers(){
+  public List<User> getAllUsers() {
     return userService.getAllUsers();
   }
 
   /**
    * Gets a specific user from the database.
+   * 
    * @param username
    * @return
    */
   @GetMapping("/{username}")
-  public User getUser(@PathVariable("username")String username){
+  public User getUser(@PathVariable("username") String username) {
     return userService.getUser(username);
   }
 
   /**
    * Adds a user to the database.
+   * 
    * @param user
    * @return
    * @throws JsonProcessingException
    * @throws JsonMappingException
    */
   @PostMapping("/add")
-  public boolean addUser(@RequestBody String user) throws JsonMappingException, JsonProcessingException{
+  public boolean addUser(@RequestBody String user) throws JsonMappingException, JsonProcessingException {
     userService.addUser(user);
-    return true; 
+    return true;
   }
 
-   /**
+  /**
    * Adds a shopeeList to a user in the database.
+   * 
    * @param username
    * @param newList
    * @return
@@ -86,24 +86,24 @@ public class ShopeeUserController {
    * @throws JsonMappingException
    */
   @PostMapping("/{username}/addList")
-  public boolean addShopeeList(@PathVariable("username")String username, @RequestBody String newList) 
-  throws JsonMappingException, JsonProcessingException{
+  public boolean addShopeeList(@PathVariable("username") String username, @RequestBody String newList)
+      throws JsonMappingException, JsonProcessingException {
     userService.addShopeeList(username, newList);
-
-    return true; 
+    return true;
   }
 
-    /**
+  /**
    * Deletes a shopeeList from a user in the database.
+   * 
    * @param username
    * @param listName
    * @throws IOException
    */
   @DeleteMapping("/{username}/{listName}")
-  public boolean deleteShopeeList(@PathVariable("username")String username,
-    @PathVariable("listName") String listName)throws IOException{
+  public boolean deleteShopeeList(@PathVariable("username") String username,
+      @PathVariable("listName") String listName) throws IOException {
     userService.deleteShopeeList(username, listName);
     return true;
   }
-  
+
 }
