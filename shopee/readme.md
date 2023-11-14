@@ -17,7 +17,7 @@ Read more about the ui-module [here](shopee/ui/readme.md)
 Read more about the rest-module [here](shopee/rest/readme.md)
 _____
 ## Diagrams 
-Diagram for shopee [here](diagrams)
+Diagrams for shopee [here](diagrams)
 
 ___
 
