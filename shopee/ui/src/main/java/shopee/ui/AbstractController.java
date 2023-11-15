@@ -73,15 +73,13 @@ public abstract class AbstractController {
             if (controller instanceof LogInController) {
                 ((LogInController) controller).initData(shopeeAccess);
             }
-            
             if (controller instanceof HomePageController) {
                 ((HomePageController) controller).initData(user, shopeeAccess);
             } 
-            
             if (controller instanceof ShopeeController) {
                 ((ShopeeController) controller).initData(user, listName, shopeeAccess);
             }
-
+            
             Scene scene = new Scene(parent);
             stage.setScene(scene);
         } catch (IOException e) {
