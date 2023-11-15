@@ -103,14 +103,14 @@ public class LogInTest extends ApplicationTest {
         assertEquals("", lookup("#usernameInput").queryTextInputControl().getText());
         assertEquals("", lookup("#passwordInput").queryTextInputControl().getText());
 
-        assertEquals("Brukeren er blitt opprettet. Du kan nå logge inn",
+        assertEquals("The user has been created. You can now log in.",
              this.controller.getErrorLabel());
 
         clickOn("#usernameInput").write("valid@example.com");
         clickOn("#passwordInput").write("validpwd123/");
         clickOn("#signUp");
 
-        assertEquals("Brukernavnet finnes allerede.", this.controller.getErrorLabel());
+        assertEquals("The username is taken.", this.controller.getErrorLabel());
     }
 
     /*
@@ -139,7 +139,7 @@ public class LogInTest extends ApplicationTest {
         clickOn("#passwordInput").write("validpwd123/");
         clickOn("#signIn");  
 
-        assertEquals("Feil brukernavn eller passord. Vennligst prøv igjen.",
+        assertEquals("Wrong username or password. Please try again.",
                 this.controller.getErrorLabel());
     }
 

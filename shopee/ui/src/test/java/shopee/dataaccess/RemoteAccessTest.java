@@ -198,7 +198,7 @@ public class RemoteAccessTest {
             .withStatus(200)));
         remoteAccess.deleteShopeeList(userName, listName);
 
-        //Stub the wiremock to return a non-200 status code, and check if a exception is thrown
+        // Stub the wiremock to return a non-200 status code, and check if a exception is thrown
         WireMock.stubFor(delete("/users/" + userName + "/" + listName)
             .willReturn(aResponse().withStatus(500)));
 

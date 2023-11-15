@@ -24,7 +24,7 @@ import shopee.ui.dataaccess.UserAccess;
  */
 public class ShopeeTest extends ApplicationTest {
     
-    private User testUser = new User("Oskar@ntnu.no", "Eksempelpassors123@");
+    private User testUser = new User("Oskar@ntnu.no", "ExamplePassword123@");
     private FileHandeler fileHandeler = new FileHandeler();
     private ShopeeController controller = new ShopeeController();
     private UserAccess dataAccess;
@@ -115,19 +115,19 @@ public class ShopeeTest extends ApplicationTest {
     public void testMarkAsBought() {
         setUpTest();
 
-        clickOn(LabeledMatchers.hasText("Water : 4  STK"));
+        clickOn(LabeledMatchers.hasText("Water : 4"));
         clickOn("#foodBought");
 
         assertEquals("Water", controller.getBoughtListView().getItems().get(0).getFoodName());
         assertEquals(2, controller.getShoppingListView().getItems().size());
 
-        clickOn(LabeledMatchers.hasText("Bread : 8  STK"));
+        clickOn(LabeledMatchers.hasText("Bread : 8"));
         clickOn("#foodBought");
 
         assertEquals("Bread", controller.getBoughtListView().getItems().get(1).getFoodName());
         assertEquals(1, controller.getShoppingListView().getItems().size());
 
-        clickOn(LabeledMatchers.hasText("Egg : 12  STK"));
+        clickOn(LabeledMatchers.hasText("Egg : 12"));
         clickOn("#foodBought");
 
         assertEquals("Egg", controller.getBoughtListView().getItems().get(2).getFoodName());
@@ -142,12 +142,12 @@ public class ShopeeTest extends ApplicationTest {
     public void testDeleteItems() {
         setUpTest();
 
-        clickOn(LabeledMatchers.hasText("Water : 4  STK"));
+        clickOn(LabeledMatchers.hasText("Water : 4"));
         clickOn("#removeFood");
 
         assertEquals(2, controller.getShoppingListView().getItems().size());
 
-        clickOn(LabeledMatchers.hasText("Bread : 8  STK"));
+        clickOn(LabeledMatchers.hasText("Bread : 8"));
         clickOn("#removeFood");
 
         assertEquals(1, controller.getShoppingListView().getItems().size());

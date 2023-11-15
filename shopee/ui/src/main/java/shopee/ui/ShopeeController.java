@@ -26,9 +26,6 @@ public class ShopeeController extends AbstractController {
     /**
      * Using the empty constructor in the ShopeeList class to create a new shopping
      * list.
-     * In this sprint, we dont name our shoppinglists, but instead we create one
-     * single
-     * shoppinglist to moderate.
      * Now we can set and validate the input from the user.
      */
     @FXML

@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * ShopeeList class consists of a bought list and a shopList which each contains FoodItems.
+ * ShopeeList class consists of a boughtList and a shopList which each contains FoodItems.
  */
 public class ShopeeList {
 
-    private String listName = ""; // Will be used later in the project!
+    private String listName = ""; 
     private List<FoodItem> shopList;
     private List<FoodItem> boughtList;
 
@@ -150,7 +150,7 @@ public class ShopeeList {
         hasFood(foodName);
         return shopList.stream().filter(a -> a.getFoodName()
         .equals(foodName)).findFirst().orElse(null)
-                .getFoodAmount();
+        .getFoodAmount();
     }
 
     /**

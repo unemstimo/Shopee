@@ -41,7 +41,7 @@ public class FileHandlerTest {
     public void testWriteAndReadUserToFile() throws FileNotFoundException {
         
         // Add a shopeelist to User 
-        ShopeeList newList = new ShopeeList("Onsdag");
+        ShopeeList newList = new ShopeeList("Wednesday");
         newList.addFoodShopList("Chips", 7);
         newList.addFoodBoughtList(newList.getFood("Chips"));
         newList.addFoodShopList("Apple", 4);
@@ -76,7 +76,7 @@ public class FileHandlerTest {
         fileHandler.clearFileContent();
         // Create a User object for testing
         User testUser = new User("oskar@gmail.com", "Password12!");
-        ShopeeList newList = new ShopeeList("Onsdag");
+        ShopeeList newList = new ShopeeList("Wednesday");
         newList.addFoodShopList("Chips", 7);
         newList.addFoodShopList("Chips", 3);
         testUser.addShopeeList(newList);
@@ -103,7 +103,7 @@ public class FileHandlerTest {
 
     /**
      * Test the clearFileContent() helper method 
-     * Checks if all stored data is removed from the file, ¨
+     * Checks if all stored data is removed from the file, 
      * such that an empty file can be used in other methods.
      * 
      */
@@ -133,15 +133,15 @@ public class FileHandlerTest {
      */
     public User setUpTestuser() {
         
-        ShopeeList newList = new ShopeeList("Middag");
+        ShopeeList newList = new ShopeeList("Dinner");
         newList.addFoodShopList("Chips", 7);
         newList.addFoodShopList("Apple", 4);
         newList.addFoodShopList("Bread", 1);
 
-        ShopeeList newlist2 = new ShopeeList("Lunsj");
-        newlist2.addFoodShopList("Tomat", 7);
-        newlist2.addFoodShopList("Fisk", 4);
-        newlist2.addFoodShopList("Mat", 1);
+        ShopeeList newlist2 = new ShopeeList("Lunch");
+        newlist2.addFoodShopList("Tomato", 7);
+        newlist2.addFoodShopList("Fish", 4);
+        newlist2.addFoodShopList("Milk", 1);
 
         User testUser = new User("test@test.no", "test1234@");
 

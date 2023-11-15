@@ -103,7 +103,7 @@ public class User {
      */
     private boolean validPassword(final String password) {
         if (password.length() < 8) {
-            throw new IllegalArgumentException("The password needs to be over 8 characters long");
+            throw new IllegalArgumentException("Password needs to be at least 8 characters long");
         }
 
         final String regex = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!/]).*$";

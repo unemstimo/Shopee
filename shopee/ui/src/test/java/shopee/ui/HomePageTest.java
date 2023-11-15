@@ -25,7 +25,7 @@ import shopee.ui.dataaccess.UserAccess;
  */
 public class HomePageTest extends ApplicationTest {
 
-    private User testUser = new User("Oskar@ntnu.no", "Eksempelpassors123@");
+    private User testUser = new User("Oskar@ntnu.no", "ExamplePassword123@");
     private FileHandeler fileHandeler = new FileHandeler();
     private HomePageController controller = new HomePageController();
     private UserAccess dataAccess;  
@@ -63,23 +63,23 @@ public class HomePageTest extends ApplicationTest {
     public void createNewShopeeList() {
         assertEquals("", lookup("#listName").queryTextInputControl().getText());
 
-        clickOn("#listName").write("Uke 40");
+        clickOn("#listName").write("Week 40");
         clickOn("#addList");
 
 
         ShopeeList list1 = this.dataAccess.getAllUsers().get(0).getShopeeLists().get(0);
-        assertEquals("Uke 40", list1.getListName());
+        assertEquals("Week 40", list1.getListName());
 
         clickOn(LabeledMatchers.hasText("Back"));
 
         assertEquals("", lookup("#listName").queryTextInputControl().getText());
 
-        clickOn("#listName").write("Uke 41");
+        clickOn("#listName").write("Week 41");
         clickOn("#addList");
 
 
         ShopeeList list2 = this.dataAccess.getAllUsers().get(0).getShopeeLists().get(1);
-        assertEquals("Uke 41", list2.getListName());
+        assertEquals("Week 41", list2.getListName());
 
         clickOn(LabeledMatchers.hasText("Back"));
 
@@ -100,19 +100,19 @@ public class HomePageTest extends ApplicationTest {
         List<ShopeeList> list1 = dataAccess.getAllUsers().get(0).getShopeeLists();
         assertEquals(4, list1.size());
 
-        clickOn(LabeledMatchers.hasText("Middag"));
+        clickOn(LabeledMatchers.hasText("Dinner"));
         clickOn("#deleteList");
         
         List<ShopeeList> list2 = dataAccess.getAllUsers().get(0).getShopeeLists();
         assertEquals(3, list2.size());
 
-        clickOn(LabeledMatchers.hasText("Lunsj"));
+        clickOn(LabeledMatchers.hasText("Lunch"));
         clickOn("#deleteList");
         
         List<ShopeeList> list3 = dataAccess.getAllUsers().get(0).getShopeeLists();
         assertEquals(2, list3.size());
 
-        clickOn(LabeledMatchers.hasText("Frokost"));
+        clickOn(LabeledMatchers.hasText("Breakfast"));
         clickOn("#deleteList");
         
         List<ShopeeList> list4 = dataAccess.getAllUsers().get(0).getShopeeLists();
@@ -127,27 +127,27 @@ public class HomePageTest extends ApplicationTest {
     * helper method for the test deleteShopeeList().
     */
     public void setUpDeletetest() {
-        clickOn("#listName").write("Middag");
+        clickOn("#listName").write("Dinner");
         clickOn("#addList");
         clickOn(LabeledMatchers.hasText("Back"));
-        clickOn("#listName").write("Lunsj");
+        clickOn("#listName").write("Lunch");
         clickOn("#addList");
         clickOn(LabeledMatchers.hasText("Back"));
         clickOn("#listName").write("Dessert");
         clickOn("#addList");
         clickOn(LabeledMatchers.hasText("Back"));
-        clickOn("#listName").write("Frokost");
+        clickOn("#listName").write("Breakfast");
         clickOn("#addList");
         clickOn(LabeledMatchers.hasText("Back"));
     }
 
     @Test
     public void modifyList() {
-        clickOn("#listName").write("Middag");
+        clickOn("#listName").write("Dinner");
         clickOn("#addList");
         clickOn(LabeledMatchers.hasText("Back"));
 
-        clickOn(LabeledMatchers.hasText("Middag"));
+        clickOn(LabeledMatchers.hasText("Dinner"));
         clickOn("#modifyList");
         clickOn(LabeledMatchers.hasText("Back"));
 

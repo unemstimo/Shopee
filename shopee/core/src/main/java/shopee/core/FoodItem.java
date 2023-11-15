@@ -98,7 +98,7 @@ public class FoodItem {
      */
     @Override
     public String toString() {
-        return foodName + " : " + foodAmount + "  STK";
+        return foodName + " : " + foodAmount;
     }
 }
 
