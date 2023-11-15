@@ -5,19 +5,19 @@ The shopee app is an application that works as a shopping list. An user can log 
 ___
 
 ## Storage
-The application supports cloud based use for saving and loading. The states and the servers will always be up to date by sending a post-request to the REST API when a state is changed. This makes it possible for the user to close the applicatiom, resume a session without explicitly load it from previus sessions and also use the app other places. Read more about REST API [here](docs/restapi.md)
+The application supports cloud based use for saving and loading. The states and the servers will always be up to date by sending a post-request to the REST API when a state is changed. This makes it possible for the user to close the applicatiom, resume a session without explicitly load it from previus sessions and also use the app other places. Read more about REST API [here](./rest/readme.md)
 _____
 
 ## Module documentation
 ### `core` module
-Read more about core-module [here](shopee/core/readme.md)
+Read more about core-module [here](../shopee/core/readme.md)
 ### `ui` module
-Read more about the ui-module [here](shopee/ui/readme.md)
+Read more about the ui-module [here](../shopee/ui/readme.md)
 ### `rest` module
-Read more about the rest-module [here](shopee/rest/readme.md)
+Read more about the rest-module [here](../shopee/rest/readme.md)
 _____
 ## Diagrams 
-Diagrams for shopee [here](diagrams)
+Diagrams for shopee [here](../diagrams/readme.md)
 
 ___
 
@@ -26,13 +26,13 @@ ___
 The pictures illustrate how the group thinks the final product of the app will look like. 
 
 ### FrontPage:
-![FrontPage](shopee/ui/frame1.png)
+![FrontPage](../diagrams/pictures/frame1.png)
 
 ### New Shopee List:
-![New Shopee List](shopee/ui/frame2.png)
+![New Shopee List](../diagrams/pictures/frame2.png)
 
 ### Edit Shopee List:
-![Edit Shopee List](shopee/ui/frame3.png)
+![Edit Shopee List](../diagrams/pictures/frame3.png)
 
 ## User story 1
 As a user I want to be able to add food items to my shopping list, and also mark item as bought or remove items, for an efficient and simple shopping.
@@ -44,10 +44,10 @@ As a user I want to create an account in this application and create grocery lis
 As a user I want to log in to view what groceries is needed for different dishes I want to make, just like a cook book but without description to make it easy for me to shop for each dish when in the grocery store.
 _____
 
-## Intendet functionality at final release:
+## Intended functionality at final release:
 
 
-### important to be able to see
+### Important to be able to see
 #### Log in page
 1. **Input fields** : The user should be able to easly see input fields for username and password
 2. **Verification text** : User should be able to see text occur when clicking sign up/in that verificate the action done
@@ -60,7 +60,7 @@ _____
 3. **Input fields** : The user can view input fields for food item and amount.
 4. **Buttons** : The user should see buttons for removing/adding and mark item as bought. Should also see button for going back to previus page.
 
-### important to be able to do
+### Important to be able to do
 #### Log in page
 1. **Sign up** : User should be able to make an user with vaalid credentials
 2. **Sign in** : User should be able to sign in if the user already have an account

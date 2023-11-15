@@ -8,21 +8,21 @@ This folder contains all classes and logic related to the data that the applicat
 This folder contains the classes needed to store all data in the application. This involves both reading from and writing to file using JSON.
 
 ## **Classes:**
-- [core](shopee/core/src/main/java/shopee/core)
-    - [FoodItem.java](shopee/core/src/main/java/shopee/core/FoodItem.java) : handles food item objects
-    - [ShopeeList.java](shopee/core/src/main/java/shopee/core/ShopeeList.java) : Java class for shopping list objects
-    - [User.java](shopee/core/src/main/java/shopee/core/User.java) : Java class for user object
-- [json](shopee/core/src/main/java/shopee/json)
-    - [FileHandeler.java](shopee/core/src/main/java/shopee/json/FileHandeler.java) : handles persitance regarding the application
+- [core](src/main/java/shopee/core)
+    - [FoodItem.java](src/main/java/shopee/core/FoodItem.java) : handles food item objects
+    - [ShopeeList.java](src/main/java/shopee/core/ShopeeList.java) : Java class for shopping list objects
+    - [User.java](src/main/java/shopee/core/User.java) : Java class for user object
+- [json](src/main/java/shopee/json)
+    - [FileHandeler.java](src/main/java/shopee/json/FileHandeler.java) : handles persitance regarding the application
 
 
 ## **Testing:**
--[core](shopee/core/src/test/java/shopee/core)
-    - [FoodItemTest.java](shopee/core/src/test/java/shopee/core/FoodItemTest.java)
-    - [ShopeeListTest.java](shopee/core/src/test/java/shopee/core/ShopeeListTest.java)
-    - [UserTest.java](shopee/core/src/test/java/shopee/core/UserTest.java)
-- [jsoon](shopee/core/src/test/java/shopee/json)
-    - [FileHandlerTest.java](shopee/core/src/test/java/shopee/json/FileHandlerTest.java)
+- [core](src/test/java/shopee/core)
+    - [FoodItemTest.java](src/test/java/shopee/core/FoodItemTest.java)
+    - [ShopeeListTest.java](src/test/java/shopee/core/ShopeeListTest.java)
+    - [UserTest.java](src/test/java/shopee/core/UserTest.java)
+- [json](src/test/java/shopee/json)
+    - [FileHandlerTest.java](src/test/java/shopee/json/FileHandlerTest.java)
 
 
 

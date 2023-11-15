@@ -10,7 +10,7 @@ The group prioritized readability over information when designing the diagram. A
 
 ![Class Diagram](./ShopeeClass.png)
 
-## Sequense Diagram
+## Sequence Diagram
 
 For the sequence diagram, the group chose to base it on user story number 3: when the user wants to create a new Shopee list. This is one of the essential functionalities of the application, providing a comprehensive insight into how the program operates from the user interface, through the controller classes, client, and server, and back to the user interface. The sequence diagram is relatively extensive, but the group deemed it appropriate to include everything executed through the user's keystrokes to paint a picture of how the application is structured.
 

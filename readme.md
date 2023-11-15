@@ -55,12 +55,8 @@ Before running:
 The JaCoCo report is created when this command is runned and is located in /target/site/index.html in each module. 
 
 __Note:__ The springboot- and integrationtest-module runs on port 8080, this requires that the server is not running at the same time. Make sure the server is not running in any terminal when running `mvn verify` or `mvn clean install`.  
-_______________________
-
-## How the application work
 
 
-________
 ## Project Structure
 The project is organized with these directories for managing source code, documentation and resources.
 
@@ -74,9 +70,11 @@ The project is organized with these directories for managing source code, docume
     * [rest](shopee/rest)
 
 
+## Format persistence json-file
+![Format persistence](diagrams/pictures/persistencejson.png)
 
 ## Package diagram explaining folder structure
-[Package diagram](ShopeePackage.png)
+![Package diagram](diagrams/ShopeePackage.png)
 
 ______
 ## The plan for this project

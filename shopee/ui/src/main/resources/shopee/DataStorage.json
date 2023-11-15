@@ -3,18 +3,19 @@
   "password" : "Johan123@",
   "shopeeLists" : [ ]
 }, {
-  "username" : "osk@.no",
+  "username" : "osk@ntnu.no",
   "password" : "Oskar123@",
   "shopeeLists" : [ {
-    "listName" : "halla",
+    "listName" : "week 35",
     "shopList" : [ {
-      "foodName" : "halla",
+      "foodName" : "apple",
       "foodAmount" : 4
     } ],
     "boughtList" : [ ]
   } ]
 }, {
-  "username" : "une@.no",
+  "username" : "une@ntnu.no",
   "password" : "Oskar@123",
   "shopeeLists" : [ ]
 } ]
+
