@@ -4,19 +4,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.FileNotFoundException;
-import shopee.core.User;
-
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
+import shopee.core.User;
 
+/**
+* Test class for the ShopeeAppApplication.
+*/
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(classes = { ShopeeAppApplication.class, ShopeeUserService.class, ShopeeUserController.class })
+@ContextConfiguration(classes = {ShopeeAppApplication.class,
+    ShopeeUserService.class, ShopeeUserController.class})
 public class ShopeeApplicationTest {
 
     @Autowired
