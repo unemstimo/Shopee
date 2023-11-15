@@ -3,9 +3,9 @@ package shopee.rest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/* 
-The Spring Application
- */
+/**
+* Applicaiton that runs the spring boot server.
+*/
 @SpringBootApplication
 public class ShopeeAppApplication {
 

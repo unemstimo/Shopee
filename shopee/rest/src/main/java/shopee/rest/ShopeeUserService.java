@@ -1,21 +1,19 @@
 package shopee.rest;
 
-import shopee.core.User;
-import shopee.core.ShopeeList;
-import shopee.json.FileHandeler;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.stereotype.Service;
+import shopee.core.ShopeeList;
+import shopee.core.User;
+import shopee.json.FileHandeler;
 
+/**
+ * Class responsible for connecting remote and local activity.
+ */
 @Service
 public class ShopeeUserService {
     private List<User> allUsers;
@@ -23,54 +21,51 @@ public class ShopeeUserService {
     private ObjectMapper mapper;
 
     /**
-     * Constructor for ShopeeUserService.
-     * 
-     * @throws FileNotFoundException
-     */
+    * Constructor for the controller, creates a service object.
+    *
+    * @throws FileNotFoundException if files not found
+    */
     public ShopeeUserService() throws FileNotFoundException {
         this.shopeePersistence = new FileHandeler("direct.json");
         this.allUsers = shopeePersistence.jsonToObj();
         this.mapper = new ObjectMapper();
-
     }
 
     /**
      * Gets all users from the database.
-     * 
-     * @return
+     *
+     * @return a list of all users. 
      */
     public List<User> getAllUsers() {
         return this.allUsers;
     }
 
     /**
-     * sets users, used for testing.
-     * 
-     * @param allUsers
-     */
+    * Constructor for the controller, creates a service object.
+    *
+    * @param allUsers setter for the list of Users
+    */
     public void setAllUsers(List<User> allUsers) {
         this.allUsers = allUsers;
     }
 
     /**
-     * Gets a user from the database.
-     * 
-     * @param username
-     * @return
-     */
+    * Constructor for the controller, creates a service object.
+    *
+    * @param username username of the user
+    * @return a user with the matching username 
+    */
     public User getUser(String username) {
         return allUsers.stream().filter(u -> u.getUsername().equals(username))
                 .findFirst().orElse(null);
     }
 
     /**
-     * Adds a user to the database.
-     * 
-     * @param userString
-     * @return boolean, if the user was added, else false
-     * @throws JsonProcessingException
-     * @throws JsonMappingException
-     */
+    * Constructor for the controller, creates a service object.
+    *
+    * @param userString user object as a json string
+    * @throws JsonMappingException if mapping is incorrect
+    */
     public boolean addUser(String userString) throws JsonMappingException, JsonProcessingException {
         try {
             User user = mapper.readValue(userString, User.class);
@@ -81,19 +76,15 @@ public class ShopeeUserService {
             e.printStackTrace();
         }
         return false;
-
     }
 
     /**
-     * Adds a shopeeList to a user.
-     * 
-     * @param username
-     * @param newList
-     * @return boolean, true if the user was added/replaced else false
-     * @throws JsonProcessingException
-     * @throws JsonMappingException
-     * @throws IOException
-     */
+    * Constructor for the controller, creates a service object.
+    *
+    * @param username name of the user where the shopeeList is added 
+    * @param shopeeList shopeeList as a json string
+    * @throws JsonMappingException if theres something wrong when parsing from string to object
+    */
     public boolean addShopeeList(String username, String shopeeList)
             throws JsonMappingException, JsonProcessingException {
         try {
@@ -112,14 +103,13 @@ public class ShopeeUserService {
     }
 
     /**
-     * Deletes a shopeeList from a user.
-     * 
-     * @param username
-     * @param listName
-     * @return true if the shopeeList was deleted, else false
-     * @throws IOException
-     */
-    public boolean deleteShopeeList(String username, String listName) throws IOException {
+    * Constructor for the controller, creates a service object.
+    *
+    * @param username name 
+    * @param listName name of the list which is deleted
+    * @throws FileNotFoundException if files not found
+    */
+    public boolean deleteShopeeList(String username, String listName) {
         try {
             User user = shopeePersistence.jsonToObj().stream().filter(u -> u.getUsername()
                     .equals(username)).findFirst().orElse(null);
@@ -131,11 +121,10 @@ public class ShopeeUserService {
             e.printStackTrace();
             return false;
         }
-
     }
 
-    /*
-     * To update the list when changes are done
+    /**
+     * To update the list when changes are done.
      */
     public void save() {
         try {
@@ -154,8 +143,6 @@ public class ShopeeUserService {
         if (!users.isEmpty()) {
             return users;
         }
-        List<User> exampleUsers = new ArrayList<>();
-        User exampleUser = new User("Terje@gmail.com", "Passord123@");
 
         ShopeeList list1 = new ShopeeList("PreLoadedList1");
         list1.addFoodShopList("Bread", 2);
@@ -167,6 +154,8 @@ public class ShopeeUserService {
         list2.addFoodShopList("Meat", 1);
         list2.addFoodShopList("Coffee", 6);
         list2.addFoodShopList("Cake", 1);
+
+        User exampleUser = new User("Terje@gmail.com", "Passord123@");
         exampleUser.addShopeeList(list1);
         exampleUser.addShopeeList(list2);
 
@@ -175,6 +164,8 @@ public class ShopeeUserService {
 
         testHandler.writeToFile(exampleUser);
         testHandler.writeToFile(exampleUser2);
+
+        List<User> exampleUsers = new ArrayList<>();
         exampleUsers.add(exampleUser);
         exampleUsers.add(exampleUser2);
 
