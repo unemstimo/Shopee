@@ -24,7 +24,10 @@
       <TextField fx:id="listName" layoutX="76.0" layoutY="201.0" />
       <Text layoutX="14.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List name:" />
       <Button fx:id="addList" layoutX="117.0" layoutY="237.0" mnemonicParsing="false" onAction="#addNewList" text="Add list" />
-      <Label fx:id="output" wrapText="true" layoutX="67.0" layoutY="295.0" prefHeight="53.0" prefWidth="160.0" />
+      <Label fx:id="output" wrapText="true" layoutX="67.0" layoutY="295.0" prefHeight="53.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED" >
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label> 
       <ListView fx:id="shoppingListView" layoutX="278.0" layoutY="51.0" prefHeight="299.0" prefWidth="207.0" />
       <ImageView fitHeight="103.0" fitWidth="237.0" layoutX="21.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
