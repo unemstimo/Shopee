@@ -1,36 +1,39 @@
 package shopee.rest;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler;
 
+/**
+ * Class responsible for testing the ShopeeUserService class.
+ */
 public class ShopeeServiceTest {
 
     private ShopeeUserService shopeeService;
     private ObjectMapper mapper;
     private FileHandeler handler;
 
-    /*
-     * Sets up a service and uses createIntialUser to reset the
-     * user info between each test
-     */
+    /**
+    * Sets up a service and uses createIntialUser to reset the
+    * user info between each test.
+    *
+    * @throws FileNotFoundException if files not found
+    */
     @BeforeEach
     public void setUp() throws FileNotFoundException {
         this.shopeeService = new ShopeeUserService();
@@ -38,7 +41,6 @@ public class ShopeeServiceTest {
         this.handler = new FileHandeler("direct.json");
         handler.clearFileContent();
         shopeeService.setAllUsers(ShopeeUserService.createInitialUser());
-
     }
 
     @Test
@@ -81,8 +83,9 @@ public class ShopeeServiceTest {
         ShopeeList testList = new ShopeeList("serviceList");
         try {
             assertThrows(IllegalArgumentException.class,
-                    () -> shopeeService.getUser(username).getShopeeList(username));
+                    () -> shopeeService.getUser(username).getShopeeList(username));                    
             assertTrue(shopeeService.addShopeeList(username, mapper.writeValueAsString(testList)));
+
             User user = shopeeService.getUser(username);
             assertNotNull(user);
             assertEquals(user.getShopeeLists().get(user.getShopeeLists().size() - 1).getListName(),
@@ -97,9 +100,11 @@ public class ShopeeServiceTest {
     public void deleteShopeeList() throws IOException {
         User userExample = shopeeService.getAllUsers().get(0);
         ShopeeList listExample = shopeeService.getAllUsers().get(0).getShopeeLists().get(0);
-        assertTrue(shopeeService.getUser(userExample.getUsername()).getShopeeLists()
-                .contains(listExample), "The shopeeList was never in example user and cant be removed");
-        assertTrue(shopeeService.deleteShopeeList(userExample.getUsername(), listExample.getListName()),
+        assertTrue(shopeeService.getUser(userExample.getUsername())
+        .getShopeeLists().contains(listExample),
+            "The shopeeList was never in example user and cant be removed");
+        assertTrue(shopeeService.deleteShopeeList(userExample.getUsername(),
+             listExample.getListName()),
                 "The delete shopeeList method didnt work");
         assertFalse(shopeeService.getUser(userExample.getUsername()).getShopeeLists()
                 .contains(listExample), "The shopeeList was not deleted from the example user");
@@ -112,7 +117,6 @@ public class ShopeeServiceTest {
      * test
      * users in the method
      */
-
     @Test
     public void testCreateInitialUser() {
         try {
@@ -129,5 +133,4 @@ public class ShopeeServiceTest {
             fail("Exception thrown while creating initial users: " + e.getMessage());
         }
     }
-
 }

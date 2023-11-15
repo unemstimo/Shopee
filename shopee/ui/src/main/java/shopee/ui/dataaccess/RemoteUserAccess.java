@@ -1,56 +1,56 @@
 package shopee.ui.dataaccess;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.util.List;
-import java.net.http.HttpResponse;
 import java.net.http.HttpRequest.BodyPublishers;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-
+import java.net.http.HttpResponse;
+import java.util.List;
 import shopee.core.ShopeeList;
 import shopee.core.User;
 
-public class RemoteUserAccess implements UserAccess{
+/**
+* Sets up a mocked ShopeeUserService before each test, and creates test users
+* using the statick method service.CreateIntitalUsers.
+*
+*/
+public class RemoteUserAccess implements UserAccess {
     
     private final URI endpointUri;
   
-  
-  /**
-   * Constructor for the RemoteUserAccess class.
-   * 
-   * @param uri
-   * @param mock
-   * @throws IOException
-   * @throws InterruptedException
-   */
+    /**
+    * Sets up a remote access to the local rest api. 
+    *
+    * @param uri the uri to the server 
+    * @param mock is true if the server is running. 
+    * 
+    */
     public RemoteUserAccess(URI uri, Boolean mock) throws IOException, InterruptedException {
-      if (!mock) {
-          HttpRequest request = HttpRequest.newBuilder(uri)
+        if (!mock) {
+            HttpRequest request = HttpRequest.newBuilder(uri)
                   .header("Accept", "application/json").GET().build();
 
-          try {
-              final HttpResponse<Void> response = HttpClient.newBuilder().build().send(request,
+            try {
+                final HttpResponse<Void> response = HttpClient.newBuilder().build().send(request,
                       HttpResponse.BodyHandlers.discarding());
 
-              int statusCode = response.statusCode();
+                int statusCode = response.statusCode();
 
-              if (statusCode != 200) {
-                  throw new IOException("Server is not running. HTTP Status Code: " + statusCode);
-              }
-          } catch (IOException e) {
-              throw new IOException(e.getMessage());
-          }
-      }
-      this.endpointUri = uri;
-  }
+                if (statusCode != 200) {
+                    throw new IOException("Server is not running. HTTP Status Code: " + statusCode);
+                }
+            } catch (IOException e) {
+                throw new IOException(e.getMessage());
+            }
+        }
+        this.endpointUri = uri;
+    }
 
-          /**
+    /**
     * Method for creating the correct path to the URI.
     *
     * @param uri   the uri you want to find the path to.
@@ -63,28 +63,27 @@ public class RemoteUserAccess implements UserAccess{
     /**
      * Method for getting all users from the remote database.
      */
-      @Override
+    @Override
     public List<User> getAllUsers() { // Brukes i Login?? for å sjekke om bruker finnes????
         HttpRequest request = HttpRequest.newBuilder(endpointUri)
             .header("Accept", "application/json")
             .GET().build();
         
-            try {
-                final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                HttpResponse.BodyHandlers.ofString());
-                final String responseString = response.body();
-    
-                ObjectMapper objectMapper = new ObjectMapper();
-    
-                List<User> users = objectMapper.readValue(responseString, new TypeReference<List<User>>() {});
-    
-                return users;
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-      }
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+            HttpResponse.BodyHandlers.ofString());
+            final String responseString = response.body();
 
+            ObjectMapper objectMapper = new ObjectMapper();
 
+            List<User> users = objectMapper
+                .readValue(responseString, new TypeReference<List<User>>() {});
+            return users;
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Method for getting a user from the remote database.
@@ -94,24 +93,23 @@ public class RemoteUserAccess implements UserAccess{
         String value = "users/" + username;
 
         try {
-        HttpRequest request = HttpRequest.newBuilder(shoppingListUri(value))
-            .header("Accept", "application/json").GET().build();
-        final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-            HttpResponse.BodyHandlers.ofString());
-        final String responseString = response.body();
+            HttpRequest request = HttpRequest.newBuilder(shoppingListUri(value))
+                .header("Accept", "application/json").GET().build();
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                HttpResponse.BodyHandlers.ofString());
+            final String responseString = response.body();
 
-        ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = new ObjectMapper();
 
-        User user = objectMapper.readValue(responseString, User.class);
+            User user = objectMapper.readValue(responseString, User.class);
 
-        return user;
+            return user;
 
         } catch (IOException | InterruptedException e) {
-        return null;
+            return null;
         }
     }
     
-
     /**
      * Method for adding a user to the remote database.
      */
@@ -124,28 +122,28 @@ public class RemoteUserAccess implements UserAccess{
         String json = objectMapper.writeValueAsString(user);
 
         try {
-          //String json = gson.toJson(user);
-          HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping))
-              .header("Accept", "application/json")
-              .header("Content-Type", "application/json")
-              .POST(BodyPublishers.ofString(json)).build();
+            HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping))
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .POST(BodyPublishers.ofString(json)).build();
     
-          HttpResponse<String> response = HttpClient.newBuilder()
-              .build().send(request, HttpResponse.BodyHandlers.ofString());
-          if (response.statusCode() > 399) {
-            throw new IOException("Not legal status code"); 
-          }
+            HttpResponse<String> response = HttpClient.newBuilder()
+                .build().send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() > 399) {
+                throw new IOException("Not legal status code"); 
+            }
         } catch (IOException | InterruptedException e) {
-          System.out.println("halla");
-          throw new RuntimeException(e);
+            System.out.println("halla");
+            throw new RuntimeException(e);
         }
-      }
+    }
     
-      /**
-       * Method for updating a user in the remote database.
-       */
+    /**
+     * Method for updating a user in the remote database.
+     */
     @Override
-    public void addShopeeList(String username, ShopeeList newShopeeList) throws JsonProcessingException  {
+    public void addShopeeList(String username, ShopeeList newShopeeList) 
+          throws JsonProcessingException {
         String mapping = "users/" + username + "/addList";
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -153,19 +151,18 @@ public class RemoteUserAccess implements UserAccess{
         String json = objectMapper.writeValueAsString(newShopeeList);
 
         try {
-          //String json = gson.toJson(user);
-          HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping))
-              .header("Accept", "application/json")
-              .header("Content-Type", "application/json")
-              .POST(BodyPublishers.ofString(json)).build();
+            HttpRequest request = HttpRequest.newBuilder(shoppingListUri(mapping))
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .POST(BodyPublishers.ofString(json)).build();
     
-          HttpResponse<String> response = HttpClient.newBuilder()
-              .build().send(request, HttpResponse.BodyHandlers.ofString());
-          if (response.statusCode() > 399) {
-            throw new IOException("Not legal status code"); 
-          }
+            HttpResponse<String> response = HttpClient.newBuilder()
+                .build().send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() > 399) {
+                throw new IOException("Not legal status code"); 
+            }
         } catch (IOException | InterruptedException e) {
-          throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -174,24 +171,23 @@ public class RemoteUserAccess implements UserAccess{
      */
     @Override
     public void deleteShopeeList(String usernname, String listName) {
-      String mapping = "users/" + usernname + "/" + listName;
-      try {
-        HttpRequest request = HttpRequest
-            .newBuilder(shoppingListUri(mapping))
-            .DELETE()
-            .build();
-        HttpResponse<String> response = HttpClient.newBuilder().build()
-              .send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() > 399) {
-          throw new IOException("Not legal status code");
+        String mapping = "users/" + usernname + "/" + listName;
+        try {
+            HttpRequest request = HttpRequest
+                .newBuilder(shoppingListUri(mapping))
+                .DELETE()
+                .build();
+            HttpResponse<String> response = HttpClient.newBuilder().build()
+                  .send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() > 399) {
+                throw new IOException("Not legal status code");
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-      } catch (IOException | InterruptedException e) {
-        throw new RuntimeException(e);
-      }
     }
-
-
 }
+
     
 
 

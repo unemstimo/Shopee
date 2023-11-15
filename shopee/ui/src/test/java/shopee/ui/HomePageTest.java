@@ -1,56 +1,50 @@
 package shopee.ui;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.matcher.control.LabeledMatchers;
 import shopee.core.ShopeeList;
 import shopee.core.User;
 import shopee.json.FileHandeler;
 import shopee.ui.dataaccess.LocalUserAccess;
 import shopee.ui.dataaccess.UserAccess;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.matcher.control.LabeledMatchers;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-
-public class HomePageTest extends ApplicationTest{
+/**
+ *  Test for the HomepageController, the second controller out of three in ui.
+ */
+public class HomePageTest extends ApplicationTest {
 
     private User testUser = new User("Oskar@ntnu.no", "Eksempelpassors123@");
     private FileHandeler fileHandeler = new FileHandeler();
-
-
     private HomePageController controller = new HomePageController();
-    private UserAccess dataAccess;
+    private UserAccess dataAccess;  
   
-    
-  //Deletelist
-  //Addlist
-  //
-    
-  
+    /**
+    * Sets up a the controller to be linked with the local stored file, just for testing
+    * and adds a user to the file used in tests.
+    *
+    * @throws JsonProcessingException if theres a problem when parsing to/from json
+    * @throws FileNotFoundException if files not found
+    */
     @BeforeEach
-    public void setUp() throws FileNotFoundException, JsonProcessingException {
-      this.dataAccess = new LocalUserAccess();
-      this.fileHandeler.setFilePath("direct.json");
-      fileHandeler.clearFileContent();
-      this.dataAccess.addUser(testUser);
-      controller.initData(this.testUser, this.dataAccess);  
-  
+    public void setUp() throws JsonProcessingException, FileNotFoundException  {
+        this.dataAccess = new LocalUserAccess();
+        this.fileHandeler.setFilePath("direct.json");
+        fileHandeler.clearFileContent();
+        this.dataAccess.addUser(testUser);
+        controller.initData(this.testUser, this.dataAccess);    
     }
-
-
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -63,7 +57,7 @@ public class HomePageTest extends ApplicationTest{
     }
 
     /**
-     * Tests that the user creates and adds new lists
+     * Tests that the user creates and adds new lists.
      */
     @Test
     public void createNewShopeeList() {
@@ -94,14 +88,13 @@ public class HomePageTest extends ApplicationTest{
 
         //Skjønner ikke hvorfor denne ikke funker......
         //assertEquals("Something went wrong", controller.getErroroutput());
-    
     }
 
-
     /**
-     * Tests that the user can delete lists
-     * @throws JsonProcessingException
-     */
+    * Tests that the user can delete lists.
+    *
+    * @throws JsonProcessingException if theres an issue when parsing to/from json
+    */
     @Test
     public void deleteShopeeList() throws JsonProcessingException {
         setUpDeletetest();
@@ -132,9 +125,11 @@ public class HomePageTest extends ApplicationTest{
 
         //Skjønner ikke hvorfor denne ikke funker
         //assertEquals("Failed to delete list", controller.getErroroutput());
-
     }
 
+    /**
+    * helper method for the test deleteShopeeList().
+    */
     public void setUpDeletetest() {
         clickOn("#listName").write("Middag");
         clickOn("#addList");
@@ -162,13 +157,12 @@ public class HomePageTest extends ApplicationTest{
 
         clickOn("#shoppingListView");
         clickOn("#modifyList");
-
-
     }
 
     @Test
     public void logouttest() {
         clickOn("#logOut");
     }
-
 }
+
+

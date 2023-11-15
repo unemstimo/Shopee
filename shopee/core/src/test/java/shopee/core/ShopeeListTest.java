@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * In this test class, all the main methods of the ShopeeList.java class are being tested.
- * Some of the smaller methods (such ass getters) are being indirectly tested and do not have their own tests. 
+ * Some of the smaller methods (such ass getters) are being indirectly tested and do not 
+ * have their own tests. 
 */
 
 public class ShopeeListTest {
@@ -18,7 +19,7 @@ public class ShopeeListTest {
     private ShopeeList list; // Shopee list to use in testing
 
     @Test
-    public void testShopeeList(){
+    public void testShopeeList() {
     }
 
     /**
@@ -32,10 +33,10 @@ public class ShopeeListTest {
         list = new ShopeeList("Une");
 
         // Checking if exception is beeing thrown if the listname includes special characters
-        try{
+        try {
             list.setListName("Une@");
             fail("Expected an IllegalArgumentException to be thrown");
-        } catch(Exception e) {
+        } catch (Exception e) {
             assertEquals("Shoplist name is not valid", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
@@ -51,7 +52,7 @@ public class ShopeeListTest {
      * If the food item does not exist we will add a new FoodItem. 
      */
     @Test
-    public void testAddFoodShopList(){
+    public void testAddFoodShopList() {
         list = new ShopeeList("Hanna");
         
         // When the food item does not exist in the shop list beforehand:
@@ -67,9 +68,9 @@ public class ShopeeListTest {
     }
 
     /**
-     * Tests if the setShopList(List<FoodItem> list) method works.
-     * It should make it possible to initalize the ShopeeLists shopList in one take.
-     */
+    * Tests if the setShopList(List< FoodItem >) method works.
+    * It should make it possible to initalize the ShopeeLists shopList in one take.
+    */
     @Test
     public void testSetShopList() {
         list = new ShopeeList("Johan");
@@ -84,7 +85,7 @@ public class ShopeeListTest {
     }
 
     /**
-     * Tests if the setBoughtList(List<FoodItem> list) method works.
+     * Tests if the setBoughtList(List< FoodItem >) method works.
      * It should make it possible to initalize the ShopeeLists boughtList in one take.
      */
     @Test
@@ -127,10 +128,10 @@ public class ShopeeListTest {
         list = new ShopeeList("Hanna");
         list.addFoodShopList("Milk", 2);
 
-        try{
+        try {
             list.hasFood("Bread");
             fail("Expected an IllegalArgumentException to be thrown");
-        } catch(Exception e) {
+        } catch (Exception e) {
             assertEquals("There is no such food in the list", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }

@@ -20,9 +20,10 @@ public class LocalUserAccess implements UserAccess {
     }
     
     /**
-     * Gets all users from the database
-     * @return list of users
-     */
+    * Gets user saved.
+    *
+    * @return all saved users from the json file.
+    */
     @Override
     public List<User> getAllUsers() {
         try {
@@ -34,31 +35,39 @@ public class LocalUserAccess implements UserAccess {
     }
 
     /**
-     * Gets the user from the database
-     */
+    * Gets a user.
+    *
+    * @param username name of the user
+    * @return a User with the given username
+    */
     @Override
     public User getUser(String username) {
-        this.getAllUsers();
-        return users.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
+        List<User> allUsers = this.getAllUsers();
+        return allUsers.stream().filter(u -> u.getUsername()
+            .equals(username)).findFirst().orElse(null);
     }
 
     /**
-     * Adds a user to the local file
-     * @param user
-     */
+    * Adds a user to the local file.
+    *
+    * @param user adds a given user to the local file.
+    */
     @Override
     public void addUser(User user) {
         try {
             filehandler.writeToFile(user);
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         this.getAllUsers();
     }
 
     /**
-     * Adds a shopee list to the local file
-     */
+    * Adds a shopeeList to a user. 
+    *
+    * @param username name of the user
+    * @param newShopeeList the ShopeeList which is being added
+    */
     @Override
     public void addShopeeList(String username, ShopeeList newShopeeList) {
         getAllUsers();
@@ -66,25 +75,26 @@ public class LocalUserAccess implements UserAccess {
         user.addShopeeList(newShopeeList);
         try {
             filehandler.writeToFile(user);
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-
     /**
-     * Deletes a shopee list from the local file
-     */
+    * Deletes a ShopeeList from a user.
+    *
+    * @param username name of the user.
+    * @param listName name of the list which i being deleted
+    */
     @Override
-    public void deleteShopeeList(String Username, String listName) {
+    public void deleteShopeeList(String username, String listName) {
         getAllUsers();
-        User user = getUser(Username);
+        User user = getUser(username);
         user.deleteShopeeList(listName);
         try {
             filehandler.writeToFile(user);
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } 
     }
-    
 }

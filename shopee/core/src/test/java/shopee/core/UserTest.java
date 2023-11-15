@@ -1,14 +1,21 @@
 package shopee.core;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+
 
 /**
  * In this test class, all the main methods of the User.java class are being tested.
- * Some of the smaller methods (such ass getters) are being indirectly tested and do not have their own tests. 
+ * Some of the smaller methods (such ass getters) are being indirectly tested and 
+ * do not have their own tests. 
 */
 
 public class UserTest {
@@ -26,16 +33,17 @@ public class UserTest {
 
     /**
      * Tests if the validUsername(String username) method works.
-     * The test checks if exceptions are being thrown for all the cases where the criteria is not met. 
+     * The test checks if exceptions are being thrown for all the 
+     * cases where the criteria is not met. 
     */
     @Test
-    public void testValidUsername(){
+    public void testValidUsername() {
         // Checking if exception is being thrown if the email has a number first.
         try {
             user = new User("1olanordmann@gmail.com", "ola123//");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (Exception e) {
-            assertEquals("The username must begin with a letter, and have a length of minimum two letters before @", e.getMessage());
+            assertEquals("Illegal username, should be name@something.domain", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
 
@@ -44,7 +52,7 @@ public class UserTest {
             user = new User("o@gmail.com", "ola123//");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (Exception e) {
-            assertEquals("The username must begin with a letter, and have a length of minimum two letters before @", e.getMessage());
+            assertEquals("Illegal username, should be name@something.domain", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
 
@@ -62,14 +70,15 @@ public class UserTest {
             user = new User("olanordmann@gmail.con", "ola123//");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (Exception e) {
-            assertEquals("This domain doesnt exist.", e.getMessage());
+            assertEquals("This domain doesn't exist.", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
     }
 
     /**
      * Tests if the validPassword(String password) method works.
-     * The test checks if exceptions are being thrown for all the cases where the criteria is not met. 
+     * The test checks if exceptions are being thrown for all the 
+     * cases where the criteria is not met. 
     */
     @Test
     public void testValidPassword() {
@@ -78,7 +87,7 @@ public class UserTest {
             user = new User("olanordmann@gmail.com", "ola123/");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (Exception e) {
-            assertEquals("The password needs to be at least 8 characters long", e.getMessage());
+            assertEquals("The password needs to be over 8 characters long", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
 
@@ -87,7 +96,7 @@ public class UserTest {
             user = new User("olanordmann@gmail.com", "123123//");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (Exception e) {
-            assertEquals("The password must contain letters, digits and special characters", e.getMessage());
+            assertEquals("Password must have letters, digits and characters", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
 
@@ -96,16 +105,17 @@ public class UserTest {
             user = new User("olanordmann@gmail.com", "olaola//");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (Exception e) {
-            assertEquals("The password must contain letters, digits and special characters", e.getMessage());
+            assertEquals("Password must have letters, digits and characters", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
 
-        // Checking if exception is being thrown if password doesnt contain at least one special character.
+        // Checking if exception is being thrown if password 
+        //doesnt contain at least one special character.
         try {
             user = new User("olanordmann@gmail.com", "ola12312");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (Exception e) {
-            assertEquals("The password must contain letters, digits and special characters", e.getMessage());
+            assertEquals("Password must have letters, digits and characters", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
     }
@@ -129,7 +139,7 @@ public class UserTest {
     }
 
     /**
-     * Tests the setShopeeList(List<ShopeeList> list) method.
+     * Tests the setShopeeList(List< ShopeeList> list) method.
     */
     @Test
     public void testSetShopeeList() {
@@ -153,14 +163,15 @@ public class UserTest {
      * It is not possible to add the same list more than once.
      */
     @Test
-    public void testAddShopeeListShopeeList(){
+    public void testAddShopeeListShopeeList() {
         ShopeeList list1 = new ShopeeList("Week 40");
-        ShopeeList list2 = new ShopeeList("Week 41");
- 
+        
         assertEquals(new ArrayList<>(), user.getShopeeLists());
         user.addShopeeList(list1);
         List<ShopeeList> shopeeLists = user.getShopeeLists();
         assertTrue(shopeeLists.contains(list1));
+
+        ShopeeList list2 = new ShopeeList("Week 41");
         assertFalse(shopeeLists.contains(list2));
  
         // Adding the same list twice should throw an exception
@@ -168,7 +179,7 @@ public class UserTest {
             user.addShopeeList(list1);
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (Exception e) {
-            assertEquals("Cant use same list name twice.", e.getMessage());
+            assertEquals("Cannot use the same list name twice.", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }  
     }
@@ -176,7 +187,7 @@ public class UserTest {
     /**
      * Tests the method getShopeeList(String name)
      * The method returns the shopee list object with the given name
-     * Exception should be thrown if no such list exists for the given user
+     * Exception should be thrown if no such list exists for the given user.
      */
     @Test
     public void testGetShopeeList() {
@@ -199,7 +210,7 @@ public class UserTest {
     
     /**
      * Tests the method deleteShopeeList(int index)
-     * Throws an exception if the index passed as argument is unvalid
+     * Throws an exception if the index passed as argument is unvalid.
      */
     @Test
     public void testDeleteShopeeListInt() {
@@ -264,7 +275,7 @@ public class UserTest {
     }
 
     /**
-     * Tests the replaceShopeeList(String listname, ShopeeList newList) method
+     * Tests the replaceShopeeList(String listname, ShopeeList newList) method.
      */
     @Test
     public void testReplaceShopeeList() {
@@ -293,3 +304,4 @@ public class UserTest {
     }
 
 }
+
