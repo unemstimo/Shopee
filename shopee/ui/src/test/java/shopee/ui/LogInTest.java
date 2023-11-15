@@ -24,10 +24,6 @@ public class LogInTest extends ApplicationTest {
     private LogInController controller = new LogInController();
     private UserAccess dataAccess;
   
-    // @BeforeAll
-    // public void rigup() throws FileNotFoundException {
-    //     this.testUser = exampleUser();
-    // }
   
     /**
     *  Sets up the filepath, and creates uses the local file to test if 
@@ -51,11 +47,18 @@ public class LogInTest extends ApplicationTest {
         stage.show();
     }
     
+    /*
+     * This method tests if the controller is initialized correctly
+     */
     @Test
     public void testControllerInitial() {
         assertNotNull(this.controller);
     }
 
+    /*
+     * This method tests if the error label is given correctly
+     * when signing up with invalid username
+     */
     @Test
     public void testSignUpWithInvalidUsername() {
         assertEquals("", lookup("#usernameInput").queryTextInputControl().getText());
@@ -69,6 +72,10 @@ public class LogInTest extends ApplicationTest {
         assertEquals("Index 1 out of bounds for length 1", this.controller.getErrorLabel());  
     }
 
+    /*
+     * This method tests if the error label is given
+     * correctly when signing up with invalid password
+     */
     @Test
     public void testSignUpWithInvalidPassword() {
         

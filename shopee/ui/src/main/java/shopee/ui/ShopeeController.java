@@ -95,7 +95,7 @@ public class ShopeeController extends AbstractController {
             }
 
         } catch (Exception e) {
-            outPut.setText("Please fill in both input-fields");
+            outPut.setText("Input fields are not valid");
         }
     }
 

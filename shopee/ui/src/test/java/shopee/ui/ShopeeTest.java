@@ -29,10 +29,6 @@ public class ShopeeTest extends ApplicationTest {
     private ShopeeController controller = new ShopeeController();
     private UserAccess dataAccess;
   
-    // @BeforeAll
-    // public void rigup() throws FileNotFoundException {
-    //     this.testUser = exampleUser();
-    // }
         
     /**
     * Creates a local connection and sets a filepath to a file where a test user is added,
@@ -67,7 +63,6 @@ public class ShopeeTest extends ApplicationTest {
      * Also tests if the food item written in the text field 
      * is in the shopping list.
      */
-
     @Test
      public void testAddFoodButtonClick() {
         clickOn("#newFood").write("Pineapple");
@@ -110,6 +105,12 @@ public class ShopeeTest extends ApplicationTest {
         .getShopeeList("testlist").getFood("Water").getFoodAmount());
     }
 
+    /*
+     * This test checks if the list is updated when pressing
+     * bought on a food item. 
+     * The item should then be removed from the shoplist, 
+     * and moved to the boght list.
+     */
     @Test
     public void testMarkAsBought() {
         setUpTest();
@@ -133,6 +134,10 @@ public class ShopeeTest extends ApplicationTest {
         assertEquals(0, controller.getShoppingListView().getItems().size());
     }
 
+    /*
+     * This test checks if the list is updated when pressing
+     * delete on a food item.
+     */
     @Test
     public void testDeleteItems() {
         setUpTest();

@@ -3,6 +3,7 @@
     "java.debug.settings.onBuildFailureProceed": true,
     "plantuml.render": "PlantUMLServer",
     "plantuml.server": "https://www.plantuml.com/plantuml",
-    "java.checkstyle.configuration": "${workspaceFolder}/shopee/config/checkstyle/checkstyle.xml"
+    "java.checkstyle.configuration": "${workspaceFolder}/shopee/config/checkstyle/checkstyle.xml",
+    "java.checkstyle.version": "10.12.5"
 
 }

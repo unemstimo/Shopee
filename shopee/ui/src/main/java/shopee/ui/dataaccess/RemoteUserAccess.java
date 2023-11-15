@@ -133,7 +133,6 @@ public class RemoteUserAccess implements UserAccess {
                 throw new IOException("Not legal status code"); 
             }
         } catch (IOException | InterruptedException e) {
-            System.out.println("halla");
             throw new RuntimeException(e);
         }
     }
@@ -171,7 +170,9 @@ public class RemoteUserAccess implements UserAccess {
      */
     @Override
     public void deleteShopeeList(String usernname, String listName) {
-        String mapping = "users/" + usernname + "/" + listName;
+        String list = listNameConverter(listName);
+
+        String mapping = "users/" + usernname + "/" + list;
         try {
             HttpRequest request = HttpRequest
                 .newBuilder(shoppingListUri(mapping))
@@ -186,6 +187,17 @@ public class RemoteUserAccess implements UserAccess {
             throw new RuntimeException(e);
         }
     }
+
+
+    /**
+     * Method for changing the name of a list suitable for URI.
+     */
+    public String listNameConverter(String listname) {
+        if (listname.contains(" ")) {
+            return listname.replaceAll(" ", "%20");
+        }
+        return listname;
+    } 
 }
 
     

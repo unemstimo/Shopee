@@ -86,8 +86,6 @@ public class HomePageTest extends ApplicationTest {
         clickOn("#listName").write("Uke@@@@@@");
         clickOn("#addList");
 
-        //Skjønner ikke hvorfor denne ikke funker......
-        //assertEquals("Something went wrong", controller.getErroroutput());
     }
 
     /**
@@ -123,8 +121,6 @@ public class HomePageTest extends ApplicationTest {
         clickOn("#shoppingListView");
         clickOn("#deleteList");
 
-        //Skjønner ikke hvorfor denne ikke funker
-        //assertEquals("Failed to delete list", controller.getErroroutput());
     }
 
     /**
