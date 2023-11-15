@@ -84,7 +84,7 @@
                         <skipTests>${skipTests}</skipTests>
                     </configuration>
                 </plugin>
-                <!-- Configure jacoco code coverage -->
+                <!-- Configure checkstyle code coverage -->
                  <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
@@ -97,18 +97,19 @@
                         </dependency>
                     </dependencies>
                     <configuration>
-                        <configLocation>google_checks.xml</configLocation>
+                        <configLocation>config/checkstyle/checkstyle.xml</configLocation>
+                        <indentSize>4</indentSize>
                         <encoding>UTF-8</encoding>
                         <consoleOutput>true</consoleOutput>
                         <failsOnError>true</failsOnError>
-                        <linkXRef>false</linkXRef>
+                        <linkXRef>false</linkXRef> 
                     </configuration>
                     <executions>
                         <execution>
                             <id>checkstyle-check</id>
                             <phase>verify</phase>
                             <goals>
-                                <goal>check</goal>
+                                <goal>checkstyle</goal>
                             </goals>
                         </execution>
                     </executions>
