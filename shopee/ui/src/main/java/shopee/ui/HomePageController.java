@@ -120,7 +120,4 @@ public class HomePageController extends AbstractController {
         setScene(Controllers.LOGIN, actionEvent, this.dataAccess, null, null);
     }
 
-    // public String getErroroutput() {
-    //     return output.getText();
-    // }
 }
