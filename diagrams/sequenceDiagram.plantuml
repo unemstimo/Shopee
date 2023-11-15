@@ -1,0 +1,42 @@
+@startuml sequenceDiagram
+    skinparam SequenceMessageAlignment center
+    skinparam layoutDirection LR
+
+    actor User 
+    boundary UI
+    control HomePageController
+    control ShopeeController
+    entity "core.User"
+    entity "core.ShopeeList"
+    participant "UserAccess: RemoteUserAccess"
+    participant RESTAPI
+    database DATABASE
+    User -> UI : Create new Shopee list
+    UI -> HomePageController : Add new Shopee list from UI
+    HomePageController -> "UserAccess: RemoteUserAccess" : addNewList(ActionEvent)
+    "UserAccess: RemoteUserAccess" -> RESTAPI : addShopeeList(String, ShopeeList)
+    RESTAPI -> DATABASE: postShopeeList(ShopeeList)
+    DATABASE -> RESTAPI : returns true if added
+    RESTAPI -> "UserAccess: RemoteUserAccess" : void
+    "UserAccess: RemoteUserAccess" -> HomePageController: void
+    HomePageController -> core.User : this.user.getShopeeLists()
+    core.User --> HomePageController : List of Shopee lists
+    HomePageController -> HomePageController : shoppingListView(List<Shopeelist>)
+    HomePageController -> UI : setItems(ObservableList<ShopeeList>)
+    UI -> HomePageController : void
+    HomePageController -> ShopeeController : setScene(Controllers, Event,\n UserAccess, User, String)
+    ShopeeController -> core.User : getShopeeList(String) 
+    core.User -> ShopeeController : returns Shopee list
+    ShopeeController -> core.ShopeeList : getShopList()
+    core.ShopeeList -> ShopeeController : returns shopping list
+    ShopeeController -> core.ShopeeList : getBoughtList()
+    core.ShopeeList -> ShopeeController : returns bought list
+    ShopeeController -> ShopeeController : showShoppingList(List<FoodItem>)
+    ShopeeController -> UI : setItems(ObservableList<FoodItem>)
+    UI -> ShopeeController : void
+    ShopeeController -> ShopeeController : showBoughtList(List<FoodItem>)
+    ShopeeController -> UI : setItems(ObservableList<FoodItem>)
+    UI -> ShopeeController : void
+    UI -> User : Updated visualisation of the new Shopee list
+
+@enduml

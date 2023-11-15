@@ -1,0 +1,138 @@
+@startuml classDiagramCore
+
+left to right direction
+
+package core{
+    class FoodItem{
+        -String FoodName
+        -int foodAmount
+        ==
+        +void setFoodName(String)
+        +void setFoodAmount(int)
+        +String getFoodName()
+        +int getFoodAmount()
+
+        -boolean validFoodName(String)
+        -boolean validFoodAmount(int)
+    }
+
+    class ShopeeList{
+        -String listName
+        -List<FoodItem> shopList
+        -List<FoodItem> boughtList
+        ==
+        +void setListName(String)
+        +String getListName()
+        +void addFoodShopList(String, int)
+        +void setShopList(List<FoodItem>)
+        +void setBoughtList(List<FoodItem>)
+        +void addFoodBought(List(FoodItem)
+        +void removeFood(String)
+        +FoodItem getFood(String)
+        +FoodItem getFood(int)
+        +int getFoodAmount(String)
+        +void hasFood(String)
+        +FoodItem getBoughtItem(int)
+        +List<FoodItem> getShopList()
+        +List<FoodItem> getBoughtList()
+
+        -void validName(String)
+    }
+
+    class User{
+    -String username 
+    -String password
+    -List<ShopeeList> shopeeLists
+    +{static} final String[] cc
+    #List<String> newList
+    ==
+    -boolean validUsername(String)
+    -boolean validPassword(String)
+
+    +String getUsername()
+    +String getPassword()
+    +void setUsername(String)
+    +void setPassword(String)
+    +void setShopeeLists(List<ShopeeList>)
+    +List<ShopeeList> getShopeeLists()
+    +void addShopeeList(ShopeeList)
+    +ShopeeList getShopeeList(String)
+    +void deleteShopeeList(int)
+    +void deleteShopeeList(String)
+    +void addShopeeList(int, ShopeeList)
+    +void replaceShopeeList(String, ShopeeList)
+    }
+}
+
+package json{
+    class FileHandler{
+        -Path filePath
+        ==
+        +void setFilePath(String)
+        +void writeToFile(User)
+        +List<User> jsonToObj()
+        +void clearFileContent()
+    }
+}
+
+package rest{
+    class ShopeeUserController{
+        -ShopeeUserService userService
+        ==
+        +List<User> getAllUsers()
+        +User getUser(String)
+        +boolean addUser(String)
+        +boolean addShopeeList(String, String)
+        +boolean deleteShopeeList(String, String)
+    }
+
+    class ShopeeUserService{
+        -List<User> alUsers
+        -FileHandler shopeePersistence
+        -ObjectMapper mapper 
+        ==
+        +List<User> getAllUsers()
+        +void setAllUsers(List<User>)
+        +User getUser()
+        +boolean addUser(String)
+        +boolean addShopeeList(String, String)
+        +boolean deleteShopeeList(String, String)
+        +void save()
+        +{static} List<User> createInitialUser()
+    }
+}
+
+package ui.dataaccess{
+    interface UserAccess{
+        void addShopeeList(String, ShopeeList)
+        void deleteShopeeList(String, String)
+        List<User> getAllUsers()
+        void addUser(User)
+        User getUser(String)
+    }
+
+    class LocalUserAccess{
+        -final FileHandler filehandler
+        -List<User> users 
+    }
+
+    class RemoteUserAccess{
+        -final URI endpointUri
+        ==
+        -URI shoppingListURI(String)
+    }
+}
+
+ShopeeList "0" --> "*" FoodItem : "Contains"
+User "0" --> "*" ShopeeList : "Contains"
+
+ShopeeUserController --> ShopeeUserService : "uses"
+ShopeeUserService --> FileHandler : "uses"
+ShopeeUserService --> User : "uses"
+
+UserAccess <|.. LocalUserAccess : "Implements"
+UserAccess <|.. RemoteUserAccess : "Implements"
+
+LocalUserAccess --> FileHandler : "Uses"
+
+@enduml

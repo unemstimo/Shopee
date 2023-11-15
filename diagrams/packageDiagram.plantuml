@@ -1,0 +1,51 @@
+@startuml Shopee
+
+component ui {
+    folder shopee.ui
+    folder shopee.ui.dataaccess
+}
+
+component rest {
+    folder shopee.rest {
+    }
+}
+
+component core{
+    folder shopee.core
+    folder shopee.json
+}
+
+component jackson {
+}
+
+component javafx {
+    component fxml {
+    }
+}
+
+component springboot {
+}
+
+
+
+shopee.ui ..> shopee.ui.dataaccess
+shopee.ui.dataaccess ..> shopee.core
+shopee.ui.dataaccess ..> shopee.rest
+shopee.ui.dataaccess ..> shopee.json
+ui ..> javafx
+ui ..> fxml
+shopee.core ..> shopee.json
+shopee.json ..> jackson
+rest ..> springboot
+shopee.rest ..> shopee.core
+shopee.rest ..> shopee.json
+
+
+skinparam component{
+    BackgroundColor Pink
+}
+skinparam folder{
+    BackgroundColor Yellow
+}
+
+@enduml
