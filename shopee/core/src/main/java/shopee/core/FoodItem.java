@@ -70,7 +70,7 @@ public class FoodItem {
      * @return True if the food name only consists of letters; otherwise, throws an exception.
      */
     private boolean validFoodName(final String foodName) {
-        if (foodName.matches("^[A-Za-zåÅ ]+$")) {
+        if (foodName.matches("^[A-Za-zæøåÆØÅ ]+$")) {
             return true;
         } else {
             throw new IllegalArgumentException("The food name can only contain letters.");
