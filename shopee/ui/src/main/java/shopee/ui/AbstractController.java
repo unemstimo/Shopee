@@ -68,8 +68,7 @@ public abstract class AbstractController {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(controller);
             loader.setLocation(ShopeeApp.class.getResource(controllerType.getFxml()));
-            Parent parent = loader.load();
-
+            
             if (controller instanceof LogInController) {
                 ((LogInController) controller).initData(shopeeAccess);
             }
@@ -80,6 +79,7 @@ public abstract class AbstractController {
                 ((ShopeeController) controller).initData(user, listName, shopeeAccess);
             }
             
+            Parent parent = loader.load();
             Scene scene = new Scene(parent);
             stage.setScene(scene);
         } catch (IOException e) {
