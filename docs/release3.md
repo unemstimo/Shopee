@@ -20,6 +20,12 @@ The main issue during test-writing was the file handler. Although the group desi
 The application's starter, the last significant field left untested, doesn't require testing since it lacks variables, and the app starts flawlessly both locally and remotely. 
 
 Apart from these, all other critical aspects have been tested.
+## __Code quality__
+
+Integrating Google's Checkstyle initially proved challenging for the group project, especially regarding indentation rules. The predefined settings, while widely used, lacked the flexibility needed to align with our specific coding conventions.
+
+Faced with these issues, the group opted for an alternative open-source Checkstyle configuration that allowes to define and enforce  custom coding standards. This switch provided the adaptability the group required, addressing challenges related to indentation and ensuring the code followed the desired style without compromise. Take a closer look at checkstyle [here](../shopee/config/checkstyle/checkstyle.xml)
+
 _____
 ## **User experience improvements**
 __For the final release the group have improved the user experience of the app.__ The primary improvement centers around the introduction of a new feature – the addition of a user-friendly homepage. 
