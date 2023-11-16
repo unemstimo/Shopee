@@ -1,11 +1,11 @@
 # **UI Module**
-This folder contains the ui module of the shopee application. The ui module manages the user experience through the fxml-files while ensuring seamless integration among the domain logic layer, persistence layer, and UI layer through the controller classes. The user interface is made using JavaFX- and fxml- technologies and shows the shopee list to a user, i.e. the users shopping list and bought list. In the ui, the user can move food items from the shopping list to the bought list and add new food items to the shopping list.  
+This folder contains the ui module of the shopee application. The ui module manages the user experience through the fxml-files while ensuring seamless integration among the domain logic layer, persistence layer, and UI layer through the controller classes. The user interface is made using JavaFX- and fxml- technologies and shows the shopee list to a user, i.e. the users shopping list and bought list. 
 
 ## **User interface**
 This folder contains the controller classes as well as the class that makes the application run. The controller classes connects the domain logic in the core module with the user input from the fxml-files found under resources. The user interface for this application is easy to use with basic colors and intuitive functionality. 
 
 ## **Data access**
-In this folder it is included a folder containing the data access functionality. The classes promote consistency handling tasks in our application´s RESTful API implementation.
+In the ui folder it is included a folder containing the data access functionality. The classes promote consistency handling tasks in our application´s RESTful API implementation.
 
 ## **Classes:**
 - [dataAccess](src/main/java/shopee/ui/dataAccess)
