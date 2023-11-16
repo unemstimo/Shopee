@@ -1,7 +1,7 @@
 # Shopee Project
 
 ## App Description
-The shopee app is an application that works as a shopping list. An user can log in or create an account to further view or create multiple lists. The user can therefore have multiple lists and the application allows an user to create a shopping list and manage/edit the shopping list. The shopee app makes it easy to keep track of what the user need to purchase by adding food items along with the amount of the item. Food items can easly be deleted or be mark as bought. 
+The shopee app is an application that works as a shopping list. An user can log in or create an account to further view or create multiple lists. The user can therefore have multiple lists, and the application allows a user to create a shopping list and manage/edit the shopping list. The shopee app makes it easy to keep track of what the user need to purchase by adding food items along with the amount of the item. Food items can easly be deleted or be marked as bought. 
 ___
 
 ## Storage
@@ -55,7 +55,7 @@ _____
 1. **Shopping lists** : The user should be able to view existing shopping lists created. 
 2. **Buttons** : Should view button for creating list and log out button.
 #### Shopping list page
-1. **Shopping List** : The user should be able to see the food items added to the shopping list along with the amount of food items. Food items that is bought should not be shown in the list. If there os no items added yet, there is a square marked where food items may be added to.
+1. **Shopping List** : The user should be able to see the food items added to the shopping list along with the amount of food items. Food items that is bought should not be shown in the list. If there is no items added yet, there is a square marked where food items may be added to.
 2. **Bought list** : The user should be able to see a list of all the items that has been purchased by the user.
 3. **Input fields** : The user can view input fields for food item and amount.
 4. **Buttons** : The user should see buttons for removing/adding and mark item as bought. Should also see button for going back to previus page.

@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * JavaFX App . 
+ * JavaFX App  
  */
 public class ShopeeApp extends Application {
 
@@ -16,7 +16,7 @@ public class ShopeeApp extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         LogInController controller = new LogInController();
-        //sets up the access to either local or remote depending if the server is running or not
+        // sets up the access to either local or remote depending if the server is running or not
         controller.setUpAccess(); 
         fxmlLoader.setController(controller);
         fxmlLoader.setLocation(this.getClass().getResource("LogIn.fxml"));

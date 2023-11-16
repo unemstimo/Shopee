@@ -4,7 +4,7 @@
 
 
 ## Description
-This group project is a developing project through the course IT1901. The purpose of this project is to create an app that can handle data managed as a cloud service. This project is intended to familiarize the group with working collaboratively and using GitLab to become well-versed in agile practices. Read more about the project [here](shopee/readme.md)
+This group project is a developing project through the course IT1901. The purpose of this project is to create an application that can handle data managed as a cloud service. This project is intended to familiarize the group with working collaboratively and using GitLab to become well-versed in agile practices. Read more about the project [here](shopee/readme.md)
 ______________
 
 ## Tools used to ensure code quality
@@ -32,7 +32,7 @@ Before running:
 
 2. __mvn clean install__, (tests can be skipped with __mvn clean install -DskipTests__ )
 
-3. use command __"mvn javafx:run"__ in ui folder or use command "mvn javafx:run -f ui/pom.xml" wherever you would like
+3. use command __"mvn javafx:run"__ in ui folder or use command **"mvn javafx:run -f ui/pom.xml"** wherever you would like
 
 ### Running the application with remote access:
 1. Navigate to shopee directory using __"cd shopee"__
@@ -56,7 +56,7 @@ The JaCoCo report is created when this command is runned and is located in /targ
 
 __Note:__ The springboot- and integrationtest-module runs on port 8080, this requires that the server is not running at the same time. Make sure the server is not running in any terminal when running `mvn verify` or `mvn clean install`.  
 
-
+____
 ## Project Structure
 The project is organized with these directories for managing source code, documentation and resources.
 
@@ -68,6 +68,10 @@ The project is organized with these directories for managing source code, docume
         * [javafx](shopee/ui/src/main/java/shopee/ui)
         * [FXML](shopee/ui/src/main/resources/)
     * [rest](shopee/rest)
+
+
+
+___
 
 
 ## Format persistence json-file

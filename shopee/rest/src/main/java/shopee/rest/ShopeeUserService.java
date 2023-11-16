@@ -83,7 +83,7 @@ public class ShopeeUserService {
     *
     * @param username name of the user where the shopeeList is added 
     * @param shopeeList shopeeList as a json string
-    * @throws JsonMappingException if theres something wrong when parsing from string to object
+    * @throws JsonMappingException if there is something wrong when parsing from string to object
     */
     public boolean addShopeeList(String username, String shopeeList)
             throws JsonMappingException, JsonProcessingException {

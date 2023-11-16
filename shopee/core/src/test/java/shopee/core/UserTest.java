@@ -87,7 +87,7 @@ public class UserTest {
             user = new User("olanordmann@gmail.com", "ola123/");
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (Exception e) {
-            assertEquals("The password needs to be over 8 characters long", e.getMessage());
+            assertEquals("Password needs to be at least 8 characters long", e.getMessage());
             assertTrue(e instanceof IllegalArgumentException);
         }
 

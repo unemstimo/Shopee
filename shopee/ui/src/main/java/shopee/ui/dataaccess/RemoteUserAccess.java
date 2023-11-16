@@ -64,7 +64,7 @@ public class RemoteUserAccess implements UserAccess {
      * Method for getting all users from the remote database.
      */
     @Override
-    public List<User> getAllUsers() { // Brukes i Login?? for å sjekke om bruker finnes????
+    public List<User> getAllUsers() { 
         HttpRequest request = HttpRequest.newBuilder(endpointUri)
             .header("Accept", "application/json")
             .GET().build();

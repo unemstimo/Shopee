@@ -49,7 +49,7 @@ public class ShopeeUserController {
     /**
     * Gets a specific user from the database.
     *
-    * @param username gets a user .
+    * @param username gets a user 
     * @return a User with the given username
     */
     @GetMapping("/{username}")

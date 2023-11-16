@@ -42,10 +42,10 @@ public class LogInController extends AbstractController {
     * @param dataAccess sets the access.
     */
     public void initData(UserAccess dataAccess) {
-        //sets dataAccess to either local or remote!
+        // sets dataAccess to either local or remote!
         this.dataAccess = dataAccess; 
 
-        //gets all users from database either local or remote!
+        // gets all users from database either local or remote!
         this.users = dataAccess.getAllUsers(); 
     }   
 
@@ -92,15 +92,15 @@ public class LogInController extends AbstractController {
             }
         }
         if (usernameTaken) {
-            output.setText("Brukernavnet finnes allerede.");
+            output.setText("The username is taken.");
         } else {
             try {
                 User user = new User(username, password);
-                dataAccess.addUser(user); //adds user to file either local or remote!
+                dataAccess.addUser(user); // adds user to file either local or remote!
                 this.user = user;
-                //gets all users from database either local or remote updated
+                // gets all users from database either local or remote updated
                 this.users = dataAccess.getAllUsers(); 
-                output.setText("Brukeren er blitt opprettet. Du kan nå logge inn");
+                output.setText("The user has been created. You can now log in.");
                 usernameInput.clear();
                 passwordInput.clear();
             } catch (Exception e) {
@@ -123,7 +123,7 @@ public class LogInController extends AbstractController {
         readTextFields();
 
         boolean userExist = false;
-        for (User userInFile : this.users) { // checks the newes list made from the dataAccess
+        for (User userInFile : this.users) { // checks the newest list made from the dataAccess
             if (userInFile.getUsername().equals(this.username) 
                     && userInFile.getPassword().equals(this.password)) {
                 userExist = true;
@@ -131,12 +131,12 @@ public class LogInController extends AbstractController {
             }
         }
         if (userExist) { // if user exists, the user is sent to the next page
-            //gets user from database either local or remote!
+            // gets user from database either local or remote!
             this.user = dataAccess.getUser(this.username); 
-            //sets the scene to the homepage with the user
+            // sets the scene to the homepage with the user
             setScene(Controllers.HOMEPAGE, event, this.dataAccess, this.user, null);
         } else {
-            output.setText("Feil brukernavn eller passord. Vennligst prøv igjen.");
+            output.setText("Wrong username or password. Please try again.");
         }   
     }
     
